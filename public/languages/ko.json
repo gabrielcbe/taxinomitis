@@ -10,6 +10,9 @@
 
         "ADD": "추가",
         "CANCEL": "취소",
+        "DELETE": "Delete",
+        "EDIT": "Edit",
+        "TEST": "Test",
 
         "ABOUT": "소개",
         "TEACHER": "선생님",
@@ -33,7 +36,7 @@
         },
         "WHY": {
             "TITLE": "왜?",
-            "BODY": "머신러닝은 우리 주변에 있습니다. 우리는 스팸 필터, 추천 엔진, 언어 번역 서비스, 채팅 로봇 및 디지털 비서, 검색 엔진 및 사기 탐지 시스템과 같은 머신러닝 시스템을 매일 사용합니다.<br/><br/>머지 않아 머신러닝 시스템이 우리의 자동차를 운전하고, 의사가 우리의 질병을 진단하고 치료할 수 있도록 도와줄 것입니다. <br/><br/>아이들이 우리의 세계가 어떻게 작동하는지 알고 있어야 합니다. 기능과 의미를 이해하는 가장 좋은 방법은 이 기술을 직접 구현해 보는 것입니다. <br/><br/>자세한 내용은 다음을 참고하세요.: <a target='_blank' class='btn btn-primary' href='http://dalelane.co.uk/blog/?p=3513'>'Introducing Machine Learning to kids'</a>"
+            "BODY": "머신러닝은 우리 주변에 있습니다. 우리는 스팸 필터, 추천 엔진, 언어 번역 서비스, 채팅 로봇 및 디지털 비서, 검색 엔진 및 사기 탐지 시스템과 같은 머신러닝 시스템을 매일 사용합니다.<br/><br/>머지 않아 머신러닝 시스템이 우리의 자동차를 운전하고, 의사가 우리의 질병을 진단하고 치료할 수 있도록 도와줄 것입니다. <br/><br/>아이들이 우리의 세계가 어떻게 작동하는지 알고 있어야 합니다. 기능과 의미를 이해하는 가장 좋은 방법은 이 기술을 직접 구현해 보는 것입니다. <br/><br/>자세한 내용은 다음을 참고하세요.: <a target='_blank' class='btn btn-primary' href='http://dalelane.co.uk/blog/?p=3513'>'아이들을 위한 머신러닝 소개'</a>"
         },
         "TECH": {
             "TITLE": "기술",
@@ -87,11 +90,16 @@
         "FORGOT_DETAILS": "아이디나 비밀번호를 잊어버렸나요?",
         "TRY_TITLE": "등록 건너뛰기",
         "TRY_NOW": "지금 실행해보기",
-        "BACK": "@:APP.BACK",
         "WHO_YOU": "누구십니까?",
         "TEACHER": "교사 혹은 코딩 클럽의 리더",
         "STUDENT": "학생",
-        "FORGOT_TEXT": "아이디와 비밀번호를 잊어버렸나요? 괜찮아요. 우리도 종종 잊어버립니다"
+        "FORGOT_TEXT": "아이디와 비밀번호를 잊어버렸나요? 괜찮아요. 우리도 종종 잊어버립니다",
+        "ARE_YOU_A_STUDENT": "Are you a student?",
+        "ARE_YOU_A_STUDENT_INTRO_1": "If your class is already using this tool, ask your teacher or coding group leader to create you an account.",
+        "ARE_YOU_A_STUDENT_INTRO_2": "If your class isn't already using the tool, ask your teacher or coding group leader to get in touch.",
+        "RESET_STUDENT_PASSWORD_1": "If you're a student, we don't have your email address to be able to send you a password-reset email.",
+        "RESET_STUDENT_PASSWORD_2": "That's no problem, though!",
+        "RESET_STUDENT_PASSWORD_3": "Just ask your teacher or group leader who first signed you up. They will be able to reset your password from their Admin page."
     },
     "SIGNUP": {
         "TEACHER": {
@@ -166,7 +174,11 @@
                 "VALUES_LIMIT": "프로젝트에 10개 이상의 값은 허용되지 않습니다"
             }
         },
-        "CREATE": "만들기"
+        "CREATE": "만들기",
+        "ERRORS": {
+            "REQUIRED": "This is required!",
+            "TOOLONG": "That's too long!"
+        }
     },
     "PROJECT": {
         "TRAIN": {
@@ -200,7 +212,7 @@
     },
     "TRAINING": {
         "TITLE": "훈련",
-        "ADDLABEL": "새로운 라벨 추가",
+        "ADDLABEL": "새로운 레이블 추가",
         "CREATEFIRSTLABEL": "'추가' 버튼을 클릭하여 당신의 첫번째 바구니를 만드세요",
         "CROWDSOURCEDEMPTY": "선생님이 새로운 바구니를 만든 다음 페이지를 새로고침하세요",
         "ADDEXAMPLE": "데이터 추가",
@@ -209,8 +221,8 @@
         "ADDDRAWING": "그리기",
         "DRAGIMAGES": "사진을 드래그하여 가져오세요",
         "NEWLABEL": {
-            "INTRO": "새로운 라벨을 추가하세요",
-            "ERROR": "라벨 이름은 숫자와 문자로만 작성하세요"
+            "INTRO": "새로운 레이블을 추가하세요",
+            "ERROR": "레이블 이름은 숫자와 문자로만 작성하세요"
         },
         "NEWEXAMPLE": {
             "INTRO": "새로운 데이터를 추가하세요 ",
@@ -230,6 +242,8 @@
         "TRAIN": "새로운 머신 러닝 모델을 훈련시켜보세요",
         "CANCEL": "훈련 취소",
         "DELETE": "모델 삭제",
+        "TEST_CANVAS": "Draw something to test your model with",
+        "TEST_WEBCAM": "Take a photo to test your model with",
         "WHATHAVEYOUDONE": {
             "TITLE": "무엇을 하고 있나요?",
             "PLEASEWAIT": "몇 분이 걸려요. 하지만 트레이닝 컴퓨터가 바쁘다면 조금 더 걸릴 수 있어요.",
@@ -302,14 +316,14 @@
                 },
                 "NODATA" : {
                     "CROWDSOURCED" : {
-                        "TEXT" : "Your class said that you want to collect examples of text for a computer to recognise when text is ",
-                        "IMAGES" : "Your class said that you want to collect examples of images for a computer to recognise when images are ",
-                        "NUMBERS" : "Your class said that you want to collect examples of numbers for a computer to recognise when numbers are "
+                        "TEXT" : "다음의 문자를 컴퓨터가 인식하기 위해 여러분 교실 친구들은 데이터를 추가해야합니다 : ",
+                        "IMAGES" : "다음의 그림를 컴퓨터가 인식하기 위해 여러분 교실 친구들은 데이터를 추가해야합니다 : ",
+                        "NUMBERS" : "다음의 숫자를 컴퓨터가 인식하기 위해 여러분 교실 친구들은 데이터를 추가해야합니다 : "
                     },
                     "INDIVIDUAL" : {
-                        "TEXT" : "You said that you want to collect examples of text for a computer to recognise when text is ",
-                        "IMAGES" : "You said that you want to collect examples of images for a computer to recognise when images are ",
-                        "NUMBERS" : "You said that you want to collect examples of numbers for a computer to recognise when numbers are "
+                        "TEXT" : "다음의 문자를 컴퓨터가 인식하기 위해 여러분은 데이터를 추가해야합니다 : ",
+                        "IMAGES" : "다음의 그림을 컴퓨터가 인식하기 위해 여러분은 데이터를 추가해야합니다 : ",
+                        "NUMBERS" : "다음의 숫자를 컴퓨터가 인식하기 위해 여러분은 데이터를 추가해야합니다 : "
                     }
                 },
                 "NOEXAMPLES" : {
@@ -318,18 +332,18 @@
                 },
                 "DATA" : {
                     "CROWDSOURCED" : {
-                        "TEXT" : "Your class has collected examples of text for a computer to use to recognise when text is ",
-                        "IMAGES" : "Your class has collected examples of images for a computer to use to recognise when images are ",
-                        "NUMBERS" : "Your class has collected examples of numbers for a computer to use to recognise when numbers are "
+                        "TEXT" : "다음의 문자를 컴퓨터가 인식하기 위해 여러분 교실 친구들은 데이터를 모았습니다.",
+                        "IMAGES" : "다음의 그림를 컴퓨터가 인식하기 위해 여러분 교실 친구들은 데이터를 모았습니다.",
+                        "NUMBERS" : "다음의 숫자를 컴퓨터가 인식하기 위해 여러분 교실 친구들은 데이터를 모았습니다."
                     },
                     "INDIVIDUAL" : {
-                        "TEXT" : "You have collected examples of text for a computer to use to recognise when text is ",
-                        "IMAGES" : "You have collected examples of images for a computer to use to recognise when images are ",
-                        "NUMBERS" : "You have collected examples of numbers for a computer to use to recognise when numbers are "
+                        "TEXT" : "다음의 문자를 컴퓨터가 인식하기 위해 여러분은 데이터를 모았습니다.",
+                        "IMAGES" : "다음의 그림를 컴퓨터가 인식하기 위해 여러분은 데이터를 모았습니다.",
+                        "NUMBERS" : "다음의 숫자를 컴퓨터가 인식하기 위해 여러분은 데이터를 모았습니다."
                     },
                     "COLLECTED" : {
-                        "CLASS" : "They've collected: ",
-                        "YOU" : "You've collected: "
+                        "CLASS" : "반 친구들이 수집한 데이터: ",
+                        "YOU" : "여러분이 수집한 데이터: "
                     }
                 }
             }
@@ -343,32 +357,32 @@
             "IDLE": {
                 "NOLABELS" : "다음 단계로 <a href='{{ urls.train }}'>훈련</a>페이지로 가보세요. 컴퓨터가 인식하기를 원하는 몇 개의 레이블을 추가해보세요.",
                 "ONELABEL" : {
-                    "EXPLANATION": "You've only said one thing that you want the computer to be able to recognise: {{ label }}",
-                    "ISTHATALL": "Is that the only thing you want the computer to be able to recognise?",
-                    "NO": "<strong>No?</strong><br/>Go back to the <a href='{{ urls.train }}'>Train</a> page.<br/>Add more labels for each of the things that you want to teach the computer to be able to recognise.<br/><br/>",
-                    "YES": "<strong>Yes?</strong><br/>You need to do a little more work first.<br/>For the computer to be able to learn how to recognise \"{{ label }}\", you need to give it some examples of things that aren't {{ label }}.<br/>Go back to the <a href='{{ urls.train }}'>Train</a> page and create a new label for examples of things that aren't {{ label }}. You could call it \"not-{{ label }}\"."
+                    "EXPLANATION": "여러분은 다음의 하나만 컴퓨터가 인식하도록 만들었습니다 : {{ label }}",
+                    "ISTHATALL": "컴퓨터가 인식하기 원하는 것이 하나뿐인가요?",
+                    "NO": "<strong>아닌가요?</strong><br/> 그렇다면 <a href='{{ urls.train }}'>훈련</a>페이지로 이동하세요.<br/>더 많은 레이블을 추가하여 컴퓨터가 많은 것을 인식하도록 해 보세요.<br/><br/>",
+                    "YES": "<strong>그런가요?</strong><br/>여러분은 먼저 할 일이 있습니다.<br/>컴퓨터가 \"{{ label }}\"를 인식할 수 있도록, {{ label }}이 아닌 여러 데이터를 모아야 합니다.<br/><a href='{{ urls.train }}'>훈련</a> 페이지로 돌아가서 {{ label }}이 아닌 레이블을 하나 만드세요. 그것을 \"not-{{ label }}\"이라 이름 지을 수 있어요."
                 },
                 "LABELS" : {
-                    "NO_DATA" : "The next step is to go to the <a href='{{ urls.train }}'>Train</a> page. Add examples for each of the labels.",
+                    "NO_DATA" : "다음 단계는 <a href='{{ urls.train }}'>훈련</a> 페이지로 이동해서 각각의 레이블에 데이터를 추가하는 것입니다.",
                     "MORE_DATA" : {
-                        "KEEP_GOING": "Keep going!",
+                        "KEEP_GOING": "계속하세요",
                         "MORE_EXAMPLES" : {
-                            "YOU": "Go back to the <a href='{{ urls.train }}'>Train</a> page and collect more examples for each of the labels.",
-                            "CLASS": "Ask your class to go back to the <a href='{{ urls.train }}'>Train</a> page and collect more examples for each of the labels."
+                            "YOU": "<a href='{{ urls.train }}'>훈련</a> 페이지로 이동해서 각각의 레이블에 데이터를 추가하세요.",
+                            "CLASS": "<a href='{{ urls.train }}'>훈련</a> 페이지로 이동해서 여러분 교실 친구들과 각각의 레이블에 데이터를 추가하세요."
                         },
-                        "MORE_IS_BETTER" : "The more you can get, the better it should learn, but you need at least {{ minimumExamples }} examples of each as an absolute minimum."
+                        "MORE_IS_BETTER" : "데이터를 많이 모을 수록 컴퓨터는 더 많이 배울 수 있습니다. 단, 적어도 {{ minimumExamples }}개 이상의 데이터를 모아야 합니다."
                     },
                     "ENOUGH_DATA" : {
-                        "READY_TO_START" : "Ready to start the computer's training?",
+                        "READY_TO_START" : "컴퓨터를 학습시킬 준비가 되었나요?",
                         "START_TRAINING" : {
-                            "CROWDSOURCED" : "Click the button below to start training a machine learning model using the examples your class have collected so far",
-                            "INDIVIDUAL" : "Click the button below to start training a machine learning model using the examples you have collected so far"
+                            "CROWDSOURCED" : "머신러닝 모델 만들기 시작 버튼을 눌러 여러분 교실 친구들이 모은 데이터로 모델을 만들어보세요.",
+                            "INDIVIDUAL" : "머신러닝 모델 만들기 시작 버튼을 눌러 여러분이 모은 데이터로 모델을 만들어보세요."
                         },
                         "MORE_EXAMPLES" : {
-                            "CROWDSOURCED" : "(Or ask your class to go back to the <a href='{{ urls.train }}'>Train</a> page if you want them to collect more examples first.)",
-                            "INDIVIDUAL" : "(Or go back to the <a href='{{ urls.train }}'>Train</a> page if you want to collect some more examples first.)"
+                            "CROWDSOURCED" : "(혹은 여러분 교실 친구들과 <a href='{{ urls.train }}'>훈련</a> 페이지로 이동하여 더 많은 데이터를 모아보세요.)",
+                            "INDIVIDUAL" : "(혹은 <a href='{{ urls.train }}'>훈련</a> 페이지로 이동하여 더 많은 데이터를 모아보세요.)"
                         },
-                        "WAITING_FOR_TEACHER" : "Waiting for your teacher to start the computer's training."
+                        "WAITING_FOR_TEACHER" : "선생님이 컴퓨터를 훈련시킬 때까지 기다려보세요."
                     }
                 }
             },
@@ -408,8 +422,8 @@
             },
             "WEBCAM": "<strong>웹캠</strong>으로 테스트하기",
             "DRAWING": "<strong>그림 그리기</strong>로 테스트하기",
-            "WWW": "T<strong>인터넷 자료</strong>로 테스트하기",
-            "RECOGNISED": "R<strong>{{ testoutput }}</strong>(으)로 인식되었습니다."
+            "WWW": "<strong>인터넷 자료</strong>로 테스트하기",
+            "RECOGNISED": "<strong>{{ testoutput }}</strong>(으)로 인식되었습니다."
         },
         "QUIZ": {
             "TITLE": "퀴즈 시간!",
@@ -449,20 +463,20 @@
 
         "LAUNCH": "스크래치에서 열기",
 
-        "LAUNCH_SCRATCH_BY_ITSELF": "(You can use <a href='{{ url }}' class='btn btn-default' target='_blank'>Scratch by itself</a> if you want.)",
-        "GO_TO_LEARNANDTEST": "Or go to the <strong>Learn &amp; Test</strong> page for some tips on what to do next.",
+        "LAUNCH_SCRATCH_BY_ITSELF": "(원한다면 머신러닝 모델이 없는 <a href='{{ url }}' class='btn btn-default' target='_blank'>스크래치</a> 만을 사용할 수 있습니다.)",
+        "GO_TO_LEARNANDTEST": "혹은 <strong>학습 &amp; 테스트</strong> 페이지로 이동하여 다음에 무엇을 해야하는지에 대한 팁을 얻어보세요.",
 
-        "MORE_BLOCKS": "Your project will add these blocks to the <span style='background-color: purple; color: white; padding-left: 7px; padding-right: 7px; white-space: nowrap;'>More Blocks</span> tab in Scripts.",
-        "EXPLAIN_RECOGNISE_LABEL": "Put {{ type }} in the input for this, and it will return the label that your machine learning model recognises it as.",
-        "EXPLAIN_RECOGNISE_CONFIDENCE": "This will return how confident your machine learning model is that it recognises the type of {{ type }}. (As a number from 0 - 100).",
-        "EXPLAIN_LABELS": "These blocks represent the labels you've created in your project, so you can use their names in your scripts.",
-        "EXPLAIN_COSTUMEIMAGE": "This block is in the Looks palette for Sprites and will return the image of the currently selected costume.",
-        "SAMPLE_SCRIPT": "This means you can do something like this:",
-        "SAMPLE_SCREENSHOT": "It will look something like this - except with the name of your project.",
-        "EXPLAIN_STATUS": "The coloured circle next to your project name tells you if your machine learning model is okay.",
-        "STATUS_GREEN": "means your model is trained and ready to go",
-        "STATUS_YELLOW": "means your model hasn't finished training yet",
-        "STATUS_RED": "means something went wrong. Go back to the <strong>Learn &amp; Test</strong> page to see what went wrong with training."
+        "MORE_BLOCKS": "<span style='background-color: purple; color: white; padding-left: 7px; padding-right: 7px; white-space: nowrap;'>More Blocks</span> 탭에 다음의 블록이 추가됩니다.",
+        "EXPLAIN_RECOGNISE_LABEL": "{{ type }} 칸에 값을 입력하면 여러분의 머신러닝 모델이 무엇을 인식하였는지를 알려줍니다.",
+        "EXPLAIN_RECOGNISE_CONFIDENCE": "여러분의 머신러닝 모델이 {{ type }}를 인식한 값의 정확도를 알려줍니다(0 - 100 사이의 값으로 나타냅니다).",
+        "EXPLAIN_LABELS": "여러분이 프로젝트에서 만든 레이블을 나타냅니다. 여러분은 스크래치에서 이 블록을 사용할 수 있습니다.",
+        "EXPLAIN_COSTUMEIMAGE": "이 블록은 모양 팔레트에 있으며, 현재 실행창에 나타난 모양을 가져옵니다.",
+        "SAMPLE_SCRIPT": "다음과 같이 스크립트를 만들 수 있습니다.:",
+        "SAMPLE_SCREENSHOT": "블록들은 다음과 같이 여러분이 만든 프로젝트 이름과 함께 나타납니다.",
+        "EXPLAIN_STATUS": "동그라미의 색깔은 여러분의 머신러닝 모델이 어떠한 상태인지 나타냅니다.",
+        "STATUS_GREEN": "모델을 사용할 수 있다는 의미입니다.",
+        "STATUS_YELLOW": "아직 모델 학습이 완료되지 않았다는 의미입니다.",
+        "STATUS_RED": "무엇인가 잘못되었다는 표시입니다. <strong>학습 &amp; 테스트</strong> 페이지로 이동하여 무엇이 잘못되었는지 확인해보세요."
     },
     "SCRATCH3": {
         "TITLE": "스크래치3.0에서 머신러닝 사용하기",
@@ -498,21 +512,21 @@
         "DOWNLOAD": "다운로드",
 
         "MAKETYPES": {
-            "ALL": "All make types",
+            "ALL": "모든 종류의 프로젝트",
 
-            "SCRATCH": "Scratch projects",
-            "PYTHON": "Python projects",
-            "APPINVENTOR": "App Inventor projects",
+            "SCRATCH": "스크래치 프로젝트",
+            "PYTHON": "파이썬 프로젝트",
+            "APPINVENTOR": "앱 인벤터 프로젝트",
 
-            "SCRATCH_WORKSHEET": "Worksheet for making project in Scratch",
-            "PYTHON_WORKSHEET": "Worksheet for making project in Python",
-            "APPINVENTOR_WORKSHEET": "Worksheet for making project in App Inventor"
+            "SCRATCH_WORKSHEET": "스크래치 프로젝트를 위한 워크시트",
+            "PYTHON_WORKSHEET": "파이썬 프로젝트를 위한 워크시트",
+            "APPINVENTOR_WORKSHEET": "앱 인벤터 프로젝트를 위한 워크시트"
         },
 
         "NO_WORKSHEETS": {
-            "NO_MATCHES": "There aren't any project worksheets that match those filters.",
-            "MAKE_YOUR_OWN": "You could adapt some of the existing worksheets or come up with a new one.",
-            "CONTRIBUTE": "If you do, please consider <a href='https://github.com/IBM/taxinomitis-docs/blob/master/README.md#contributions'>contributing it for others to use</a>."
+            "NO_MATCHES": "조건에 적합한 워크시트가 없습니다.",
+            "MAKE_YOUR_OWN": "기존의 워크시트를 사용해보거나, 새로운 워크시트에 도전해보세요.",
+            "CONTRIBUTE": "다른 사람을 위해 <a href='https://github.com/IBM/taxinomitis-docs/blob/master/README.md#contributions'>기여</a>해 보세요."
         },
 
 
@@ -562,9 +576,9 @@
             "DESCRIPTION": "사람들이 판다를 쳐다보면 부끄러워하며 춤추는 것을 멈추는 판다를 만들어봐요"
         },
         "VIRTUALPET": {
-            "TITLE": "Virtual Pet",
-            "SUMMARY": "Teach a computer to recognise pictures",
-            "DESCRIPTION": "Train the computer to recognise what you're doing so you can look after a virtual pet."
+            "TITLE": "가상 애완동물",
+            "SUMMARY": "컴퓨터가 사진을 인식하도록 가르쳐봐요",
+            "DESCRIPTION": "여러분이 무엇을 하는지 알아차리는 컴퓨터를 만들어서 여러분이 가상 동물을 돌볼 수 있도록 해봐요."
         },
         "PACMAN": {
             "TITLE": "팩맨",
@@ -608,13 +622,13 @@
         },
         "SCHOOLLIBRARY": {
             "TITLE": "도서관",
-            "SUMMARY": "컴퓨터가 추천을 하도록 가르치십시오.",
+            "SUMMARY": "컴퓨터가 추천을 하도록 가르치십시오",
             "DESCRIPTION": "어떤 책이 적합한지를 제안하는 학교 사서를 스크래치로 만들어봐요"
         },
         "WHATTWITTERTHINKS": {
-            "TITLE": "What does Twitter think?",
-            "SUMMARY": "Teach a computer to measure public opinion",
-            "DESCRIPTION": "Create a sentiment analysis tool in Scratch to analyze discussion on Twitter"
+            "TITLE": "트위터는 어떻게 생각하나요?",
+            "SUMMARY": "대중의 의견을 알아차리도록 컴퓨터를 가르쳐봐요",
+            "DESCRIPTION": "트위터의 의견들을 분석할 수 있는 감정 분석 도구를 "
         },
         "NOUGHTSANDCROSSES": {
             "TITLE": "동그라미 & 엑스 게임",
@@ -670,36 +684,112 @@
             "NOTAUTHORISED": "교사 페이지로의 접근 권한이 없습니다."
         },
         "APIKEYS": {
-            "TITLE": "Administration : IBM Watson API Keys",
+            "TITLE": "관리자 : IBM Watson API Keys",
 
-            "ADDNEWCREDENTIALS": "Add new credentials",
-            "ADDAPIKEY": "Add new API key",
-            "REMOVE": "Remove",
+            "ADDNEWCREDENTIALS": "새로운 인증 추가",
+            "ADDAPIKEY": "새로운 API key 추가",
+            "REMOVE": "삭제",
 
-            "NO_TEXT_CREDENTIALS": "You don't have any Assistant credentials. This means that it will not be possible to train models for <strong>text</strong> projects.",
-            "NO_IMAGE_CREDENTIALS": "You don't have any Visual Recognition API keys. This means that it will not be possible to train models for <strong>images</strong> projects.",
+            "NO_TEXT_CREDENTIALS": "여러분은 텍스트 인식 인증서(Assistant credentials)를 가지고 있지 않습니다. 그렇기 때문에 <strong>text</strong> 프로젝트를 만들 수 없습니다.",
+            "NO_IMAGE_CREDENTIALS": "여러분은 이미지 인식 인증키(Visual Recognition API keys)를 가지고 있지 않습니다. 그렇기 때문에  <strong>images</strong> 프로젝트를 만들 수 없습니다.",
 
-            "NOTAUTHORISED": "You are not authorized to access the Watson API keys used by your class.",
-            "MANAGEDCLASS": "API Keys used by your class are being managed for you.",
+            "NOTAUTHORISED": "여러분의 교실에서 Watson API keys에 접근할 수 있는 권한이 없습니다.",
+            "MANAGEDCLASS": "API Keys가 여러분의 교실에서 관리되고 있습니다.",
 
-            "HELP_STEPBYSTEP_GUIDE": "If you're not sure what to do here, please follow the <a href='https://github.com/IBM/taxinomitis-docs/raw/master/docs/pdf/machinelearningforkids-apikeys.pdf'> step-by-step guide </a>. If you'd like any help, please <strong><a style='cursor: pointer;' ui-sref='help'>get in touch</a></strong>.",
+            "HELP_STEPBYSTEP_GUIDE": "어떻게 해야 할지 잘 모르겠다면 <a href='https://github.com/IBM/taxinomitis-docs/raw/master/docs/pdf/machinelearningforkids-apikeys.pdf'>단계별 가이드</a>를 참고하세요. 도움이 필요하다면 <strong><a style='cursor: pointer;' ui-sref='help'>연락</a></strong>하세요.",
 
-            "INTRO_WATSONASSISTANT": "Training machine learning models for <span class='mlprojecttype'>text</span> projects uses <a class='mlprojecttype' href='https://www.ibm.com/watson/services/conversation/'>Watson Assistant</a>",
-            "INTRO_VISUALRECOGNITION": "Training machine learning models for <span class='mlprojecttype'>images</span> projects uses <a class='mlprojecttype' href='https://www.ibm.com/watson/services/visual-recognition/'>Watson Visual Recognition</a>",
+            "INTRO_WATSONASSISTANT": "<span class='mlprojecttype'>text</span> 프로젝트를 <a class='mlprojecttype' href='https://www.ibm.com/cloud/watson-assistant/'>Watson Assistant</a>를 사용하여 만들어보세요.",
+            "INTRO_VISUALRECOGNITION": "<span class='mlprojecttype'>images</span> 프로젝트를 <a class='mlprojecttype' href='https://www.ibm.com/watson/services/visual-recognition/'>Watson Visual Recognition</a>를 사용하여 만들어보세요",
 
-            "ERROR_FETCHING_WATSONASSISTANT": "Failed to get your Watson Assistant passwords",
-            "ERROR_FETCHING_VISUALRECOG": "Failed to get your Visual Recognition API keys",
+            "ERROR_FETCHING_WATSONASSISTANT": "여러분의 Watson Assistant 비밀번호가 잘못되었습니다.",
+            "ERROR_FETCHING_VISUALRECOG": "여러분의 Visual Recognition API keys가 잘못되었습니다.",
 
-            "USERNAME": "Username",
-            "PASSWORD": "Password",
+            "USERNAME": "사용자명",
+            "PASSWORD": "비밀번호",
             "APIKEY": "API key",
 
-            "NUMBER_OF_ML_MODELS": "Number of ML models",
-            "UNKNOWN": "unknown",
-            "UNLIMITED": "unlimited",
+            "NUMBER_OF_ML_MODELS": "ML models의 수",
+            "UNKNOWN": "알 수 없음",
+            "UNLIMITED": "제한없음",
 
-            "LIMIT_TEXT_PROJECTS": "Number of text machine learning models your students can have:",
-            "LIMIT_IMAGE_PROJECTS": "Number of images machine learning models your students can have:"
+            "LIMIT_TEXT_PROJECTS": "여러분의 교실 학생들이 만들 수 있는 텍스트 머신러닝 모델의 수:",
+            "LIMIT_IMAGE_PROJECTS": "여러분의 교실 학생들이 만들 수 있는  머신러닝 모델의 수:",
+
+            "ADD_API_KEYS": {
+                "ASSISTANT_TITLE": "Add Watson Assistant credentials",
+                "VISUAL_RECOGNITION_TITLE": "Add Visual Recognition API key",
+
+                "USED_FOR_TEXT_PROJECTS": "These will be used when your students train models in text projects.",
+                "USED_FOR_IMAGE_PROJECTS": "These will be used when your students train models in images projects.",
+
+                "HIDDEN_FROM_STUDENTS": "This will not be shown to students in your group.",
+
+                "PRICING_PLAN": "Which Pricing Plan did you use?",
+                "ENTER_APIKEY": "Please enter the API key below",
+                "ENTER_PASSWORD": "Please enter the username and password below",
+
+                "CREDENTIALS_TYPE": "What did you create in Watson Assistant?"
+            }
+        },
+        "RESTRICTIONS": {
+            "TITLE": "Administration : Restrictions",
+
+            "ASK_FOR_CHANGES": "If any of these restrictions cause a problem for your group, please <strong><a href='/help'>get in touch</a></strong>.",
+
+            "CLASS_LIMITS": {
+                "TITLE": "Limits for your class",
+                "NUM_USERS": "You can have up to <span class='mlprojecttype'>{{ num }}</span> users (including students and teachers) in your group.",
+                "NUM_TEXT_MODELS": "Your class is allowed to have up to <span class='mlprojecttype'>{{ num }}</span> machine learning models in total across all their <span class='mlprojecttype'>text</span> projects.",
+                "NUM_IMAGE_MODELS": "Your class is allowed to have up to <span class='mlprojecttype'>{{ num }}</span> machine learning models in total across all their <span class='mlprojecttype'>images</span> projects.</div>"
+            },
+            "PROJECT_LIMITS": {
+                "TITLE": "Limits for projects created by your students",
+                "NUM_PROJECTS": "Each of your students is allowed to have up to <span class='mlprojecttype'>{{ num }}</span> projects.",
+                "TYPES": "Your students can create projects to recognise <span class='mlprojecttype'>{{ types }}</span>.",
+                "TRAINING_DATA": "Each <span class='mlprojecttype'>{{ type }}</span> project can have up to <span class='mlprojecttype'>{{ num }}</span> training data examples. "
+            },
+            "EXPIRY": {
+                "TITLE": "To help you avoid the limits for number of machine learning models:",
+                "TIME_LIMIT": "Machine learning models created for <span class='mlprojecttype'>{{ type }}</span> projects will automatically be deleted after <span class='mlprojecttype'>{{ num }}</span> hours.",
+                "DONT_WORRY": "(Don't worry! Training data will not be deleted, so students can always train a new machine learning model again if they still need it after this.)"
+            },
+
+            "NOT_AUTHORIZED": "You are not authorized to access the restrictions in place for your class."
+        },
+        "SUPERVISION": {
+            "TITLE": "Administration : Student projects",
+
+            "INTRO_1": "This page displays a list of all of the projects that your class currently has. You can use it to review what they're working on.",
+            "INTRO_2": "If you've hit the limit for the number of machine learning models that your class can create, you can use this to see which projects currently have a machine learning model, and delete any that you think are no longer needed.",
+
+            "NO_PROJECTS_1": "None of the students in your class currently have any projects.",
+            "NO_PROJECTS_2": "Once your students start creating projects, come back here to see an overview of their work.",
+
+            "NAME": "Name",
+            "TYPE": "Type",
+            "STUDENT": "Student",
+            "MODELS": "ML models",
+
+            "DELETE": "Click the icon to delete",
+
+            "NOT_AUTHORIZED": "You are not authorized to access the list of projects for all students in your class."
+        },
+        "STUDENTMANAGEMENT": {
+            "TITLE": "Administration : Student management",
+
+            "CREATE_FIRST_STUDENT": "Click on the 'plus' button on the right to create the first student",
+            "ADD": "Add new student",
+            "NEW_USERNAME": "Choose a unique username",
+            "ALPHANUMERIC": "Only use letters and numbers",
+
+            "NOT_LOGGED_IN": "Not logged in yet",
+
+            "RESET_PASSWORD": "Reset password",
+            "RESET_ALL_PASSWORDS": "Reset password for all students",
+
+            "DELETE_STUDENT": "Delete student account",
+
+            "NOT_AUTHORIZED": "You are not authorized to access the list of students in your class."
         }
     },
     "HELP": {
@@ -738,7 +828,12 @@
             "Q3-A-5": "스크래치 블록을 학습하는 머신 옆의 상태 표시등이 녹색이면 블록이 작동해야합니다. 예상한 답을 얻지 못하면 \"학습 및 테스트\"페이지로 이동하여 모델의 결과를 확인하십시오.",
 
             "Q5": "모든 버전의 스크래치를 사용할 수 있습니까?",
-            "Q5-A-1": "아이들을 위한 머신러닝 사이트에서 제공하는 Scratch 버전을 사용해야합니다. 프로젝트 페이지에서 스크래치(또는 '스크래치 3') 버튼을 클릭하면 시작할 수 있습니다."
+            "Q5-A-1": "아이들을 위한 머신러닝 사이트에서 제공하는 Scratch 버전을 사용해야합니다. 프로젝트 페이지에서 스크래치(또는 '스크래치 3') 버튼을 클릭하면 시작할 수 있습니다.",
+
+            "Q6": "Scratch 3 is only saving projects to the 'Downloads' folder",
+            "Q6-A-1": "When you click 'File' -> 'Save to your computer' in Scratch 3, your Scratch project is saved to your computer.",
+            "Q6-A-2": "Some teachers reported a problem that this saved to the Downloads folder, on a computer where students don't have access in Windows to the Downloads folder. The result was that students were not able to access their saved projects.",
+            "Q6-A-3": "If you have this problem, you need to look in your web browser settings for a setting like 'Ask where to save each file before downloading'. If you enable that, your students will be able to choose where their projects are saved."
         },
 
         "TRAININGUI": {
@@ -810,7 +905,6 @@
             "Q4-A-2": "학생들이 수업을 끝내고 모델을 지우도록 요구하는 대신(다음 클래스가 모델을 만들 수 있도록), 수업이 끝나면 모델을 삭제하여 자동으로 정리할 수 있습니다. 이렇게 하면 다음 학습을 위해 모델을 수동으로 정리하지 않아도 됩니다.",
             "Q4-A-3": "모델을 삭제하기 전의 시간 제한을 구성 할 수 있습니다. 수업 시간이 1 시간 또는 2 시간인 학교에서는 2시간 후에 모델을 삭제하는 것이 좋습니다. 매주 작성하는 클럽의 경우, 새로운 클럽 세션이 시작되기 전인 6일이 더 적합할 수 있습니다.",
             "Q4-A-4": "수업 시간 제한을 확인하려면 선생님 페이지의 <a href='https://machinelearningforkids.co.uk/#!/teacher/restrictions'>제한 사항</a>을 살펴보세요.",
-            "Q4-A-5": "수업 시간 제한을 변경하려면 <a href='mailto:dale.lane@uk.ibm.com'>이메일</a>을 보내주세요.",
             "Q4-A-6": "<em>참고 : 기계 학습 모델 만 자동으로 삭제되며 작성하는 데 사용 된 교육 데이터는 자동 삭제되지 않습니다. 따라서 학생이 아직 작업중인 프로젝트에 대해 모델이 자동으로 삭제되면 \"훈련\" 버튼을 다시 클릭하여 모델을 다시 만들 수 있습니다."
         },
 
@@ -853,8 +947,16 @@
             "Q3-A-7": "교사 계정을 삭제하면 수업 전체와 학생 계정이 모두 삭제됩니다. 그리고 취소할 수 없습니다.",
             "Q3-A-8": "<a href='https://machinelearningforkids.co.uk/teacher'>교사 페이지</a>의 고급 옵션 중 \"교실 삭제\" 버튼을 누르면 됩니다.",
 
-            "Q4": "사용자에 대해 어떤 정보가 저장되어 있습니까?"
-
+            "Q4": "사용자에 대해 어떤 정보가 저장되어 있습니까?",
+            "Q4-A-1": "Teacher accounts",
+            "Q4-A-2": "I store the username and email address that you provide when you create the account, so that I can keep in touch with you.",
+            "Q4-A-3": "Student accounts",
+            "Q4-A-4": "I store the usernames for student accounts, so that I can let them log in. I have no email addresses or contact details for students. I have no other personally identifying information about students.",
+            "Q4-A-5": "I also <a href='https://github.com/IBM/taxinomitis-docs/raw/master/docs/pdf/machinelearningforkids-schools.pdf'>recommend that students are given generic usernames</a> (e.g. student1) so that students are not identifiable outside of their school or coding group.",
+            "Q4-A-6": "General information stored about all accounts",
+            "Q4-A-7": "User management for Machine Learning for Kids is implemented using the third party service, <a href='https://auth0.com/'>Auth0</a>. They store the IP address that you last logged into Machine Learning for Kids from, and the type of browser you used. I've never found a reason to use that, but it is stored if I did want to go and look for it.",
+            "Q4-A-8": "Errors that happen in the web browser are captured using the third party service, <a href='https://sentry.io/'>Sentry</a>. If something goes wrong, it will capture information about the error, including your username, IP address, type of browser you were using, and a technical description of what went wrong.",
+            "Q4-A-9": "I use <a href='https://www.google.com/analytics/'>Google Analytics</a> so that I know how many users visit Machine Learning for Kids each day. Although it captures information such as geographic location and browser type, this is only ever displayed to me in an anonymised aggregate way."
         }
     }
 }

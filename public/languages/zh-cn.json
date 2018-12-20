@@ -10,6 +10,9 @@
 
         "ADD": "添加",
         "CANCEL": "取消",
+        "DELETE": "Delete",
+        "EDIT": "Edit",
+        "TEST": "Test",
 
         "ABOUT": "关于",
         "TEACHER": "老师",
@@ -29,15 +32,15 @@
         "IN20MINS": " 20分钟...... ",
         "WHAT": {
             "TITLE": "什么？",
-            "BODY": "该工具通过提供培训机器学习系统和用它们构建物品的实践经验来介绍机器学习。<br/> <br/>它为培训机器学习模型提供了一个易于使用的指导环境用于分类文本,数字或识别图像。<br/> <br/>这是建立在现有的向儿童介绍和教授编码的努力的基础上,将这些模型添加到<a href ='https: //scratch.mit.edu/关于'target ='_ blank'> Scratch </a>（一种广泛使用的教育编码平台）,允许孩子们用他们训练过的机器学习模型创建项目和构建游戏。<br/> <br/>到了解更多,看看: "
+            "BODY": "该工具通过提供培训机器学习系统和用它们构建物品的实践经验来介绍机器学习。<br/> <br/>它为培训机器学习模型提供了一个易于使用的指导环境用于分类文本,数字或识别图像。<br/> <br/>这是建立在现有的向儿童介绍和教授编码的努力的基础上,将这些模型添加到<a href ='https://scratch.mit.edu/关于' target ='_blank'> Scratch </a>（一种广泛使用的教育编码平台）,允许孩子们用他们训练过的机器学习模型创建项目和构建游戏。<br/> <br/>到了解更多,看看: "
         },
         "WHY": {
             "TITLE": "为什么？",
-            "BODY": "机器学习就在我们身边。我们每天都使用机器学习系统 - 例如垃圾邮件过滤器，推荐引擎，语言翻译服务，聊天机器人和数字助理，搜索引擎和欺诈检测系统。<br/> <br/>机器学习系统很快就能驾驶我们的汽车，并帮助医生诊断和治疗我们的疾病。<br/> <br/>让孩子们了解我们的世界是如何工作的。理解能力和含义的方法是能够用自己的技术构建。<br/> <br/>要了解更多信息，请阅读: <a target ='_ blank'class ='btn btn-primary'href = 'http://dalelane.co.uk/blog/?p=3513'> 向孩子们介绍机器学习</a>"
+            "BODY": "机器学习就在我们身边。我们每天都使用机器学习系统 - 例如垃圾邮件过滤器，推荐引擎，语言翻译服务，聊天机器人和数字助理，搜索引擎和欺诈检测系统。<br/> <br/>机器学习系统很快就能驾驶我们的汽车，并帮助医生诊断和治疗我们的疾病。<br/> <br/>让孩子们了解我们的世界是如何工作的。理解能力和含义的方法是能够用自己的技术构建。<br/> <br/>要了解更多信息，请阅读: <a target ='_blank' class='btn btn-primary' href='http://dalelane.co.uk/blog/?p=3513'> 向孩子们介绍机器学习</a>"
         },
         "TECH": {
             "TITLE": " 技术 ",
-            "BODY": "该工具完全基于网络，无需安装或复杂的设置即可使用。<br/> <br/>它专为学校和志愿者编写的课堂设计而设计儿童，并为教师或小组负责人提供管理页面，以便能够管理和管理学生的访问权限。<br/> <br/>它由<a target ='_ blank'href ='http: /构建/dalelane.co.uk/'>Dale Lane </a>使用来自<a target='_blank' href='https://www.ibm.com/watson/developercloud/'> IBM Watson Developer Cloud的API </ a>。",
+            "BODY": "该工具完全基于网络，无需安装或复杂的设置即可使用。<br/> <br/>它专为学校和志愿者编写的课堂设计而设计儿童，并为教师或小组负责人提供管理页面，以便能够管理和管理学生的访问权限。<br/> <br/>它由<a target ='_blank' href='http://dalelane.co.uk/'>Dale Lane </a>使用来自<a target='_blank' href='https://www.ibm.com/watson/developercloud/'> IBM Watson Developer Cloud的API </ a>。",
             "LOGIN": "开始: "
         }
     },
@@ -87,11 +90,16 @@
         "FORGOT_DETAILS": "忘了你的详细信息？",
         "TRY_TITLE": "尝试不注册",
         "TRY_NOW": "立即尝试",
-        "BACK": "@:APP.BACK",
         "WHO_YOU": "你是谁？",
         "TEACHER": "编码俱乐部的老师或领导者",
         "STUDENT": "一个学生",
-        "FORGOT_TEXT": "忘记了你的用户名或密码？没关系 - 我们有时会忘记一些事情。"
+        "FORGOT_TEXT": "忘记了你的用户名或密码？没关系 - 我们有时会忘记一些事情。",
+        "ARE_YOU_A_STUDENT": "Are you a student?",
+        "ARE_YOU_A_STUDENT_INTRO_1": "If your class is already using this tool, ask your teacher or coding group leader to create you an account.",
+        "ARE_YOU_A_STUDENT_INTRO_2": "If your class isn't already using the tool, ask your teacher or coding group leader to get in touch.",
+        "RESET_STUDENT_PASSWORD_1": "If you're a student, we don't have your email address to be able to send you a password-reset email.",
+        "RESET_STUDENT_PASSWORD_2": "That's no problem, though!",
+        "RESET_STUDENT_PASSWORD_3": "Just ask your teacher or group leader who first signed you up. They will be able to reset your password from their Admin page."
     },
     "SIGNUP": {
         "TEACHER": {
@@ -166,7 +174,11 @@
                 "VALUES_LIMIT": "项目中不允许超过10个值。"
             }
         },
-        "CREATE": "创建"
+        "CREATE": "创建",
+        "ERRORS": {
+            "REQUIRED": "This is required!",
+            "TOOLONG": "That's too long!"
+        }
     },
     "PROJECT": {
         "TRAIN": {
@@ -230,6 +242,8 @@
         "TRAIN": "培养新机器学习模式",
         "CANCEL": "取消训练",
         "DELETE": "删除此模型",
+        "TEST_CANVAS": "Draw something to test your model with",
+        "TEST_WEBCAM": "Take a photo to test your model with",
         "WHATHAVEYOUDONE": {
             "TITLE": "你做了什么？",
             "PLEASEWAIT": "这通常需要几分钟,但如果训练计算机非常繁忙,可能需要更长的时间。",
@@ -682,10 +696,10 @@
             "NOTAUTHORISED": "您无权访问您班级使用的Watson API密钥。",
             "MANAGEDCLASS": "您的班级使用的API密钥正在为您管理。",
 
-            "HELP_STEPBYSTEP_GUIDE": "如果您不确定该怎么做,请按照<a href ='https: //github.com/IBM/taxinomitis-docs/raw/master/docs/pdf/machinelearningforkids-apikeys。 pdf'>分步指南</a>。如果您需要任何帮助,请<strong> <a style ='cursor: pointer;' ui-sref ='help'>取消联系</a> </strong>。",
+            "HELP_STEPBYSTEP_GUIDE": "如果您不确定该怎么做,请按照<a href ='https://github.com/IBM/taxinomitis-docs/raw/master/docs/pdf/machinelearningforkids-apikeys.pdf'>分步指南</a>。如果您需要任何帮助,请<strong> <a style ='cursor: pointer;' ui-sref='help'>取消联系</a> </strong>。",
 
-            "INTRO_WATSONASSISTANT": " <span class ='mlprojecttype'> text </ span>项目的训练机器学习模型使用<a class ='mlprojecttype'href ='https: //www.ibm.com/watson/services/conversation /'> Watson Assistant </a> ",
-            "INTRO_VISUALRECOGNITION": " <span class ='mlprojecttype'> images </ span>项目的训练机器学习模型使用<a class ='mlprojecttype'href ='https: //www.ibm.com/watson/services/visual -recognition /'> Watson Visual Recognition </a> ",
+            "INTRO_WATSONASSISTANT": " <span class ='mlprojecttype'> text </ span>项目的训练机器学习模型使用<a class='mlprojecttype' href ='https://www.ibm.com/watson/services/conversation'> Watson Assistant </a> ",
+            "INTRO_VISUALRECOGNITION": " <span class ='mlprojecttype'> images </ span>项目的训练机器学习模型使用<a class ='mlprojecttype' href ='https://www.ibm.com/watson/services/visual-recognition'> Watson Visual Recognition </a> ",
 
             "ERROR_FETCHING_WATSONASSISTANT": "无法获取您的Watson助手密码",
             "ERROR_FETCHING_VISUALRECOG": "无法获取您的Visual Recognition API密钥",
@@ -699,7 +713,83 @@
             "UNLIMITED": "无限",
 
             "LIMIT_TEXT_PROJECTS": "学生可以拥有的文本机器学习模型的数量: ",
-            "LIMIT_IMAGE_PROJECTS": "学生可以拥有的机器学习模型数量: "
+            "LIMIT_IMAGE_PROJECTS": "学生可以拥有的机器学习模型数量: ",
+
+            "ADD_API_KEYS": {
+                "ASSISTANT_TITLE": "Add Watson Assistant credentials",
+                "VISUAL_RECOGNITION_TITLE": "Add Visual Recognition API key",
+
+                "USED_FOR_TEXT_PROJECTS": "These will be used when your students train models in text projects.",
+                "USED_FOR_IMAGE_PROJECTS": "These will be used when your students train models in images projects.",
+
+                "HIDDEN_FROM_STUDENTS": "This will not be shown to students in your group.",
+
+                "PRICING_PLAN": "Which Pricing Plan did you use?",
+                "ENTER_APIKEY": "Please enter the API key below",
+                "ENTER_PASSWORD": "Please enter the username and password below",
+
+                "CREDENTIALS_TYPE": "What did you create in Watson Assistant?"
+            }
+        },
+        "RESTRICTIONS": {
+            "TITLE": "Administration : Restrictions",
+
+            "ASK_FOR_CHANGES": "If any of these restrictions cause a problem for your group, please <strong><a href='/help'>get in touch</a></strong>.",
+
+            "CLASS_LIMITS": {
+                "TITLE": "Limits for your class",
+                "NUM_USERS": "You can have up to <span class='mlprojecttype'>{{ num }}</span> users (including students and teachers) in your group.",
+                "NUM_TEXT_MODELS": "Your class is allowed to have up to <span class='mlprojecttype'>{{ num }}</span> machine learning models in total across all their <span class='mlprojecttype'>text</span> projects.",
+                "NUM_IMAGE_MODELS": "Your class is allowed to have up to <span class='mlprojecttype'>{{ num }}</span> machine learning models in total across all their <span class='mlprojecttype'>images</span> projects.</div>"
+            },
+            "PROJECT_LIMITS": {
+                "TITLE": "Limits for projects created by your students",
+                "NUM_PROJECTS": "Each of your students is allowed to have up to <span class='mlprojecttype'>{{ num }}</span> projects.",
+                "TYPES": "Your students can create projects to recognise <span class='mlprojecttype'>{{ types }}</span>.",
+                "TRAINING_DATA": "Each <span class='mlprojecttype'>{{ type }}</span> project can have up to <span class='mlprojecttype'>{{ num }}</span> training data examples. "
+            },
+            "EXPIRY": {
+                "TITLE": "To help you avoid the limits for number of machine learning models:",
+                "TIME_LIMIT": "Machine learning models created for <span class='mlprojecttype'>{{ type }}</span> projects will automatically be deleted after <span class='mlprojecttype'>{{ num }}</span> hours.",
+                "DONT_WORRY": "(Don't worry! Training data will not be deleted, so students can always train a new machine learning model again if they still need it after this.)"
+            },
+
+            "NOT_AUTHORIZED": "You are not authorized to access the restrictions in place for your class."
+        },
+        "SUPERVISION": {
+            "TITLE": "Administration : Student projects",
+
+            "INTRO_1": "This page displays a list of all of the projects that your class currently has. You can use it to review what they're working on.",
+            "INTRO_2": "If you've hit the limit for the number of machine learning models that your class can create, you can use this to see which projects currently have a machine learning model, and delete any that you think are no longer needed.",
+
+            "NO_PROJECTS_1": "None of the students in your class currently have any projects.",
+            "NO_PROJECTS_2": "Once your students start creating projects, come back here to see an overview of their work.",
+
+            "NAME": "Name",
+            "TYPE": "Type",
+            "STUDENT": "Student",
+            "MODELS": "ML models",
+
+            "DELETE": "Click the icon to delete",
+
+            "NOT_AUTHORIZED": "You are not authorized to access the list of projects for all students in your class."
+        },
+        "STUDENTMANAGEMENT": {
+            "TITLE": "Administration : Student management",
+
+            "CREATE_FIRST_STUDENT": "Click on the 'plus' button on the right to create the first student",
+            "ADD": "Add new student",
+            "NEW_USERNAME": "Choose a unique username",
+            "ALPHANUMERIC": "Only use letters and numbers",
+
+            "NOT_LOGGED_IN": "Not logged in yet",
+
+            "RESET_PASSWORD": "Reset password",
+            "RESET_ALL_PASSWORDS": "Reset password for all students",
+
+            "DELETE_STUDENT": "Delete student account",
+
+            "NOT_AUTHORIZED": "You are not authorized to access the list of students in your class."
         }
     },
     "HELP": {
@@ -724,7 +814,7 @@
 
             "Q1": "我不知道如何让Scratch工作",
             "Q1-A-1": "儿童机器学习使用Scratch 2. Scratch需要Adobe Flash才能工作,所以你需要使用可以使用Flash的操作系统和网络浏览器（这意味着现在不需要iPad）对不起）。",
-            "Q1-A-2": "如果你不确定如何启用Flash,你可以<a href ='https: //github.com/IBM/taxinomitis-docs/raw/master/docs/pdf/ machinelearningforkids-scratchx.pdf'>下载一份文档,其中包含一些让Scratch正常工作的技巧</a>。",
+            "Q1-A-2": "如果你不确定如何启用Flash,你可以<a href ='https://github.com/IBM/taxinomitis-docs/raw/master/docs/pdf/machinelearningforkids-scratchx.pdf'>下载一份文档,其中包含一些让Scratch正常工作的技巧</a>。",
 
             "Q2": "在\"加载项目\"和\"保存项目\"的耐擦伤菜单不工作",
             "Q2-A-1": "如果你在MacOS使用Safari和划痕菜单\"文件- ＆GT; 加载项目\"和\"文件 - ＆gt; 保存项目\"菜单不起作用,可能是您在安全模式下运行。",
@@ -738,7 +828,12 @@
             "Q3-A-5": "如果机器学习划痕块旁边的状态指示灯为绿色,那么块应该正常工作。如果您没有得到他们期望的响应,请尝试转到\"学习\" ＆安培; 测试\"页面并检查模型返回的结果。",
 
             "Q5": "我可以使用任何版本的Scratch吗？",
-            "Q5-A-1": "您需要使用由儿童机器学习站点提供的Scratch版本。可以通过单击项目页面中的Scratch（或'Scratch 3'）按钮来启动它。"
+            "Q5-A-1": "您需要使用由儿童机器学习站点提供的Scratch版本。可以通过单击项目页面中的Scratch（或'Scratch 3'）按钮来启动它。",
+
+            "Q6": "Scratch 3 is only saving projects to the 'Downloads' folder",
+            "Q6-A-1": "When you click 'File' -> 'Save to your computer' in Scratch 3, your Scratch project is saved to your computer.",
+            "Q6-A-2": "Some teachers reported a problem that this saved to the Downloads folder, on a computer where students don't have access in Windows to the Downloads folder. The result was that students were not able to access their saved projects.",
+            "Q6-A-3": "If you have this problem, you need to look in your web browser settings for a setting like 'Ask where to save each file before downloading'. If you enable that, your students will be able to choose where their projects are saved."
         },
 
         "TRAININGUI": {
@@ -799,10 +894,10 @@
             "TITLE": "教师/管理员用户界面问题",
 
             "Q2": "教师页面列表中缺少学生帐户",
-            "Q2-A-1": "用于儿童机器学习的用户管理是使用第三方服务实施的,<a href= \" https://auth0.com/ \"> Auth0 </a>。",
+            "Q2-A-1": "用于儿童机器学习的用户管理是使用第三方服务实施的,<a href='https://auth0.com'> Auth0 </a>。",
             "Q2-A-2": "有时,Auth0返回的学生名单可能会过时,并且无法反映最近创建的学生（或类似地,仍然显示最近被删除的学生）。",
             "Q2-A-3": "在这些情况下,学生通常已成功创建（或删除）,只是显示的学生列表不反映最近的更新。",
-            "Q2-A-4": " Auth0通常会在其状态页面上报告此类事件为<a href='https://status.auth0.com/incidents/0sk1d3hjlw0m'>用户索引延迟</a>或<a href ='https: //status.auth0.com/incidents/t8995b9jggx5'>他们的搜索API问题</a>。",
+            "Q2-A-4": " Auth0通常会在其状态页面上报告此类事件为<a href='https://status.auth0.com/incidents/0sk1d3hjlw0m'>用户索引延迟</a>或<a href ='https://status.auth0.com/incidents/t8995b9jggx5'>他们的搜索API问题</a>。",
             "Q2-A-5": "在这些情况下,最好的办法是等待Auth0索引赶上来。",
 
             "Q4": "为什么机器学习模型会自动删除？",
@@ -810,7 +905,6 @@
             "Q4-A-2": "不要求孩子在课后清理并删除他们的模型（为了让下一个课程能够创建模型）,该工具可以通过删除课程结束后的模型。这样可以轻松运行下一课,以及之后的下一课,无需手动清理。",
             "Q4-A-3": "删除模型之前的时间限制是可配置的。在一所学校,课程长达1或2小时,两小时后删除模型可能是明智的。对于每周编码俱乐部,六天可能更适合确保在每次新的俱乐部会议之前清理模型。",
             "Q4-A-4": "要查看课程的时间限制,请访问教师页面的<a href='https://machinelearningforkids.co.uk/#!/teacher/restrictions'>限制部分< / a>。",
-            "Q4-A-5": "要更改课程的时间限制,请<a href='mailto:dale.lane@uk.ibm.com'>给我发送电子邮件</a>。",
             "Q4-A-6": " <em>注意: 只有机器学习模型会被自动删除,而不是用于创建它们的训练数据。因此,如果某个项目的学生自动删除,学生仍在继续,他们总是可以再次单击\"Train\"按钮再次创建模型。</ em> "
         },
 
@@ -853,8 +947,16 @@
             "Q3-A-7": "删除教师帐户将删除整个班级及其中的所有学生帐户。它无法撤消。",
             "Q3-A-8": "这可以通过点击<a href='https://machinelearningforkids.co.uk/teacher'>您的教师页面的高级选项部分中的\"删除班级\"按钮来完成</a> ",
 
-            "Q4": "关于用户存储了哪些信息？"
-
+            "Q4": "关于用户存储了哪些信息？",
+            "Q4-A-1": "Teacher accounts",
+            "Q4-A-2": "I store the username and email address that you provide when you create the account, so that I can keep in touch with you.",
+            "Q4-A-3": "Student accounts",
+            "Q4-A-4": "I store the usernames for student accounts, so that I can let them log in. I have no email addresses or contact details for students. I have no other personally identifying information about students.",
+            "Q4-A-5": "I also <a href='https://github.com/IBM/taxinomitis-docs/raw/master/docs/pdf/machinelearningforkids-schools.pdf'>recommend that students are given generic usernames</a> (e.g. student1) so that students are not identifiable outside of their school or coding group.",
+            "Q4-A-6": "General information stored about all accounts",
+            "Q4-A-7": "User management for Machine Learning for Kids is implemented using the third party service, <a href='https://auth0.com/'>Auth0</a>. They store the IP address that you last logged into Machine Learning for Kids from, and the type of browser you used. I've never found a reason to use that, but it is stored if I did want to go and look for it.",
+            "Q4-A-8": "Errors that happen in the web browser are captured using the third party service, <a href='https://sentry.io/'>Sentry</a>. If something goes wrong, it will capture information about the error, including your username, IP address, type of browser you were using, and a technical description of what went wrong.",
+            "Q4-A-9": "I use <a href='https://www.google.com/analytics/'>Google Analytics</a> so that I know how many users visit Machine Learning for Kids each day. Although it captures information such as geographic location and browser type, this is only ever displayed to me in an anonymised aggregate way."
         }
     }
 }
