@@ -1,7 +1,8 @@
 <html lang="en">
     <head>
         <title>Machine Learning for Kids</title>
-        <meta name="description" content="An educational tool for teaching kids about machine learning, by letting them train a computer to recognise text, pictures or numbers, and make things with it in Scratch."/>
+        <meta charset="UTF-8">
+        <meta name="description" content="An educational tool for teaching kids about machine learning, by letting them train a computer to recognise text, pictures, numbers, or sounds, and then make things with it in tools like Scratch."/>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
@@ -12,6 +13,8 @@
 
         <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon"/>
 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta charset="utf-8" />
 
         <%= USE_IN_PROD_ONLY %>
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-293441-6"></script>
@@ -28,7 +31,7 @@
         <meta name="twitter:site" content="@MLforKids" />
         <meta name="twitter:creator" content="@dalelane" />
         <meta name="twitter:title" content="Machine Learning for Kids" />
-        <meta name="twitter:description" content="An educational tool for teaching kids about machine learning, by letting them train a computer to recognise text, pictures or numbers, and make things with it in Scratch." />
+        <meta name="twitter:description" content="An educational tool for teaching kids about machine learning, by letting them train a computer to recognise text, pictures, numbers, or sounds, and make things with it in Scratch." />
         <meta name="twitter:image" content="https://machinelearningforkids.co.uk/static/images/machinelearningforkids.gif" />
         <meta name="twitter:player" content="https://machinelearningforkids.co.uk/twitter-card.html" />
         <meta name="twitter:player:width" value="506" />
@@ -36,7 +39,7 @@
 
         <meta property="og:url" content="https://machinelearningforkids.co.uk" />
         <meta property="og:title" content="Machine Learning for Kids" />
-        <meta property="og:description" content="An educational tool for teaching kids about machine learning, by letting them train a computer to recognise text, pictures or numbers, and make things with it in Scratch." />
+        <meta property="og:description" content="An educational tool for teaching kids about machine learning, by letting them train a computer to recognise text, pictures, numbers, or sounds, and make things with it in Scratch." />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://machinelearningforkids.co.uk/static/images/machinelearningforkids.gif" />
         <meta property="og:video" content="https://machinelearningforkids.co.uk/static/images/machinelearningforkids.gif" />
@@ -71,13 +74,18 @@
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Language</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="?lang=en">English</a></li>
-                                    <li><a href="?lang=zh-cn">简体中文</a></li>
-                                    <li><a href="?lang=ko">한국어</a></li>
-                                    <li><a href="?lang=pt-br">Português do Brasil</a></li>
-                                    <li><a href="?lang=es">Español</a></li>
-                                    <li><a href="?lang=sv-se">Svenska</a></li>
-                                    <li><a href="?lang=tr">Türkçe</a></li>
+                                    <li><a href="?lang=en">🇬🇧 English</a></li>
+                                    <li><a href="?lang=zh-cn">🇨🇳 简体中文</a></li>
+                                    <li><a href="?lang=de">🇩🇪 Deutsch</a></li>
+                                    <li><a href="?lang=fr">🇫🇷 Français</a></li>
+                                    <li><a href="?lang=ja">🇯🇵 日本語</a></li>
+                                    <li><a href="?lang=ko">🇰🇷 한국어</a></li>
+                                    <li><a href="?lang=nl-be">🇳🇱 Nederlands</a></li>
+                                    <li><a href="?lang=pt-br">🇧🇷 Português do Brasil</a></li>
+                                    <li><a href="?lang=si-lk">🇱🇰 සිංහල</a></li>
+                                    <li><a href="?lang=es">🇪🇸 Español</a></li>
+                                    <li><a href="?lang=sv-se">🇸🇪 Svenska</a></li>
+                                    <li><a href="?lang=tr">🇹🇷 Türkçe</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="https://github.com/IBM/taxinomitis/wiki/Support-for-other-languages" target="_blank">Other...</a></li>
                                 </ul>
@@ -86,6 +94,23 @@
                     </div>
                 </div>
             </nav>
+            <div ng-if="siteAlert" class="sitealert ng-cloak">
+                <div ng-if="siteAlert && siteAlert.severity === 'error'" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="clearSiteAlert && clearSiteAlert()"><span aria-hidden="true">X</span></button>
+                    {{ siteAlert.message }}
+                    <a href="{{siteAlert.url}}" target="_blank">More...</a>
+                </div>
+                <div ng-if="siteAlert && siteAlert.severity === 'warning'" class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="clearSiteAlert && clearSiteAlert()"><span aria-hidden="true">X</span></button>
+                    {{ siteAlert.message }}
+                    <a href="{{siteAlert.url}}" target="_blank">More...</a>
+                </div>
+                <div ng-if="siteAlert && siteAlert.severity === 'info'" class="alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="clearSiteAlert && clearSiteAlert()"><span aria-hidden="true">X</span></button>
+                    {{ siteAlert.message }}
+                    <a href="{{siteAlert.url}}" target="_blank">More...</a>
+                </div>
+            </div>
             <div ui-view></div>
         </div>
 

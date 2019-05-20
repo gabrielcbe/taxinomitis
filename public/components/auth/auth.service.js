@@ -93,23 +93,23 @@
 
         function scheduleTokenRenewal(timeToRefreshMs) {
             var refreshTime = new Date(Date.now() + timeToRefreshMs);
-            console.log('scheduling token renewal in ' +
-                        Math.round(timeToRefreshMs / 1000 / 60) + ' minutes (' +
-                        refreshTime.toString());
+            // console.log('scheduling token renewal in ' +
+            //             Math.round(timeToRefreshMs / 1000 / 60) + ' minutes (' +
+            //             refreshTime.toString());
             nextRefreshTimer = setTimeout(renewLogin, timeToRefreshMs);
         }
 
 
         function renewLogin() {
-            console.log('renewing login');
+            // console.log('renewing login');
             lock.checkSession({}, function (err, authres) {
                 if (err) {
                     console.log('failed to renew login');
                     console.log(err);
                 }
                 else if (authres) {
-                    console.log('renewed login');
-                    console.log(authres);
+                    // console.log('renewed login');
+                    // console.log(authres);
                     storeToken(authres);
 
                     // schedule the next renewal!
@@ -165,6 +165,8 @@
             userProfile = null;
             $rootScope.isTeacher = false;
             $rootScope.isAuthenticated = false;
+
+            $rootScope.$broadcast('authStateChange', 'cleared auth data');
         }
 
         function logout() {
@@ -242,6 +244,7 @@
 
                         $timeout(function () {
                             $state.go('welcome');
+                            $rootScope.$broadcast('authStateChange', 'authentication complete');
                         });
                     });
                 }
@@ -256,6 +259,7 @@
                               'Please click on the Help tab for more info');
                     }
                 }
+                $rootScope.$broadcast('authStateChange', 'authorization error');
             });
 
             // auth0 looks completely broken so try starting again
@@ -386,7 +390,7 @@
             $rootScope.isAuthenticated = true;
             $rootScope.isTeacher = false;
 
-            // authManager.authenticate();
+            $rootScope.$broadcast('authStateChange', 'switched to session user');
         }
 
 

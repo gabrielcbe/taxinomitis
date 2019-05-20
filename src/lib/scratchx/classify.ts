@@ -29,7 +29,7 @@ function chooseLabelsAtRandom(project: Types.Project): TrainingTypes.Classificat
 
 
 async function classifyText(key: Types.ScratchKey, text: string): Promise<TrainingTypes.Classification[]> {
-    if (!text || text.trim().length === 0) {
+    if (!text || typeof text !== 'string' || text.trim().length === 0) {
         throw new Error('Missing data');
     }
 
@@ -53,7 +53,7 @@ async function classifyText(key: Types.ScratchKey, text: string): Promise<Traini
 
 async function classifyImage(key: Types.ScratchKey, base64imagedata: string): Promise<TrainingTypes.Classification[]> {
     if (!base64imagedata || typeof base64imagedata !== 'string' || base64imagedata.trim().length === 0) {
-        log.error({ base64imagedata, type : typeof base64imagedata }, 'Missing data');
+        log.warn({ base64imagedata, type : typeof base64imagedata, func : 'classifyImage' }, 'Missing data');
         throw new Error('Missing data');
     }
 
@@ -87,7 +87,7 @@ async function classifyImage(key: Types.ScratchKey, base64imagedata: string): Pr
 }
 
 
-function logError(err?: Error) {
+function logError(err?: Error | null) {
     if (err) {
         log.error({ err }, 'Error when deleting image file');
     }
@@ -139,6 +139,14 @@ async function classifyNumbers(key: Types.ScratchKey, numbers: string[]): Promis
 
 
 
+async function classifySound(key: Types.ScratchKey): Promise<TrainingTypes.Classification[]> {
+    const err: any = new Error('Sound classification is only available in the browser');
+    err.statusCode = 400;
+    throw err;
+}
+
+
+
 
 
 export function classify(scratchKey: Types.ScratchKey, data: any): Promise<TrainingTypes.Classification[]> {
@@ -149,5 +157,7 @@ export function classify(scratchKey: Types.ScratchKey, data: any): Promise<Train
         return classifyImage(scratchKey, data as string);
     case 'numbers':
         return classifyNumbers(scratchKey, data as string[]);
+    case 'sounds':
+        return classifySound(scratchKey);
     }
 }

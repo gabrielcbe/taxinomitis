@@ -46,12 +46,6 @@
             return $http.delete('/api/classes/' + profile.tenant + '?confirm=true');
         }
 
-
-        function getClassesList() {
-            return $http.get('/api/classes')
-                .then(returnData);
-        }
-
         function getStudentList(profile) {
             return $http.get('/api/classes/' + profile.tenant + '/students')
                 .then(returnData);
@@ -70,6 +64,16 @@
                 .then(returnData);
         }
 
+        function createStudents(tenant, prefix, number, password) {
+            var bulkCreate = {
+                prefix : prefix,
+                number : number,
+                password : password
+            };
+            return $http.put('/api/classes/' + tenant + '/students', bulkCreate)
+                .then(returnData);
+        }
+
         function resetStudentPassword(profile, tenant) {
             return $http.post('/api/classes/' + tenant + '/students/' + profile.id + '/password')
                 .then(returnData);
@@ -83,6 +87,12 @@
                 };
             });
             return $http.patch('/api/classes/' + tenant + '/students', students)
+                .then(returnData);
+        }
+
+
+        function getGeneratedPassword(tenant) {
+            return $http.get('/api/classes/' + tenant + '/passwords')
                 .then(returnData);
         }
 
@@ -118,12 +128,12 @@
         return {
             createTeacher : createTeacher,
 
-            getClassesList : getClassesList,
-
             addCredentials : addCredentials,
             getCredentials : getCredentials,
             modifyCredentials : modifyCredentials,
             deleteCredentials : deleteCredentials,
+
+            getGeneratedPassword : getGeneratedPassword,
 
             getClassPolicy : getClassPolicy,
             modifyClassPolicy : modifyClassPolicy,
@@ -131,6 +141,7 @@
             getStudentList : getStudentList,
 
             createStudent : createStudent,
+            createStudents : createStudents,
             deleteStudent : deleteStudent,
 
             resetStudentPassword : resetStudentPassword,

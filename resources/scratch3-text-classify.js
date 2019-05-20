@@ -39,7 +39,10 @@ class MachineLearningText {
                 {
                     opcode: 'label',
                     blockType: Scratch.BlockType.REPORTER,
-                    text: 'recognise text [TEXT] (label)',
+                    text: {
+                        default: 'recognise text [TEXT] (label)',
+                        id: 'mlforkids.text.recogniseLabel'
+                    },
                     arguments: {
                         TEXT: {
                             type: Scratch.ArgumentType.STRING,
@@ -52,7 +55,10 @@ class MachineLearningText {
                 {
                     opcode: 'confidence',
                     blockType: Scratch.BlockType.REPORTER,
-                    text: 'recognise text [TEXT] (confidence)',
+                    text: {
+                        default: 'recognise text [TEXT] (confidence)',
+                        id: 'mlforkids.text.recogniseConfidence'
+                    },
                     arguments: {
                         TEXT: {
                             type: Scratch.ArgumentType.STRING,
@@ -66,7 +72,7 @@ class MachineLearningText {
                 {
                     opcode: 'return_label_{{idx}}',
                     blockType: Scratch.BlockType.REPORTER,
-                    text: '{{name}}'
+                    text: ' {{name}}'
                 },
                 {{/labels}}
 
@@ -74,7 +80,10 @@ class MachineLearningText {
                 {
                     opcode: 'addTraining',
                     blockType: Scratch.BlockType.COMMAND,
-                    text: 'add training data [TEXT] [LABEL]',
+                    text: {
+                        default: 'add training data [TEXT] [LABEL]',
+                        id: 'mlforkids.text.addTraining'
+                    },
                     arguments: {
                         TEXT: {
                             type: Scratch.ArgumentType.STRING,
@@ -92,14 +101,20 @@ class MachineLearningText {
                 {
                     opcode: 'trainNewModel',
                     blockType: Scratch.BlockType.COMMAND,
-                    text: 'train new machine learning model'
+                    text: {
+                        default: 'train new machine learning model',
+                        id: 'mlforkids.text.trainNewModel'
+                    }
                 },
 
                 // get the status of the machine learning model
                 {
                     opcode: 'checkModelStatus',
                     blockType: Scratch.BlockType.BOOLEAN,
-                    text: 'Is the machine learning model [STATUS] ?',
+                    text: {
+                        default: 'Is the machine learning model [STATUS] ?',
+                        id: 'mlforkids.text.checkModelStatus'
+                    },
                     arguments: {
                         STATUS: {
                             type: Scratch.ArgumentType.STRING,
@@ -119,12 +134,10 @@ class MachineLearningText {
 
 
     label({ TEXT }) {
-        var txt = removeLineBreaks(TEXT);
-        return new Promise(resolve => getTextClassificationResponse(txt, txt, 'class_name', resolve));
+        return new Promise(resolve => getTextClassificationResponse(TEXT, TEXT, 'class_name', resolve));
     }
     confidence({ TEXT }) {
-        var txt = removeLineBreaks(TEXT);
-        return new Promise(resolve => getTextClassificationResponse(txt, txt, 'confidence', resolve));
+        return new Promise(resolve => getTextClassificationResponse(TEXT, TEXT, 'confidence', resolve));
     }
 
 
@@ -136,16 +149,21 @@ class MachineLearningText {
 
 
     addTraining({ TEXT, LABEL }) {
-        var txt = removeLineBreaks(TEXT);
+        var txt = cleanUpText(TEXT, 1024);
 
         var url = new URL('{{{ storeurl }}}');
-        url.searchParams.append('data', txt);
-        url.searchParams.append('label', LABEL);
 
         var options = {
             headers : {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
                 'X-User-Agent': 'mlforkids-scratch3-text'
-            }
+            },
+            method : 'POST',
+            body : JSON.stringify({
+                data : txt,
+                label : LABEL
+            })
         };
 
         return fetch(url, options)
@@ -322,6 +340,11 @@ function classifyText(text, cacheKey, lastmodified, callback) {
 
 
 function getTextClassificationResponse(text, cacheKey, valueToReturn, callback) {
+    var cleanedUpText = cleanUpText(text, 2000);
+    if (!cleanedUpText) {
+        return callback('You need to put some text that you want to classify in here');
+    }
+
     var cached = resultsCache[cacheKey];
 
     // protect against kids putting the ML block inside a forever
@@ -339,14 +362,11 @@ function getTextClassificationResponse(text, cacheKey, valueToReturn, callback) 
     }
 
     // submit to the classify API
-    classifyText(text, cacheKey, lastmodified, function (result) {
+    classifyText(cleanedUpText, cacheKey, lastmodified, function (result) {
         if (result.random) {
             // We got a randomly selected result (which means we must not
-            //  have a working classifier) but we thought we had a model
-            //  with a good status.
-            // This should not be possible - we've gotten into a weird
-            //  unexpected state.
-            return callback(result[valueToReturn]);
+            //  have a working classifier).
+            console.log('randomly selected result returned by API');
         }
 
         // update the timestamp to allow local throttling
@@ -519,11 +539,20 @@ function getStatus() {
 }
 
 
-// Newlines in text will cause errors in Watson Assistant API calls
-// so we replace them a with a space
 var LINE_BREAKS = /(\r\n|\n|\r|\t)/gm;
-function removeLineBreaks(str) {
-    return str.replace(LINE_BREAKS, ' ');
+function cleanUpText(str, maxlength) {
+    if (str) {
+        // Newlines in text will cause errors in Watson Assistant API calls
+        // so we replace them a with a space
+        return str.replace(LINE_BREAKS, ' ')
+                .trim()
+                // Protect against text that will exceed the limit on
+                //  number of characters allowed by the API
+                .substr(0, maxlength);
+    }
+    else {
+        return str;
+    }
 }
 
 

@@ -32,7 +32,10 @@ class MachineLearningImages {
                 {
                     opcode: 'label',
                     blockType: Scratch.BlockType.REPORTER,
-                    text: 'recognise image [IMAGE] (label)',
+                    text: {
+                        default: 'recognise image [IMAGE] (label)',
+                        id: 'mlforkids.images.recogniseLabel'
+                    },
                     arguments: {
                         IMAGE: {
                             type: Scratch.ArgumentType.STRING,
@@ -45,7 +48,10 @@ class MachineLearningImages {
                 {
                     opcode: 'confidence',
                     blockType: Scratch.BlockType.REPORTER,
-                    text: 'recognise image [IMAGE] (confidence)',
+                    text: {
+                        default: 'recognise image [IMAGE] (confidence)',
+                        id: 'mlforkids.images.recogniseConfidence'
+                    },
                     arguments: {
                         IMAGE: {
                             type: Scratch.ArgumentType.STRING,
@@ -59,7 +65,7 @@ class MachineLearningImages {
                 {
                     opcode: 'return_label_{{idx}}',
                     blockType: Scratch.BlockType.REPORTER,
-                    text: '{{name}}'
+                    text: ' {{name}}'
                 },
                 {{/labels}}
 
@@ -67,7 +73,10 @@ class MachineLearningImages {
                 {
                     opcode: 'addTraining',
                     blockType: Scratch.BlockType.COMMAND,
-                    text: 'add training data [TEXT] [LABEL]',
+                    text: {
+                        default: 'add training data [TEXT] [LABEL]',
+                        id: 'mlforkids.images.addTraining'
+                    },
                     arguments: {
                         TEXT: {
                             type: Scratch.ArgumentType.STRING,
@@ -112,25 +121,26 @@ class MachineLearningImages {
         }
 
         var url = new URL('{{{ storeurl }}}');
-        url.searchParams.append('data', TEXT);
-        url.searchParams.append('label', LABEL);
 
         var options = {
             headers : {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
                 'X-User-Agent': 'mlforkids-scratch3-images'
-            }
+            },
+            method : 'POST',
+            body : JSON.stringify({
+                data : TEXT,
+                label : LABEL
+            })
         };
 
         return fetch(url, options)
-            .then((response) => {
-                if (response.status !== 200) {
-                    return response.json();
-                }
+            .then(() => {
+                console.log('added');
             })
-            .then((responseJson) => {
-                if (responseJson) {
-                    console.log(responseJson);
-                }
+            .catch((err) => {
+                console.log(err);
             });
     }
 }
@@ -157,6 +167,20 @@ var resultsCache = {
 var TEN_SECONDS = 10 * 1000;
 
 
+// keep a record of BAD_REQUEST requests so that we don't submit them
+// multiple times.
+var incorrectUses = {};
+
+// the number of times that the 'recognise image' block has been used
+// incorrectly (this will be reset when the Help page is displayed)
+var numIncorrectUses = 0;
+
+// the number of times that the 'recognise image' block should be used
+// incorrectly before the Help page is shown
+var MAX_INCORRECT_USES = 2;
+
+// have we displayed the 'recognise image' help doc?
+var displayedMLforKidsHelp = false;
 
 
 // returns the current date in the format that the API uses
@@ -185,7 +209,8 @@ function classifyImage(imagedata, cacheKey, lastmodified, callback) {
         },
         method : 'POST',
         body : JSON.stringify({
-            data : imagedata
+            data : imagedata,
+            displayedhelp : displayedMLforKidsHelp
         })
     };
 
@@ -196,19 +221,29 @@ function classifyImage(imagedata, cacheKey, lastmodified, callback) {
                 // reuse the value we got last time
                 callback(resultsCache[cacheKey]);
             }
-            else if (response.status === 200) {
+            else if (response.status === 200 || response.status === 400) {
                 response.json().then((responseJson) => {
-                    if (responseJson && responseJson.length > 0) {
+                    if (response.status === 200 && responseJson && responseJson.length > 0) {
                         // we got a result from the classifier
-                        callback(responseJson[0]);
+                        return callback(responseJson[0]);
                     }
-                    else {
-                        callback({
-                            class_name: 'Unknown',
-                            confidence: 0,
-                            classifierTimestamp: nowAsString()
-                        });
+                    else if (response.status === 400 && responseJson &&
+                        (responseJson.error === 'Missing data' ||
+                         responseJson.error === 'Invalid image data provided. Remember, only jpg and png images are supported.'))
+                    {
+                        registerIncorrectUse();
                     }
+                    else if (response.status === 400 && responseJson &&
+                        responseJson.error === 'Your machine learning model could not be found. Has it been deleted?')
+                    {
+                        postMessage({ mlforkids : 'mlforkids-recogniseimage-nomodel' });
+                    }
+
+                    callback({
+                        class_name: 'Unknown',
+                        confidence: 0,
+                        classifierTimestamp: nowAsString()
+                    });
                 });
             }
             else {
@@ -233,10 +268,28 @@ function classifyImage(imagedata, cacheKey, lastmodified, callback) {
 }
 
 
+function registerIncorrectUse() {
+    console.log('recognise image block used incorrectly');
+    numIncorrectUses += 1;
+
+    if (numIncorrectUses >= MAX_INCORRECT_USES) {
+        postMessage({ mlforkids : 'mlforkids-recogniseimage-help' });
+        displayedMLforKidsHelp = true;
+        numIncorrectUses = 0;
+    }
+}
+
+
 function getImageClassificationResponse(imagedata, cacheKey, valueToReturn, callback) {
     if (imagedata === '' || imagedata === 'image') {
         // The student has left the default text in the image block
         //  so there is no point in submitting an xhr request
+        registerIncorrectUse();
+        return callback('You need to put an image block in here');
+    }
+
+    if (incorrectUses[cacheKey]){
+        registerIncorrectUse();
         return callback('You need to put an image block in here');
     }
 
@@ -260,11 +313,10 @@ function getImageClassificationResponse(imagedata, cacheKey, valueToReturn, call
     classifyImage(imagedata, cacheKey, lastmodified, function (result) {
         if (result.random) {
             // We got a randomly selected result (which means we must not
-            //  have a working classifier) but we thought we had a model
-            //  with a good status.
-            // This should not be possible - we've gotten into a weird
-            //  unexpected state.
-            return callback(result[valueToReturn]);
+            //  have a working classifier).
+            console.log('randomly selected result returned by API');
+
+            postMessage({ mlforkids : 'mlforkids-recogniseimage-nomodel' });
         }
 
         // update the timestamp to allow local throttling

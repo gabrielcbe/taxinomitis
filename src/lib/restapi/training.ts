@@ -11,6 +11,7 @@ import * as errors from './errors';
 import * as headers from './headers';
 import * as visrec from '../training/visualrecognition';
 import * as imageCheck from '../utils/imageCheck';
+import * as imageDownload from '../utils/download';
 import loggerSetup from '../utils/logger';
 
 const log = loggerSetup();
@@ -63,6 +64,9 @@ async function getTraining(req: auth.RequestWithProject, res: Express.Response) 
             break;
         case 'images':
             training = await store.getImageTraining(req.project.id, options);
+            break;
+        case 'sounds':
+            training = await store.getSoundTraining(req.project.id, options);
             break;
         }
 
@@ -153,25 +157,40 @@ async function storeTraining(req: auth.RequestWithProject, res: Express.Response
             training = await store.storeTextTraining(req.project.id, data, label);
             break;
         case 'numbers':
+            if (!Array.isArray(data) || data.length !== req.project.numfields) {
+                return errors.missingData(res);
+            }
             training = await store.storeNumberTraining(req.project.id, req.project.isCrowdSourced, data, label);
             break;
         case 'images':
             await imageCheck.verifyImage(data, visrec.getMaxImageFileSize());
             training = await store.storeImageTraining(req.project.id, data, label, false);
             break;
+        case 'sounds':
+            training = await store.storeSoundTraining(req.project.id, data, label);
+            break;
         }
 
         res.status(httpstatus.CREATED).json(training);
     }
     catch (err) {
-        if (err.message === 'Text exceeds maximum allowed length (1024 characters)' ||
+        if (err.message && typeof err.message === 'string' &&
+            (
+            err.message === 'Text exceeds maximum allowed length (1024 characters)' ||
             err.message === 'Empty text is not allowed' ||
             err.message === 'Number of data items exceeded maximum' ||
             err.message === 'Data contains non-numeric items' ||
+            err.message === 'Number is too small' ||
+            err.message === 'Number is too big' ||
             err.message === 'Missing required attributes' ||
             err.message.startsWith(imageCheck.ERROR_PREFIXES.BAD_TYPE) ||
             err.message.startsWith('Unable to download image from ') ||
-            err.message.startsWith(imageCheck.ERROR_PREFIXES.TOO_BIG))
+            err.message.startsWith(imageCheck.ERROR_PREFIXES.TOO_BIG) ||
+            err.message.includes(imageDownload.ERRORS.DOWNLOAD_FORBIDDEN) ||
+            err.message === 'Empty audio is not allowed' ||
+            err.message === 'Audio exceeds maximum allowed length' ||
+            err.message === 'Invalid audio input'
+            ))
         {
             return res.status(httpstatus.BAD_REQUEST).json({ error : err.message });
         }

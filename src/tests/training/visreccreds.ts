@@ -8,6 +8,7 @@ import * as request from 'request-promise';
 import * as visrec from '../../lib/training/visualrecognition';
 import * as downloadAndZip from '../../lib/utils/downloadAndZip';
 
+import * as DbTypes from '../../lib/db/db-types';
 import * as TrainingTypes from '../../lib/training/training-types';
 
 import * as iam from '../../lib/iam';
@@ -16,38 +17,58 @@ import * as mockVisRec from './mock-visrec';
 
 import * as store from '../../lib/db/store';
 
+import requestPromise = require('request-promise');
+import requestLegacy = require('request');
+
+
 
 describe('Training - Visual Recognition - IAM/API keys', () => {
 
-    let getStub: sinon.SinonStub;
-    let postStub: sinon.SinonStub;
-    let deleteStub: sinon.SinonStub;
+    let getStub: sinon.SinonStub<[string,
+        (requestPromise.RequestPromiseOptions | undefined)?,
+        (requestLegacy.RequestCallback | undefined)?], requestPromise.RequestPromise>;
+    let postStub: sinon.SinonStub<[string,
+        (requestPromise.RequestPromiseOptions | undefined)?,
+        (requestLegacy.RequestCallback | undefined)?], requestPromise.RequestPromise>;
+    let deleteStub: sinon.SinonStub<[string,
+        (requestPromise.RequestPromiseOptions | undefined)?,
+        (requestLegacy.RequestCallback | undefined)?], requestPromise.RequestPromise>;
 
-    let getClassTenantStub: sinon.SinonStub;
-    let getImageTrainingByLabelStub: sinon.SinonStub;
-    let countTrainingByLabelStub: sinon.SinonStub;
-    let getImageClassifiersStub: sinon.SinonStub;
-    let getBluemixCredentialsByIdStub: sinon.SinonStub;
-    let getBluemixCredentialsStub: sinon.SinonStub;
-    let storeImageClassifierStub: sinon.SinonStub;
-    let storeScratchKeyStub: sinon.SinonStub;
-    let resetExpiredScratchKeyStub: sinon.SinonStub;
-    let deleteImageClassifierStub: sinon.SinonStub;
+    let getClassTenantStub: sinon.SinonStub<[string], Promise<DbTypes.ClassTenant>>;
+    let getImageTrainingByLabelStub: sinon.SinonStub<[string, string, DbTypes.PagingOptions],
+                                                     Promise<DbTypes.ImageTraining[]>>;
+    let countTrainingByLabelStub: sinon.SinonStub<[DbTypes.Project], Promise<{ [label: string]: number; }>>;
+    let getImageClassifiersStub: sinon.SinonStub<[string], Promise<TrainingTypes.VisualClassifier[]>>;
+    let getBluemixCredentialsByIdStub: sinon.SinonStub<[string], Promise<TrainingTypes.BluemixCredentials>>;
+    let getBluemixCredentialsStub: sinon.SinonStub<[string, TrainingTypes.BluemixServiceType],
+                                                   Promise<TrainingTypes.BluemixCredentials[]>>;
+    let storeImageClassifierStub: sinon.SinonStub<[TrainingTypes.BluemixCredentials,
+        DbTypes.Project, TrainingTypes.VisualClassifier],
+        Promise<TrainingTypes.VisualClassifier>>;
+    let storeScratchKeyStub: sinon.SinonStub<[DbTypes.Project, TrainingTypes.BluemixCredentials, string, Date],
+                                             Promise<string>>;
+    let resetExpiredScratchKeyStub: sinon.SinonStub<[string, DbTypes.ProjectTypeLabel], Promise<void>>;
+    let deleteImageClassifierStub: sinon.SinonStub<[string], Promise<void>>;
 
     let setTimeoutStub: sinon.SinonStub;
 
-    let downloadStub: sinon.SinonStub;
+    let downloadStub: sinon.SinonStub<[downloadAndZip.ImageDownload[]], Promise<string>>;
 
 
     before(() => {
         iam.init();
 
+        // @ts-ignore
         getStub = sinon.stub(request, 'get');
 
+        // @ts-ignore
         postStub = sinon.stub(request, 'post');
+        // @ts-ignore
         postStub.withArgs('https://iam.bluemix.net/identity/token', sinon.match.any).callsFake(mockIAM.request.get);
+        // @ts-ignore
         postStub.withArgs(sinon.match(/.*classifiers/), sinon.match.any).callsFake(mockVisRec.request.create);
 
+        // @ts-ignore
         deleteStub = sinon.stub(request, 'delete').callsFake(mockVisRec.request.delete);
 
 
@@ -73,6 +94,7 @@ describe('Training - Visual Recognition - IAM/API keys', () => {
                                          .callsFake(mockVisRec.store.deleteImageClassifier);
 
         const fakeTimer: NodeJS.Timer = {} as NodeJS.Timer;
+        // @ts-ignore
         setTimeoutStub = sinon.stub(global, 'setTimeout').returns(fakeTimer);
 
         downloadStub = sinon.stub(downloadAndZip, 'run').callsFake(mockVisRec.download.run);
@@ -194,7 +216,7 @@ describe('Training - Visual Recognition - IAM/API keys', () => {
             assert.strictEqual(classifier.url,
                                mockVisRec.CREDENTIALS_NEW.url +
                                     '/v3/classifiers/' +
-                                    classifier.classifierid);
+                                    encodeURIComponent(classifier.classifierid));
 
 
         });
@@ -222,7 +244,8 @@ describe('Training - Visual Recognition - IAM/API keys', () => {
             assert(resetExpiredScratchKeyStub.called);
             assert(deleteStub.called);
 
-            assert(deleteStub.calledWith(mockVisRec.CREDENTIALS_NEW.url + '/v3/classifiers/' + classifierinfo.id,
+            assert(deleteStub.calledWith(mockVisRec.CREDENTIALS_NEW.url + '/v3/classifiers/' +
+                                             encodeURIComponent(classifierinfo.id),
                                          sinon.match.has('qs', { version : '2018-03-19' })));
 
             const authHeader = await iam.getAuthHeader(mockVisRec.CREDENTIALS_NEW.username +
@@ -232,7 +255,8 @@ describe('Training - Visual Recognition - IAM/API keys', () => {
 
             assert(setTimeoutStub.calledOnce);
 
-            assert(deleteStub.calledWith(mockVisRec.CREDENTIALS_NEW.url + '/v3/classifiers/' + classifierinfo.id,
+            assert(deleteStub.calledWith(mockVisRec.CREDENTIALS_NEW.url + '/v3/classifiers/' +
+                                             encodeURIComponent(classifierinfo.id),
                                          sinon.match.has('headers', sinon.match.has('Authorization', authHeader))));
         });
 

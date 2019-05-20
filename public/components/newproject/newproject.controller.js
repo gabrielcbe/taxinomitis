@@ -118,7 +118,7 @@
             }
 
             projectsService.createProject(projectSpec, vm.profile.user_id, vm.profile.tenant)
-                .then(function (newproject) {
+                .then(function () {
                     $state.go('projects');
                 })
                 .catch(function (err) {

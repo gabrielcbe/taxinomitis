@@ -15,7 +15,9 @@ import registerAppInventorApis from './appinventor';
 import registerWatsonApis from './watsonapis';
 import registerClassifierApis from './classifiers';
 import registerSessionUserApis from './sessionusers';
+import registerSiteAlertApis from './sitealerts';
 import registerAdminApis from './siteadmin';
+import * as URLS from './urls';
 import * as serverConfig from './config';
 import * as errors from './errors';
 import loggerSetup from '../utils/logger';
@@ -41,8 +43,9 @@ export default function setup(app: Express.Application): void {
     serverConfig.setupUI(app);
 
     // body types
-    app.use('/api/scratch/:scratchkey/classify', bodyParser.json({ limit : '3mb' }));
-    app.use('/', bodyParser.json());
+    app.use(URLS.SCRATCHKEY_CLASSIFY, bodyParser.json({ limit : '3mb' }));
+    app.use(URLS.TRAININGITEMS, bodyParser.json({ limit : '400kb' }));
+    app.use(URLS.ROOT, bodyParser.json({ limit : '100kb' }));
 
     // API route handlers
     registerBluemixApis(app);
@@ -56,6 +59,7 @@ export default function setup(app: Express.Application): void {
     registerWatsonApis(app);
     registerClassifierApis(app);
     registerSessionUserApis(app);
+    registerSiteAlertApis(app);
     registerAdminApis(app);
 
     // error handling

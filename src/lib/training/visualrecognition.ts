@@ -8,6 +8,7 @@ import * as store from '../db/store';
 import * as DbObjects from '../db/db-types';
 import * as TrainingObjects from './training-types';
 import * as iam from '../iam';
+import * as wikimedia from '../utils/wikimedia';
 import * as downloadAndZip from '../utils/downloadAndZip';
 import * as constants from '../utils/constants';
 import * as notifications from '../notifications/slack';
@@ -25,6 +26,7 @@ export const ERROR_MESSAGES = {
                          'at too fast a rate. ' +
                          'Please stop now and let your teacher or group leader know that ' +
                          '"the Watson Visual Recognition service is currently rate limiting their API key"',
+    NO_MODEL : 'Your machine learning model could not be found. Has it been deleted?',
 };
 
 
@@ -99,6 +101,8 @@ async function createClassifier(
             const url = credentials.url + '/v3/classifiers';
             classifier = await submitTrainingToVisualRecognition(project, credentials, url, training, tenantPolicy);
 
+            log.info({ classifier }, 'Created new classifier to store');
+
             await store.storeImageClassifier(credentials, project, classifier);
 
             await store.storeOrUpdateScratchKey(project, credentials, classifier.classifierid, classifier.created);
@@ -128,6 +132,13 @@ async function createClassifier(
                 //  creds in the pool
                 finalError = ERROR_MESSAGES.API_KEY_RATE_LIMIT;
             }
+            else if (err.error && err.error.code === 401 && err.error.error === 'Unauthorized')
+            {
+                // there is a problem with their API key
+                log.warn({ err, project, credentials : credentials.id },
+                         'Credentials rejected');
+                throw err;
+            }
             else {
                 // Otherwise - rethrow it so we can bug out.
                 log.error({
@@ -143,6 +154,9 @@ async function createClassifier(
                     err.error.error.description)
                 {
                     detail = '\n' + err.error.error.description;
+                }
+                else if (err.error && err.error.error) {
+                    detail = '\n' + err.error.error;
                 }
                 notifications.notify('Unexpected failure to train image classifier' +
                                      ' for project : ' + project.id +
@@ -222,7 +236,7 @@ export async function getStatus(
             return classifier;
         })
         .catch((err) => {
-            log.error({ err }, 'Failed to get status');
+            log.warn({ err }, 'Failed to get status');
             classifier.status = 'Non Existent';
             return classifier;
         });
@@ -252,38 +266,72 @@ async function getTraining(project: DbObjects.Project): Promise<{ [label: string
     const examples: { [label: string]: string } = {};
 
     for (const label of project.labels) {
-        const training = await store.getImageTrainingByLabel(project.id, label, {
-            start : 0, limit : counts[label],
-        });
 
-        const trainingLocations = training.map((trainingitem) => {
-            if (trainingitem.isstored) {
-                const fromStorage: downloadAndZip.ImageDownload = {
-                    type : 'retrieve',
-                    spec : {
-                        imageid : trainingitem.id,
-                        projectid : project.id,
-                        userid : project.userid,
-                        classid : project.classid,
-                    },
-                };
-                return fromStorage;
-            }
-            else {
-                const fromWeb: downloadAndZip.ImageDownload = {
-                    type : 'download',
-                    url: trainingitem.imageurl,
-                };
-                return fromWeb;
-            }
-        });
-        validateRequest(trainingLocations);
+        if (label in counts && counts[label] > 0) {
 
-        const trainingZip = await downloadAndZip.run(trainingLocations);
-        examples[label] = trainingZip;
+            const training = await store.getImageTrainingByLabel(project.id, label, {
+                start : 0, limit : counts[label],
+            });
+
+            const trainingLocations: downloadAndZip.ImageDownload[] = [];
+
+            for (const trainingitem of training) {
+                if (trainingitem.isstored) {
+                    const fromStorage: downloadAndZip.ImageDownload = {
+                        type : 'retrieve',
+                        spec : {
+                            imageid : trainingitem.id,
+                            projectid : project.id,
+                            userid : project.userid,
+                            classid : project.classid,
+                        },
+                    };
+                    trainingLocations.push(fromStorage);
+                }
+                else {
+                    const fromWeb = await getImageDownloadSpec(trainingitem.id, trainingitem.imageurl);
+                    trainingLocations.push(fromWeb);
+                }
+            }
+
+            validateRequest(trainingLocations);
+
+            const trainingZip = await downloadAndZip.run(trainingLocations);
+            examples[label] = trainingZip;
+        }
     }
 
     return examples;
+}
+
+
+async function getImageDownloadSpec(imageid: string, imageurl: string): Promise<downloadAndZip.ImageDownload> {
+    if (wikimedia.isWikimedia(imageurl)) {
+        try {
+            const thumb = await wikimedia.getThumbnail(imageurl, 400);
+            return {
+                type : 'download',
+                imageid,
+                url : thumb,
+            };
+        }
+        catch (err) {
+            log.error({ err, imageid, imageurl }, 'getImageDownloadSpec fail');
+            return {
+                type : 'download',
+                imageid,
+                url : imageurl,
+            };
+        }
+    }
+    else {
+        const fromWeb: downloadAndZip.DownloadFromWeb = {
+            type : 'download',
+            imageid,
+            url : imageurl,
+        };
+        return Promise.resolve(fromWeb);
+    }
 }
 
 
@@ -292,7 +340,7 @@ function deleteTrainingFiles(training: { [label: string]: string }): void {
     const trainingKeys = Object.keys(training);
     for (const trainingKey of trainingKeys) {
         if (trainingKey !== 'name') {
-            fs.unlink(training[trainingKey], (err?: Error) => {
+            fs.unlink(training[trainingKey], (err?: Error | null) => {
                 if (err) {
                     log.error({ err, trainingKey, path : training[trainingKey] }, 'Failed to delete training file');
                 }
@@ -402,7 +450,7 @@ export async function deleteClassifierFromBluemix(
     const req = await createBaseRequest(credentials);
 
     try {
-        const url = credentials.url + '/v3/classifiers/' + classifierId;
+        const url = credentials.url + '/v3/classifiers/' + encodeURIComponent(classifierId);
         await request.delete(url, req);
     }
     catch (err) {
@@ -442,24 +490,74 @@ export async function testClassifierFile(
         },
     };
     const req: NewTestFileRequest | LegacyTestFileRequest = { ...basereq, ...testreq };
+    const url = credentials.url + '/v3/classify';
 
-
-    const body: VisualRecogApiResponsePayloadClassifyFile = await request.post(credentials.url + '/v3/classify', req);
-    if (body.images &&
-        body.images.length > 0 &&
-        body.images[0].classifiers &&
-        body.images[0].classifiers.length > 0 &&
-        body.images[0].classifiers[0].classes)
-    {
-        return body.images[0].classifiers[0].classes.map((item) => {
-            return { class_name : item.class, confidence : Math.round(item.score * 100), classifierTimestamp };
-        }).sort(sortByConfidence);
+    try {
+        const body: VisualRecogApiResponsePayloadClassifyFile = await request.post(url, req);
+        if (body.images &&
+            body.images.length > 0 &&
+            body.images[0].classifiers &&
+            body.images[0].classifiers.length > 0 &&
+            body.images[0].classifiers[0].classes)
+        {
+            return body.images[0].classifiers[0].classes.map((item) => {
+                return { class_name : item.class, confidence : Math.round(item.score * 100), classifierTimestamp };
+            }).sort(sortByConfidence);
+        }
+        else {
+            log.error({ body }, 'Image was not classifiable');
+            return [];
+        }
     }
-    else {
-        log.error({ body }, 'Image was not classifiable');
-        return [];
+    catch (err) {
+        // recognise some common errors and explain them in a more helpful way
+        //
+        //  otherwise, just re-throw as-is
+        if (err.error &&
+            err.error.images && Array.isArray(err.error.images) && err.error.images.length === 1 &&
+            err.error.images[0].error &&
+            err.error.images[0].error.code && err.error.images[0].error.description &&
+            typeof err.error.images[0].error.description === 'string')
+        {
+            const errorInfo = err.error.images[0].error;
+
+            if (classifierNotFoundError(errorInfo))
+            {
+                const externalError: any = new Error(ERROR_MESSAGES.NO_MODEL);
+                externalError.statusCode = 400;
+                throw externalError;
+            }
+            else if (errorInfo.code === 400 &&
+                     errorInfo.description === 'Invalid/corrupted image data. ' +
+                                               'Supported image file formats are GIF, JPEG, PNG, and TIFF. ' +
+                                               'Supported compression format is ZIP.')
+            {
+                const externalError: any = new Error('Invalid image data provided. ' +
+                                                     'Remember, only jpg and png images are supported.');
+                externalError.statusCode = 400;
+                throw externalError;
+            }
+            else if (errorInfo.code === 400 &&
+                     errorInfo.description.startsWith('Image resolution is smaller than the minimum limit'))
+            {
+                const externalError: any = new Error('Image is too small to be recognized');
+                externalError.statusCode = 400;
+                throw externalError;
+            }
+        }
+        else if (err.error && err.error.error &&
+                 err.error.error.code === 400 &&
+                 err.error.error.description === 'No images were specified.')
+        {
+            const externalError: any = new Error('Missing data');
+            externalError.statusCode = 400;
+            throw externalError;
+        }
+
+        throw err;
     }
 }
+
 
 
 export async function testClassifierURL(
@@ -486,23 +584,106 @@ export async function testClassifierURL(
         timeout : basereq.timeout,
     };
 
-    const body: VisualRecogApiResponsePayloadClassification = await request.get(credentials.url + '/v3/classify', req);
-    if (body.images &&
-        body.images.length > 0 &&
-        body.images[0].classifiers &&
-        body.images[0].classifiers.length > 0 &&
-        body.images[0].classifiers[0].classes)
-    {
-        return body.images[0].classifiers[0].classes.map((item) => {
-            return { class_name : item.class, confidence : Math.round(item.score * 100), classifierTimestamp };
-        }).sort(sortByConfidence);
+    try {
+        const url = credentials.url + '/v3/classify';
+        const body: VisualRecogApiResponsePayloadClassification = await request.get(url, req);
+        if (body.images &&
+            body.images.length > 0 &&
+            body.images[0].classifiers &&
+            body.images[0].classifiers.length > 0 &&
+            body.images[0].classifiers[0].classes)
+        {
+            return body.images[0].classifiers[0].classes.map((item) => {
+                return { class_name : item.class, confidence : Math.round(item.score * 100), classifierTimestamp };
+            }).sort(sortByConfidence);
+        }
+        else {
+            log.error({ body }, 'Image was not classifiable');
+            return [];
+        }
     }
-    else {
-        log.error({ body }, 'Image was not classifiable');
-        return [];
+    catch (err) {
+        // recognise some common errors and explain them in a more helpful way
+        //
+        //  otherwise, just re-throw as-is
+        if (err.error &&
+            err.error.images && Array.isArray(err.error.images) && err.error.images.length === 1 &&
+            err.error.images[0].error &&
+            err.error.images[0].error.code && err.error.images[0].error.description &&
+            typeof err.error.images[0].error.description === 'string')
+        {
+            const errorInfo = err.error.images[0].error;
+            if (errorInfo.code === 400 &&
+                errorInfo.description.startsWith('Invalid/corrupted image data. ' +
+                                                 'Supported image file formats are GIF, JPEG, PNG, and TIFF'))
+            {
+                const externalError: any = new Error('A usable test image could not be found at that address. ' +
+                                                     'Remember, only jpg and png images are supported.');
+                externalError.statusCode = 400;
+                throw externalError;
+            }
+            else if (errorInfo.code === 400 &&
+                     (errorInfo.description === 'URL Fetcher error: Could not fetch URL: ' +
+                                                'Unable to resolve host name' ||
+                      errorInfo.description === 'URL Fetcher error: Could not fetch URL: ' +
+                                                'Timeout exceeded when loading resource'))
+            {
+                const externalError: any = new Error('Web address could not be contacted. ' +
+                                                     'Please enter the web address for a picture that you want to ' +
+                                                     'test your machine learning model on');
+                externalError.statusCode = 400;
+                throw externalError;
+            }
+            else if (errorInfo.code === 400 &&
+                     (errorInfo.description === 'URL Fetcher error: Could not fetch URL: ' +
+                                                'Invalid URL specified'))
+            {
+                const externalError: any = new Error('Invalid URL. ' +
+                                                     'Please enter the web address for a picture that you want to ' +
+                                                     'test your machine learning model on');
+                externalError.statusCode = 400;
+                throw externalError;
+            }
+            else if (classifierNotFoundError(errorInfo))
+            {
+                const externalError: any = new Error(ERROR_MESSAGES.NO_MODEL);
+                externalError.statusCode = 400;
+                throw externalError;
+            }
+            else if (errorInfo.code === 400 &&
+                     errorInfo.description.startsWith('Image resolution is smaller than the minimum limit'))
+            {
+                const externalError: any = new Error('Image is too small to be recognized');
+                externalError.statusCode = 400;
+                throw externalError;
+            }
+            else if (errorInfo.code === 400 &&
+                     errorInfo.description === 'URL Fetcher error: Could not fetch URL: ' +
+                                               'Access forbidden by target server')
+            {
+                const externalError: any = new Error('Access forbidden. ' +
+                                                     'Web server at that address would not allow the ' +
+                                                     'image to be downloaded.');
+                externalError.statusCode = 400;
+                throw externalError;
+            }
+        }
+
+        throw err;
     }
 }
 
+
+
+function classifierNotFoundError(errorInfo: any): boolean {
+    return errorInfo &&
+           errorInfo.code &&
+           errorInfo.code === 404 &&
+           errorInfo.description &&
+           typeof errorInfo.description === 'string' &&
+           (errorInfo.description.startsWith('None of the requested classifier ids were found: ') ||
+            errorInfo.description === 'No classifiers found');
+}
 
 
 function sortByConfidence(item1: TrainingObjects.Classification, item2: TrainingObjects.Classification): number {
@@ -524,7 +705,9 @@ async function submitTrainingToVisualRecognition(
         name : project.name,
     };
     for (const label of project.labels) {
-        trainingData[label + '_positive_examples'] = fs.createReadStream(training[label]);
+        if (label in training) {
+            trainingData[label + '_positive_examples'] = fs.createReadStream(training[label]);
+        }
     }
 
     const basereq = await createBaseRequest(credentials);
@@ -535,6 +718,19 @@ async function submitTrainingToVisualRecognition(
 
     try {
         const body = await request.post(url, req);
+
+        log.info({ body }, 'Response from creating visual recognition classifier');
+
+        if (body && body.error) {
+            log.error({ body }, 'Error payload from Visual Recognition');
+
+            // sometimes Visual Recogition returns an error object
+            // with an HTTP-200 response code, because... reasons?
+            throw {
+                error : body.error,
+                statusCode : 500,
+            };
+        }
 
         // determine when the classifier should be deleted
         const modelAutoExpiryTime = new Date(body.created);
@@ -549,11 +745,11 @@ async function submitTrainingToVisualRecognition(
             expiry : modelAutoExpiryTime,
             credentialsid : credentials.id,
             status : body.status ? body.status : 'training',
-            url : credentials.url + '/v3/classifiers/' + body.classifier_id,
+            url : credentials.url + '/v3/classifiers/' + encodeURIComponent(body.classifier_id),
         };
     }
     catch (err) {
-        log.error({ url, req, err }, ERROR_MESSAGES.UNKNOWN);
+        log.warn({ url, req, project, err }, ERROR_MESSAGES.UNKNOWN);
 
         // The full error object will include the classifier request with the
         //  URL and credentials we used for it. So we don't want to return
@@ -579,6 +775,15 @@ export async function getImageClassifiers(
     // GETs don't need as long a timeout as POSTs
     req.timeout = 30000;
     const body: VisualRecogApiResponsePayloadClassifiers = await request.get(credentials.url + '/v3/classifiers', req);
+
+    if (body && body.error) {
+        log.error({ body }, 'Unexpected response from Visual Recognition');
+        throw {
+            error : body.error,
+            statusCode : 500,
+        };
+    }
+
     return body.classifiers.map((classifierinfo) => {
         const summary: TrainingObjects.ClassifierSummary = {
             id : classifierinfo.classifier_id,
@@ -630,6 +835,7 @@ async function createBaseRequest(credentials: TrainingObjects.BluemixCredentials
             },
             headers : {
                 'user-agent': 'machinelearningforkids',
+                'X-Watson-Learning-Opt-Out': 'true',
             },
             json : true,
             gzip : true,
@@ -646,6 +852,7 @@ async function createBaseRequest(credentials: TrainingObjects.BluemixCredentials
             },
             headers : {
                 'user-agent': 'machinelearningforkids',
+                'X-Watson-Learning-Opt-Out': 'true',
                 'Authorization': authHeader,
             },
             json : true,
@@ -667,6 +874,7 @@ interface VisRecRequestBase {
     };
     readonly headers: {
         readonly 'user-agent': 'machinelearningforkids';
+        readonly 'X-Watson-Learning-Opt-Out': 'true';
     };
     readonly json: true;
     readonly gzip: true;
@@ -685,6 +893,7 @@ export interface NewVisRecRequest extends VisRecRequestBase {
     };
     readonly headers: {
         readonly 'user-agent': 'machinelearningforkids';
+        readonly 'X-Watson-Learning-Opt-Out': 'true';
         readonly Authorization: string;
     };
 }
@@ -741,6 +950,9 @@ export interface NewTestUrlRequest extends TestUrlRequest, NewVisRecRequest {
 
 export interface VisualRecogApiResponsePayloadClassifiers {
     readonly classifiers: VisualRecogApiResponsePayloadClassifier[];
+
+    // sometimes Visual Recognition returns errors in response to GETs
+    readonly error?: any;
 }
 
 export interface VisualRecogApiResponsePayloadClassifier {
@@ -788,5 +1000,3 @@ export interface VisualRecogApiResponsePayloadClassifyFile {
     }>;
     readonly images_processed: number;
 }
-
-

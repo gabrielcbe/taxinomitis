@@ -67,6 +67,17 @@ CREATE TABLE imagetraining (
 CREATE INDEX imagetraining_getImageTraining on imagetraining(projectid, label, imageurl);
 CREATE INDEX imagetraining_getTrainingLabels on imagetraining(projectid);
 
+
+CREATE TABLE soundtraining (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    projectid CHAR(36) NOT NULL,
+    audiodata MEDIUMTEXT,
+    label VARCHAR(100)
+);
+
+CREATE INDEX soundtraining_getSoundTraining on soundtraining(projectid, label);
+CREATE INDEX soundtraining_getTrainingLabels on soundtraining(projectid);
+
 -- ------------------------------------------------------------------
 
 CREATE TABLE bluemixcredentials (
@@ -177,7 +188,7 @@ CREATE TABLE disruptivetenants (
 
 CREATE TABLE tenants (
     id VARCHAR(36) NOT NULL PRIMARY KEY,
-    projecttypes VARCHAR(25) NOT NULL DEFAULT 'text,numbers',
+    projecttypes VARCHAR(26) NOT NULL DEFAULT 'text,numbers,sounds',
     maxusers TINYINT UNSIGNED NOT NULL DEFAULT 8,
     maxprojectsperuser TINYINT UNSIGNED NOT NULL DEFAULT 3,
     textclassifiersexpiry TINYINT UNSIGNED NOT NULL DEFAULT 2,
@@ -189,7 +200,7 @@ INSERT INTO tenants (id, projecttypes, maxusers, maxprojectsperuser, textclassif
     VALUES
         ('TESTTENANT', 'text,images,numbers', 8, 3, 2, true),
         ('UNIQUECLASSID', 'text,numbers', 8, 3, 2, true),
-        ('session-users', 'text,numbers', 5, 1, 4, true);
+        ('session-users', 'text,numbers,sounds', 5, 1, 4, true);
 
 -- ------------------------------------------------------------------
 
@@ -197,4 +208,15 @@ CREATE TABLE sessionusers (
     id VARCHAR(36) NOT NULL PRIMARY KEY,
     token VARCHAR(36) NOT NULL,
     sessionexpiry DATETIME
+);
+
+-- ------------------------------------------------------------------
+
+CREATE TABLE sitealerts (
+    timestamp DATETIME NOT NULL PRIMARY KEY,
+    severityid TINYINT UNSIGNED NOT NULL,
+    audienceid TINYINT UNSIGNED NOT NULL,
+    message VARCHAR(280) NOT NULL,
+    url VARCHAR(280) NOT NULL,
+    expiry DATETIME NOT NULL
 );

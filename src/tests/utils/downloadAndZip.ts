@@ -2,7 +2,7 @@
 import * as assert from 'assert';
 import * as filecompare from 'filecompare';
 import * as fs from 'fs';
-import * as unzip from 'unzip';
+import * as unzip from 'unzip2';
 import * as tmp from 'tmp';
 import * as async from 'async';
 
@@ -55,7 +55,6 @@ describe('Utils - download and zip', () => {
             },
             (unzipTarget: string, zipFile: string, next: (err?: Error, files?: string[]) => void) => {
                 const unzippedFiles: string[] = [];
-
                 fs.createReadStream(zipFile)
                     .pipe(unzip.Parse())
                     .on('entry', (entry: any) => {
@@ -67,18 +66,21 @@ describe('Utils - download and zip', () => {
                         next(err, unzippedFiles);
                     });
             },
-            (unzippedFiles: string[], next: (err?: Error, files?: Array<TestFile | undefined>) => void) => {
-                async.map(unzippedFiles, (unzippedFile: string, nextFile: (err?: Error, file?: TestFile) => void) => {
-                    fs.stat(unzippedFile, (err, stats) => {
-                        if (err) {
-                            return nextFile(err);
-                        }
-                        nextFile(err, {
-                            location : unzippedFile,
-                            size : stats.size,
-                        });
-                    });
-                }, next);
+            (unzippedFiles: string[], next: (err?: Error | undefined | null,
+                                             files?: Array<TestFile | undefined>) => void) => {
+                async.map(unzippedFiles,
+                          (unzippedFile: string, nextFile: (err?: Error | null, file?: TestFile) => void) =>
+                          {
+                              fs.stat(unzippedFile, (err, stats) => {
+                                  if (err) {
+                                      return nextFile(err);
+                                  }
+                                  nextFile(err, {
+                                      location : unzippedFile,
+                                      size : stats.size,
+                                  });
+                              });
+                          }, next);
             },
             (unzippedFilesInfo: TestFile[], next: () => void) => {
                 assert.strictEqual(unzippedFilesInfo.length, 3);
@@ -139,16 +141,19 @@ const TESTURLS: downloadZip.DownloadFromWeb[] = [
     {
         type: 'download',
         url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/320px-IBM_logo.svg.png',
+        imageid : '1',
     },
     {
         type: 'download',
         // tslint:disable-next-line:max-line-length
         url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Thomas_J_Watson_Sr.jpg/148px-Thomas_J_Watson_Sr.jpg',
+        imageid : '2',
     },
     {
         type: 'download',
         // tslint:disable-next-line:max-line-length
         url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Old_Map_Hursley_1607.jpg/218px-Old_Map_Hursley_1607.jpg?download',
+        imageid : '3',
     },
 ];
 
@@ -157,5 +162,6 @@ const INVALIDURLS: downloadZip.DownloadFromWeb[] = [
     {
         type: 'download',
         url: 'https://www.w3.org/Graphics/SVG/svglogo.svg',
+        imageid : '4',
     },
 ];

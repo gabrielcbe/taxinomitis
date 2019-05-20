@@ -22,9 +22,16 @@
     <div class="mlprojectmenu aboutsection aboutnarrow">
         <div class="mlprojectmenutitle" translate="ABOUT.TECH.TITLE"></div>
         <div class="aboutdescription" translate="ABOUT.TECH.BODY"></div>
-        <div class="aboutdescription">
-            <span ng-if="!isAuthenticated" translate="ABOUT.TECH.LOGIN"></span>
+        <div class="aboutdescription" ng-if="!isAuthenticated" >
+            <span translate="ABOUT.TECH.LOGIN"></span>
             <button type='button' class='btn btn-primary' ui-sref='login' translate="APP.LOGIN"></button>
+        </div>
+    </div>
+    <div class="mlprojectmenu aboutsection aboutnarrow">
+        <div class="mlprojectmenutitle" translate="ABOUT.FURTHER.TITLE"></div>
+        <div class="aboutdescription">
+            <span translate="ABOUT.FURTHER.BODY"></span>
+            <button type="button" class="btn btn-primary" ui-sref="links({'#':'top'})" translate="ABOUT.FURTHER.TITLE"></button>
         </div>
     </div>
 </div>

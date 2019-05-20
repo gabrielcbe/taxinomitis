@@ -3,6 +3,7 @@ import * as uuid from 'uuid/v1';
 import * as uuidv4 from 'uuid/v4';
 // local dependencies
 import * as projects from './projects';
+import * as sitealerts from './site-alerts';
 import * as Objects from './db-types';
 import * as TrainingObjects from '../training/training-types';
 import * as ObjectStoreTypes from '../imagestore/types';
@@ -45,6 +46,9 @@ export function createProject(
         if (fields.length > MAX_FIELDS) {
             throw new Error('Too many fields specified');
         }
+        if (containsDuplicateNames(fields)) {
+            throw new Error('Fields all need different names');
+        }
         fieldsObjs = fields.map((field) => createNumberProjectField(userid, classid, projectid, field));
     }
     else if (fields && fields.length > 0) {
@@ -86,6 +90,17 @@ export function createProject(
         numfields : fieldsObjs.length,
         iscrowdsourced : crowdsource ? 1 : 0,
     };
+}
+
+function containsDuplicateNames(fields: Objects.NumbersProjectFieldSummary[]): boolean {
+    const names: { [key: string]: boolean } = {};
+    return fields.some((field) => {
+        if (names[field.name]) {
+            return true;
+        }
+        names[field.name] = true;
+        return false;
+    });
 }
 
 export function getProjectFromDbRow(row: Objects.ProjectDbRow): Objects.Project {
@@ -290,6 +305,11 @@ export function getTextTrainingFromDbRow(row: Objects.TextTrainingDbRow): Object
 
 
 
+function isEmptyString(obj: any): boolean {
+    return typeof obj === 'string' && obj.trim().length === 0;
+}
+
+
 export function createNumberTraining(projectid: string, data: number[], label: string): Objects.NumberTraining {
     if (projectid === undefined || projectid === '' ||
         data === undefined || data.length === 0)
@@ -302,8 +322,14 @@ export function createNumberTraining(projectid: string, data: number[], label: s
     }
 
     for (const num of data) {
-        if (isNaN(num)) {
+        if (isNaN(num) || isEmptyString(num)) {
             throw new Error('Data contains non-numeric items');
+        }
+        if (num < -3.4028235e+38) {
+            throw new Error('Number is too small');
+        }
+        if (num > 3.4028235e+38) {
+            throw new Error('Number is too big');
         }
     }
 
@@ -384,6 +410,59 @@ export function getImageTrainingFromDbRow(row: Objects.ImageTrainingDbRow): Obje
     return obj;
 }
 
+
+export const MAX_AUDIO_POINTS = 20000;
+
+export function createSoundTraining(projectid: string, data: any[], label: string): Objects.SoundTraining {
+    if (projectid === undefined || projectid === '' ||
+        label === undefined || label === '' ||
+        data === undefined || typeof data !== 'object' || !Array.isArray(data))
+    {
+        throw new Error('Missing required attributes');
+    }
+
+    if (data.length === 0) {
+        throw new Error('Empty audio is not allowed');
+    }
+    if (data.length > MAX_AUDIO_POINTS) {
+        throw new Error('Audio exceeds maximum allowed length');
+    }
+
+    const invalidAudio = data.some((item) => isNaN(parseFloat(item)));
+    if (invalidAudio) {
+        throw new Error('Invalid audio input');
+    }
+
+    return {
+        id : uuid(),
+        projectid,
+        audiodata : data,
+        label,
+    };
+}
+
+export function getSoundTrainingFromDbRow(row: Objects.SoundTrainingDbRow): Objects.SoundTraining {
+    const obj: any = {
+        id : row.id,
+        audiodata : row.audiodata.split(',').map(parseFloat),
+        label : row.label,
+    };
+
+    if (row.projectid) {
+        obj.projectid = row.projectid;
+    }
+
+    return obj;
+}
+
+export function createSoundTrainingDbRow(obj: Objects.SoundTraining): Objects.SoundTrainingDbRow {
+    return {
+        id : obj.id,
+        audiodata : obj.audiodata.join(','),
+        label : obj.label,
+        projectid : obj.projectid,
+    };
+}
 
 
 
@@ -695,6 +774,9 @@ export function getScratchKeyFromDbRow(row: Objects.ScratchKeyDbRow): Objects.Sc
     case 'numbers':
         servicetype = 'num';
         break;
+    case 'sounds':
+        servicetype = 'sounds';
+        break;
     default:
         throw new Error('Unrecognised service type');
     }
@@ -925,9 +1007,9 @@ export function getClassDbRow(tenant: Objects.ClassTenant): Objects.ClassDbRow {
 export function getDefaultClassTenant(classid: string): Objects.ClassTenant {
     return {
         id : classid,
-        supportedProjectTypes : [ 'text', 'images', 'numbers' ],
+        supportedProjectTypes : [ 'text', 'images', 'numbers', 'sounds' ],
         isManaged : false,
-        maxUsers : 25,
+        maxUsers : 30,
         maxProjectsPerUser : 2,
         textClassifierExpiry : 24,
         imageClassifierExpiry : 24,
@@ -995,6 +1077,68 @@ export function getTemporaryUserFromDbRow(row: Objects.TemporaryUserDbRow): Obje
         id : row.id,
         token : row.token,
         sessionExpiry : row.sessionexpiry,
+    };
+}
+
+
+
+// -----------------------------------------------------------------------------
+//
+// SITE ALERT MESSAGES
+//
+// -----------------------------------------------------------------------------
+
+const MAX_SITE_ALERT_STRING_LENGTH = 280;
+
+export function createSiteAlert(
+    message: string, url: string,
+    audience: string, severity: string,
+    expiry: number,
+): Objects.SiteAlertDbRow
+{
+    if (sitealerts.audienceLabels.indexOf(audience) === -1) {
+        throw new Error('Invalid audience type ' + audience);
+    }
+    if (sitealerts.severityLabels.indexOf(severity) === -1) {
+        throw new Error('Invalid severity type ' + severity);
+    }
+
+    if (message === undefined || typeof message !== 'string' || message === '' ||
+        url === undefined || typeof url !== 'string' || url === '')
+    {
+        throw new Error('Missing required attributes');
+    }
+    if (!expiry || isNaN(expiry) || expiry <= 0)
+    {
+        throw new Error('Invalid expiry');
+    }
+    if (message.length > MAX_SITE_ALERT_STRING_LENGTH) {
+        throw new Error('Invalid message');
+    }
+    if (url.length > MAX_SITE_ALERT_STRING_LENGTH) {
+        throw new Error('Invalid URL');
+    }
+
+    const now = new Date();
+
+    return {
+        timestamp : now,
+        audienceid : sitealerts.audiencesByLabel[audience].id,
+        severityid : sitealerts.severitiesByLabel[severity].id,
+        message, url,
+        expiry : new Date(now.getTime() + expiry),
+    };
+}
+
+export function getSiteAlertFromDbRow(row: Objects.SiteAlertDbRow): Objects.SiteAlert {
+    const severity = sitealerts.severitiesById[row.severityid].label;
+    const audience = sitealerts.audiencesById[row.audienceid].label;
+    return {
+        timestamp : row.timestamp,
+        severity, audience,
+        message : row.message,
+        url : row.url,
+        expiry : row.expiry,
     };
 }
 

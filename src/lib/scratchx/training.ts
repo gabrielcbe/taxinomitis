@@ -14,7 +14,7 @@ import * as ImageTypes from '../imagestore/types';
 async function storeText(key: Types.ScratchKey, label: string, textStr: string): Promise<Types.TextTraining>
 {
     // check that we have some data to store
-    if (!textStr || textStr.trim().length === 0) {
+    if (!textStr || typeof textStr !== 'string' || textStr.trim().length === 0) {
         throw new Error('Missing data');
     }
 
@@ -127,6 +127,18 @@ async function storeImages(key: Types.ScratchKey, label: string, base64imagedata
 
 
 
+async function storeSound(key: Types.ScratchKey): Promise<Types.SoundTraining>
+{
+    throw new Error('Not implemented yet');
+}
+
+
+
+
+
+
+
+
 export function storeTrainingData(scratchKey: Types.ScratchKey, label: string, data: any): Promise<any>
 {
     switch (scratchKey.type) {
@@ -141,5 +153,7 @@ export function storeTrainingData(scratchKey: Types.ScratchKey, label: string, d
     }
     case 'images':
         return storeImages(scratchKey, label, data as string);
+    case 'sounds':
+        return storeSound(scratchKey);
     }
 }

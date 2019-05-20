@@ -202,7 +202,7 @@ function reportMissingErrors(expectedErrors: ExpectedErrors): void {
 
 
 async function reportBadCredentials(err: Error, credentials: BluemixCredentials): Promise<void> {
-    log.error({ err, credentials }, 'Failed to verify credentials');
+    log.warn({ err, credentials }, 'Failed to verify credentials');
 
     //
     // Notify site admin
@@ -235,11 +235,33 @@ async function reportBadCredentials(err: Error, credentials: BluemixCredentials)
         //   string 'unspecified error - please try again\n' with an HTTP 500 response code
         //   even when the credentials are fine
         err.message.startsWith('unspecified error - please try again') ||
-        //  Occassionally there is a timeout when we tried to poll
+        //  Occassionally there is a timeout when we try to poll
         //   the service API. This is usually a temporary thing.
-        err.message === 'Error: ESOCKETTIMEDOUT'
+        err.message === 'Error: ESOCKETTIMEDOUT' || err.message === 'ESOCKETTIMEDOUT' ||
+        err.message === 'Error: ETIMEDOUT' || err.message === 'ETIMEDOUT'
         ))
     {
+        return;
+    }
+    const errorPayload: any = err;
+    if (errorPayload.code === 502 && errorPayload.statusCode === 502 &&
+        errorPayload.error === 'Bad Gateway')
+    {
+        // this is indicative of a Watson infrastructure error
+        //  and not bad credentials
+        return;
+    }
+    if (errorPayload.code === 500 && errorPayload.statusCode === 500 &&
+        errorPayload.error === 'Internal Server Error')
+    {
+        // this is indicative of a Watson infrastructure error
+        //  and not bad credentials
+        return;
+    }
+    if (!err.message || err.message !== 'string' || err.message.trim().length === 0)
+    {
+        // we don't have a useful error message to return so err on the
+        // safe side and don't report
         return;
     }
 
@@ -268,7 +290,7 @@ async function reportUnmanagedClassifier(
     creds: BluemixCredentials,
 ): Promise<void>
 {
-    log.error({ classifier, creds }, 'Unmanaged Bluemix classifier detected');
+    log.warn({ classifier, creds }, 'Unmanaged Bluemix classifier detected');
 
     //
     // Notify site admin
@@ -410,7 +432,7 @@ async function isClassifierKnown(
         return true;
     }
     catch (err) {
-        log.error({ err, classifier }, 'Failed to get classifier info from DB');
+        log.error({ err, classifier, creds, credid: creds.id }, 'Failed to get classifier info from DB');
         slack.notify('Failed to verify ' + expected + ' classifier ' + classifier.id,
                      slack.SLACK_CHANNELS.CREDENTIALS);
 

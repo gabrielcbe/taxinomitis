@@ -177,15 +177,19 @@
                 templateUrl: 'static/components-<%= VERSION %>/appinventor/appinventor.html',
                 controllerAs: 'vm'
             })
+            .state('links', {
+                url: '/links',
+                templateUrl: 'static/components-<%= VERSION %>/links/links.html#top'
+            })
+            .state('404', {
+                url: '/404',
+                templateUrl: 'static/components-<%= VERSION %>/404/404.html'
+            })
             .state('siteadmin', {
                 url: '/siteadmin',
                 controller: 'AdminController',
                 templateUrl: 'static/components-<%= VERSION %>/admin/admin.html',
                 controllerAs: 'vm'
-            })
-            .state('404', {
-                url: '/404',
-                templateUrl: 'static/components-<%= VERSION %>/404/404.html'
             });
 
 
@@ -277,11 +281,20 @@
                 else if (lang.indexOf('es') === 0) {
                     lang = 'es';
                 }
+                else if (lang.indexOf('fr') === 0) {
+                    lang = 'fr';
+                }
                 else if (lang.indexOf('ko') === 0) {
                     lang = 'ko';
                 }
                 else if (lang.indexOf('zh') === 0) {
                     lang = 'zh-cn';
+                }
+                else if (lang.indexOf('nl') === 0) {
+                    lang = 'nl-be';
+                }
+                else if (lang.indexOf('ja') === 0) {
+                    lang = 'ja';
                 }
 
                 return lang;

@@ -17,36 +17,42 @@ import loggerSetup from '../../lib/utils/logger';
 
 import * as mockstore from './mockstore';
 import requestPromise = require('request-promise');
+import requestLegacy = require('request');
 
 const log = loggerSetup();
 
 
 describe('Training - Conversation', () => {
 
-    let getStub: sinon.SinonStub;
-    let createStub: sinon.SinonStub;
-    let deleteStub: sinon.SinonStub;
-    let getProjectStub: sinon.SinonStub;
-    let authStoreStub: sinon.SinonStub;
-    let authByIdStoreStub: sinon.SinonStub;
-    let countStoreStub: sinon.SinonStub;
-    let getConversationWorkspacesStub: sinon.SinonStub;
-    let getStoreStub: sinon.SinonStub;
-    let storeStoreStub: sinon.SinonStub;
-    let updateConversationStub: sinon.SinonStub;
-    let deleteStoreStub: sinon.SinonStub;
-    let storeScratchKeyStub: sinon.SinonStub;
-    let resetExpiredScratchKeyStub: sinon.SinonStub;
-    let updateScratchKeyTimestampStub: sinon.SinonStub;
-    let getClassStub: sinon.SinonStub;
-    let isTenantDisruptiveStub: sinon.SinonStub;
+    let getStub: sinon.SinonStub<[string, (requestPromise.RequestPromiseOptions | undefined)?, (requestLegacy.RequestCallback | undefined)?], requestPromise.RequestPromise>;
+    let createStub: sinon.SinonStub<[string, (requestPromise.RequestPromiseOptions | undefined)?, (requestLegacy.RequestCallback | undefined)?], requestPromise.RequestPromise>;
+    let deleteStub: sinon.SinonStub<[string, (requestPromise.RequestPromiseOptions | undefined)?, (requestLegacy.RequestCallback | undefined)?], requestPromise.RequestPromise>;
+    let getProjectStub: sinon.SinonStub<[string], Promise<DbTypes.Project | undefined>>;
+    let authStoreStub: sinon.SinonStub<[string, TrainingTypes.BluemixServiceType], Promise<TrainingTypes.BluemixCredentials[]>>;
+    let authByIdStoreStub: sinon.SinonStub<[string], Promise<TrainingTypes.BluemixCredentials>>;
+    let countStoreStub: sinon.SinonStub<[DbTypes.Project], Promise<{ [label: string]: number; }>>;
+    let getConversationWorkspacesStub: sinon.SinonStub<[string], Promise<TrainingTypes.ConversationWorkspace[]>>;
+    let getStoreStub: sinon.SinonStub<[string, string, DbTypes.PagingOptions], Promise<string[]>>;
+    let storeStoreStub: sinon.SinonStub<[TrainingTypes.BluemixCredentials, DbTypes.Project, TrainingTypes.ConversationWorkspace], Promise<TrainingTypes.ConversationWorkspace>>;
+    let updateConversationStub: sinon.SinonStub<[TrainingTypes.ConversationWorkspace], Promise<void>>;
+    let deleteStoreStub: sinon.SinonStub<[string], Promise<void>>;
+    let storeScratchKeyStub: sinon.SinonStub<[DbTypes.Project, TrainingTypes.BluemixCredentials, string, Date], Promise<string>>;
+    let resetExpiredScratchKeyStub: sinon.SinonStub<[string, DbTypes.ProjectTypeLabel], Promise<void>>;
+    let updateScratchKeyTimestampStub: sinon.SinonStub<[DbTypes.Project, Date], Promise<void>>;
+    let getClassStub: sinon.SinonStub<[string], Promise<DbTypes.ClassTenant>>;
+    let isTenantDisruptiveStub: sinon.SinonStub<[string], Promise<boolean>>;
 
 
     before(() => {
+        // @ts-ignore
         getStub = sinon.stub(request, 'get').callsFake(mockConversation.getClassifier);
+        // @ts-ignore
         createStub = sinon.stub(request, 'post');
+        // @ts-ignore
         createStub.withArgs(sinon.match(/.*workspaces/), sinon.match.any).callsFake(mockConversation.createClassifier);
+        // @ts-ignore
         createStub.withArgs(sinon.match(/.*message/), sinon.match.any).callsFake(mockConversation.testClassifier);
+        // @ts-ignore
         deleteStub = sinon.stub(request, 'delete').callsFake(mockConversation.deleteClassifier);
 
         getProjectStub = sinon.stub(store, 'getProject').callsFake(mockstore.getProject);
@@ -127,7 +133,7 @@ describe('Training - Conversation', () => {
 
             assert(
                 storeScratchKeyStub.calledWith(project, mockstore.creds,
-                    '04f2d303-16fd-4f2e-80f4-2c66784cc0fe'));
+                    '04f2d303-16fd-4f2e-80f4-2c66784cc0fe', sinon.match.any));
         });
 
 
@@ -152,7 +158,7 @@ describe('Training - Conversation', () => {
 
             try {
                 await conversation.trainClassifier(project);
-                assert.fail(0, 1, 'should not have allowed this', '');
+                assert.fail('should not have allowed this');
             }
             catch (err) {
                 assert.strictEqual(err.message, conversation.ERROR_MESSAGES.UNKNOWN);
@@ -181,7 +187,7 @@ describe('Training - Conversation', () => {
 
             try {
                 await conversation.trainClassifier(project);
-                assert.fail(0, 1, 'should not have allowed this', '');
+                assert.fail('should not have allowed this');
             }
             catch (err) {
                 assert.strictEqual(err.message, conversation.ERROR_MESSAGES.INSUFFICIENT_API_KEYS);
@@ -210,7 +216,7 @@ describe('Training - Conversation', () => {
 
             try {
                 await conversation.trainClassifier(project);
-                assert.fail(0, 1, 'should not have allowed this', '');
+                assert.fail('should not have allowed this');
             }
             catch (err) {
                 assert.strictEqual(err.message, conversation.ERROR_MESSAGES.API_KEY_RATE_LIMIT);
@@ -322,7 +328,7 @@ describe('Training - Conversation', () => {
             assert(deleteStub.calledWith('http://conversation.service/v1/workspaces/good', {
                 auth : { user : 'useruseruseruseruseruseruseruseruser', pass : 'passpasspass' },
                 qs : { version : '2017-05-26' },
-                headers : { 'user-agent' : 'machinelearningforkids' },
+                headers : { 'user-agent' : 'machinelearningforkids', 'X-Watson-Learning-Opt-Out': 'true' },
                 json: true, gzip: true, timeout: 30000,
             }));
             assert(deleteStoreStub.calledWith(goodClassifier.id));
@@ -364,7 +370,7 @@ describe('Training - Conversation', () => {
             assert(deleteStub.calledWith('http://conversation.service/v1/workspaces/doesnotactuallyexist', {
                 auth : { user : 'useruseruseruseruseruseruseruseruser', pass : 'passpasspass' },
                 qs : { version : '2017-05-26' },
-                headers : { 'user-agent' : 'machinelearningforkids' },
+                headers : { 'user-agent' : 'machinelearningforkids', 'X-Watson-Learning-Opt-Out': 'true' },
                 json: true, gzip: true, timeout: 30000,
             }));
             assert(deleteStoreStub.calledWith(workspaceid));
@@ -475,6 +481,7 @@ describe('Training - Conversation', () => {
         },
         createClassifier : (url: string, options: conversation.LegacyTrainingRequest) => {
             log.debug({ url, options }, 'mock create classifier');
+            assert.strictEqual(options.headers['X-Watson-Learning-Opt-Out'], 'true');
             return new Promise((resolve, reject) => {
                 if (options.body.name === 'Bob\'s text project') {
 
@@ -539,6 +546,7 @@ describe('Training - Conversation', () => {
             });
         },
         testClassifier : (url: string, opts: conversation.LegacyTestRequest) => {
+            assert.strictEqual(opts.headers['X-Watson-Learning-Opt-Out'], 'true');
             return new Promise((resolve) => {
                 switch (url) {
                 case 'http://conversation.service/v1/workspaces/good/message':

@@ -25,6 +25,8 @@
             'WORKSHEETS.FACELOCK.TITLE', 'WORKSHEETS.FACELOCK.SUMMARY', 'WORKSHEETS.FACELOCK.DESCRIPTION',
             'WORKSHEETS.JOURNEYTOSCHOOL.TITLE', 'WORKSHEETS.JOURNEYTOSCHOOL.SUMMARY', 'WORKSHEETS.JOURNEYTOSCHOOL.DESCRIPTION',
             'WORKSHEETS.SHYPANDA.TITLE', 'WORKSHEETS.SHYPANDA.SUMMARY', 'WORKSHEETS.SHYPANDA.DESCRIPTION',
+            'WORKSHEETS.ALIENLANGUAGE.TITLE', 'WORKSHEETS.ALIENLANGUAGE.SUMMARY', 'WORKSHEETS.ALIENLANGUAGE.DESCRIPTION',
+            'WORKSHEETS.SECRETCODE.TITLE', 'WORKSHEETS.SECRETCODE.SUMMARY', 'WORKSHEETS.SECRETCODE.DESCRIPTION',
             'WORKSHEETS.VIRTUALPET.TITLE', 'WORKSHEETS.VIRTUALPET.SUMMARY', 'WORKSHEETS.VIRTUALPET.DESCRIPTION',
             'WORKSHEETS.PACMAN.TITLE', 'WORKSHEETS.PACMAN.SUMMARY', 'WORKSHEETS.PACMAN.DESCRIPTION',
             'WORKSHEETS.CHATBOTS.TITLE', 'WORKSHEETS.CHATBOTS.SUMMARY', 'WORKSHEETS.CHATBOTS.DESCRIPTION',
@@ -38,7 +40,9 @@
             'WORKSHEETS.WHATTWITTERTHINKS.TITLE', 'WORKSHEETS.WHATTWITTERTHINKS.SUMMARY', 'WORKSHEETS.WHATTWITTERTHINKS.DESCRIPTION',
             'WORKSHEETS.NOUGHTSANDCROSSES.TITLE', 'WORKSHEETS.NOUGHTSANDCROSSES.SUMMARY', 'WORKSHEETS.NOUGHTSANDCROSSES.DESCRIPTION',
             'WORKSHEETS.TOPTRUMPS.TITLE', 'WORKSHEETS.TOPTRUMPS.SUMMARY', 'WORKSHEETS.TOPTRUMPS.DESCRIPTION',
-            'WORKSHEETS.HEADLINES.TITLE', 'WORKSHEETS.HEADLINES.SUMMARY', 'WORKSHEETS.HEADLINES.DESCRIPTION'
+            'WORKSHEETS.HEADLINES.TITLE', 'WORKSHEETS.HEADLINES.SUMMARY', 'WORKSHEETS.HEADLINES.DESCRIPTION',
+            'WORKSHEETS.FINDIT.TITLE', 'WORKSHEETS.FINDIT.SUMMARY', 'WORKSHEETS.FINDIT.DESCRIPTION',
+            'WORKSHEETS.JARGONBUSTER.TITLE', 'WORKSHEETS.JARGONBUSTER.SUMMARY', 'WORKSHEETS.JARGONBUSTER.DESCRIPTION'
         ]).then(function (translations) {
             vm.worksheets = [
                 {
@@ -47,7 +51,7 @@
                     description : translations['WORKSHEETS.SMARTCLASSROOM.DESCRIPTION'],
                     difficulty : 'Beginner',
                     type : 'text',
-                    maketypes : [ 'scratch2' ],
+                    maketypes : [ 'scratch3' ],
                     image : 'static/images/project-smartclassroom.png',
                     tags : [ 'digital assistants', 'supervised learning' ],
                     teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-smartclassroom.pdf',
@@ -72,7 +76,7 @@
                     description : translations['WORKSHEETS.MAKEMEHAPPY.DESCRIPTION'],
                     difficulty : 'Beginner',
                     type : 'text',
-                    maketypes : [ 'scratch2' ],
+                    maketypes : [ 'scratch3', 'python' ],
                     image : 'static/images/project-makemehappy.png',
                     tags : [ 'sentiment analysis', 'supervised learning' ],
                     teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-makemehappy.pdf',
@@ -84,6 +88,10 @@
                         {
                             description : 'Shorter version of the project, where the students only make a machine learning version of the assistant',
                             worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-makemehappy-easy.pdf'
+                        },
+                        {
+                            description : 'Python project - for making the project using Python',
+                            worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-makemehappy-python.pdf'
                         }
                     ]
                 },
@@ -147,7 +155,7 @@
                     description : translations['WORKSHEETS.CARORCUP.DESCRIPTION'],
                     difficulty : 'Beginner',
                     type : 'images',
-                    maketypes : [ 'scratch2' ],
+                    maketypes : [ 'scratch3' ],
                     image : 'static/images/project-carorcup.png',
                     tags : [ 'image classification', 'supervised learning', 'crowd sourcing' ],
                     teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-carorcup.pdf',
@@ -211,6 +219,22 @@
                     ]
                 },
                 {
+                    title : translations['WORKSHEETS.ALIENLANGUAGE.TITLE'],
+                    summary : translations['WORKSHEETS.ALIENLANGUAGE.SUMMARY'],
+                    description : translations['WORKSHEETS.ALIENLANGUAGE.DESCRIPTION'],
+                    difficulty : 'Beginner',
+                    type : 'sounds',
+                    maketypes : [ 'scratch3' ],
+                    image : 'static/images/project-alienlanguage.png',
+                    tags : [ 'sound recognition', 'supervised learning' ],
+                    teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-alienlanguage.pdf',
+                    downloads : [
+                        {
+                            worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-alienlanguage.pdf'
+                        }
+                    ]
+                },
+                {
                     title : translations['WORKSHEETS.PACMAN.TITLE'],
                     summary : translations['WORKSHEETS.PACMAN.SUMMARY'],
                     description : translations['WORKSHEETS.PACMAN.DESCRIPTION'],
@@ -232,7 +256,7 @@
                     description : translations['WORKSHEETS.CHATBOTS.DESCRIPTION'],
                     difficulty : 'Intermediate',
                     type : 'text',
-                    maketypes : [ 'scratch2', 'python' ],
+                    maketypes : [ 'scratch3', 'python' ],
                     image : 'static/images/project-chatbots.png',
                     tags : [ 'sentiment analysis', 'supervised learning' ],
                     teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-chatbots.pdf',
@@ -269,7 +293,7 @@
                     description : translations['WORKSHEETS.TOURISTINFO.DESCRIPTION'],
                     difficulty : 'Intermediate',
                     type : 'text',
-                    maketypes : [ 'scratch2' ],
+                    maketypes : [ 'scratch3' ],
                     image : 'static/images/project-touristinfo.png',
                     tags : [ 'training bias', 'recommendations', 'supervised learning' ],
                     teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-touristinfo.pdf',
@@ -280,12 +304,28 @@
                     ]
                 },
                 {
+                    title : translations['WORKSHEETS.SECRETCODE.TITLE'],
+                    summary : translations['WORKSHEETS.SECRETCODE.SUMMARY'],
+                    description : translations['WORKSHEETS.SECRETCODE.DESCRIPTION'],
+                    difficulty : 'Intermediate',
+                    type : 'sounds',
+                    maketypes : [ 'scratch3' ],
+                    image : 'static/images/project-secretcode.png',
+                    tags : [ 'speech recognition', 'sound recognition', 'supervised learning' ],
+                    teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-secretcode.pdf',
+                    downloads : [
+                        {
+                            worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-secretcode.pdf'
+                        }
+                    ]
+                },
+                {
                     title : translations['WORKSHEETS.SORTINGHAT.TITLE'],
                     summary : translations['WORKSHEETS.SORTINGHAT.SUMMARY'],
                     description : translations['WORKSHEETS.SORTINGHAT.DESCRIPTION'],
                     difficulty : 'Intermediate',
                     type : 'text',
-                    maketypes : [ 'scratch2' ],
+                    maketypes : [ 'scratch3' ],
                     image : 'static/images/project-sortinghat.png',
                     tags : [ 'text classification', 'supervised learning', 'crowd sourcing' ],
                     teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-sortinghat.pdf',
@@ -343,7 +383,7 @@
                     description : translations['WORKSHEETS.LOCATELARRY.DESCRIPTION'],
                     difficulty : 'Intermediate',
                     type : 'images',
-                    maketypes : [ 'scratch2' ],
+                    maketypes : [ 'scratch3' ],
                     image : 'static/images/project-locatelarry.png',
                     tags : [ 'image classification', 'supervised learning', 'image pre-processing' ],
                     teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-locatelarry.pdf',
@@ -359,7 +399,7 @@
                     description : translations['WORKSHEETS.CONFUSED.DESCRIPTION'],
                     difficulty : 'Intermediate',
                     type : 'images',
-                    maketypes : [ 'scratch2' ],
+                    maketypes : [ 'scratch3' ],
                     image : 'static/images/project-confused.png',
                     tags : [ 'image classification', 'supervised learning', 'overfitting' ],
                     teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-confused.pdf',
@@ -382,6 +422,22 @@
                     downloads : [
                         {
                             worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-schoollibrary.pdf'
+                        }
+                    ]
+                },
+                {
+                    title : translations['WORKSHEETS.JARGONBUSTER.TITLE'],
+                    summary : translations['WORKSHEETS.JARGONBUSTER.SUMMARY'],
+                    description : translations['WORKSHEETS.JARGONBUSTER.DESCRIPTION'],
+                    difficulty : 'Intermediate',
+                    type : 'sounds',
+                    maketypes : [ 'scratch3' ],
+                    image : 'static/images/project-jargonbuster.png',
+                    tags : [ 'speech recognition', 'sound recognition', 'supervised learning' ],
+                    teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-jargonbuster.pdf',
+                    downloads : [
+                        {
+                            worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-jargonbuster.pdf'
                         }
                     ]
                 },
@@ -458,6 +514,22 @@
                             worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-headlines.pdf'
                         }
                     ]
+                },
+                {
+                    title : translations['WORKSHEETS.FINDIT.TITLE'],
+                    summary : translations['WORKSHEETS.FINDIT.SUMMARY'],
+                    description : translations['WORKSHEETS.FINDIT.DESCRIPTION'],
+                    difficulty : 'Advanced',
+                    type : 'images',
+                    maketypes : [ 'appinventor' ],
+                    image : 'static/images/project-findit.png',
+                    tags : [ 'image classification', 'supervised learning' ],
+                    teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-findit.pdf',
+                    downloads : [
+                        {
+                            worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-findit.pdf'
+                        }
+                    ]
                 }
             ];
         });
@@ -498,6 +570,7 @@
             }
             if (($scope.projectmaketype !== 'ALL') && match) {
                 match = (($scope.projectmaketype === 'python' && item.maketypes.indexOf('python') >= 0) ||
+                         ($scope.projectmaketype === 'appinventor' && item.maketypes.indexOf('appinventor') >= 0) ||
                          (($scope.projectmaketype === 'scratch') && (item.maketypes.indexOf('scratch2') >= 0 ||
                                                                      item.maketypes.indexOf('scratch3') >= 0)));
             }

@@ -42,6 +42,10 @@
             "TITLE": " 技术 ",
             "BODY": "该工具完全基于网络，无需安装或复杂的设置即可使用。<br/> <br/>它专为学校和志愿者编写的课堂设计而设计儿童，并为教师或小组负责人提供管理页面，以便能够管理和管理学生的访问权限。<br/> <br/>它由<a target ='_blank' href='http://dalelane.co.uk/'>Dale Lane </a>使用来自<a target='_blank' href='https://www.ibm.com/watson/developercloud/'> IBM Watson Developer Cloud的API </ a>。",
             "LOGIN": "开始: "
+        },
+        "FURTHER": {
+            "TITLE": "Further learning",
+            "BODY": "Machine Learning for Kids is a useful tool for introducing children to how ML systems are trained, how they are used, and some of the real-world implications of AI applications. <br/><br/>For additional teaching and learning resources, including teaching the internals of ML systems, please see: "
         }
     },
     "NEWS": {
@@ -53,6 +57,43 @@
         "MENTIONS": {
             "TITLE": "提及和媒体",
             "DESCRIPTION": "从wakelet.com加载提及和媒体"
+        }
+    },
+    "LINKS": {
+        "TITLE": "Educational AI resources for children",
+        "INTRO": "This page is a list of further tools and resources for introducing children to artificial intelligence.",
+        "ECRAFT2LEARN": {
+            "BODY1": "<a href='http://users.ox.ac.uk/~oucs0030/' target='_blank'>Ken Kahn</a> has created resources to allow beginners to create AI programs in Snap! (a visual programming environment similar to Scratch).",
+            "BODY2": "While I've focused on explaining how AI systems are trained and behave (and the real-world implications), eCraft2Learn has fantastic resources that dive deep into how ML systems actually work.",
+            "BODY3": "The <a href='https://ecraft2learn.github.io/ai/AI-Teacher-Guide/chapter-6.html' target='_blank'>neural net Tic Tac Toe project</a> is particularly fascinating, allowing students to experiment with hyperparameters from Snap."
+        },
+        "APPSFORGOOD": {
+            "BODY1": "Apps for Good are a UK-based not-for-profit that creates resources for teaching technology subjects, that they make freely available to schools.",
+            "BODY2": "Their Machine Learning course uses <em>Machine Learning for Kids</em>, and supplements it with a range of additional materials like schemes of work, lesson plans, student workbooks, presentations and more. It makes it easy for schools to deliver ML lessons that put the coding exercises in context."
+        },
+        "AIFAMILYCHALLENGE": {
+            "BODY1": "The AI Family Challenge is a free, hands-on AI education program for families. They use <em>Machine Learning for Kids</em>, and supplement it with a lot of additional support, such as technical coaches and mentors, a structured lesson plan and supporting videos.",
+            "BODY2": "The program is based around a competition that challenges children to think of their own AI project ideas, with the support of their families and technical mentors."
+        },
+        "AIINSCHOOLS": {
+            "BODY1": "The AIinSchools programme provides a free lesson plan for teachers to explain AI to Year 9 (aged 13-14).",
+            "BODY2": "It includes both unplugged classroom activities, and programming activities for training neural networks on GPUs running on AWS."
+        },
+        "TEENSINAI": {
+            "BODY1": "Teens in AI use a combination of hackathons, accelerators and bootcamps to support young people aged 12-18 to explore AI."
+        },
+        "AI4ALL": {
+            "BODY1": "AI4ALL run summer camps for high school students in the US that give a detailed technical introduction to AI."
+        },
+        "CALYPSO": {
+            "BODY1": "Students with programmable Cozmo robots can use the Calypso programming framework to get a hands-on way to experience AI by experimenting with techniques like computer vision and speech recognition."
+        },
+        "AIINABOX": {
+            "BODY1": "AI-in-a-Box is a bundle of robots, accessories and teaching resources. The kit can be used to teach projects that cover topics like visual recognition, facial recognition, speech generation and speech recognition."
+        },
+        "VIDEOS": {
+            "TITLE": "Videos",
+            "INTRO": "I've also found these videos useful when introducing AI concepts:"
         }
     },
     "ERRORS": {
@@ -147,7 +188,8 @@
             "NOTES_1": "你想教电脑识别什么类型的东西？",
             "NOTES_2": "对于单词,句子或段落,请选择\" text \" ",
             "NOTES_3": "对于照片,图表和图片,请选择\" images \" ",
-            "NOTES_4": "对于数字组或多个选项,请选择\"数字\" "
+            "NOTES_4": "对于数字组或多个选项,请选择\"数字\" ",
+            "NOTES_5": "For voices and sounds, choose \"sounds\""
         },
         "LANGUAGE": {
             "LABEL": "语言",
@@ -235,7 +277,8 @@
             "PATTERNURL": "这需要是图片的网址",
             "WEBCAMFAIL": "抱歉！我们无法让网络摄像头为您工作。",
             "WEBCAMERROR": "我们从您的网络浏览器收到的消息是: "
-        }
+        },
+        "BACKGROUNDNOISE": "Collecting examples of background noise will help the computer to learn to recognize your sounds"
     },
     "MODELS": {
         "TITLE": "机器学习模型",
@@ -253,12 +296,14 @@
                 "CROWDSOURCED": {
                     "TEXT": "您的班级正在使用您收集的文本示例来训练机器学习模型。",
                     "IMAGES": "您的班级正在使用您收集的图像示例来训练机器学习模型。",
-                    "NUMBERS": "您的班级正在使用您收集的数字示例来训练机器学习模型。"
+                    "NUMBERS": "您的班级正在使用您收集的数字示例来训练机器学习模型。",
+                    "SOUNDS" : "Your class is training a machine learning model using the examples of sounds that you all collected."
                 },
                 "INDIVIDUAL": {
                     "TEXT": "您已经开始使用您收集的文本示例来训练机器学习模型。",
                     "IMAGES": "您已经开始使用您收集的图像示例来训练机器学习模型。",
-                    "NUMBERS": "您已经开始使用您收集的数字示例来训练机器学习模型。"
+                    "NUMBERS": "您已经开始使用您收集的数字示例来训练机器学习模型。",
+                    "SOUNDS" : "You've started training a machine learning model using the examples of sounds that you collected."
                 },
                 "SINCE": "由于这是在训练"
             },
@@ -266,12 +311,14 @@
                 "CROWDSOURCED": {
                     "TEXT": "您的班级已培训机器学习模型,以识别文本何时",
                     "IMAGES": "你的班级已经培训了一种机器学习模型来识别图像是什么时候",
-                    "NUMBERS": "您的班级已培训机器学习模型,以识别数字何时"
+                    "NUMBERS": "您的班级已培训机器学习模型,以识别数字何时",
+                    "SOUNDS" : "Your class has trained a machine learning model to recognise when sounds are "
                 },
                 "INDIVIDUAL": {
                     "TEXT": "您已经培训了一种机器学习模型来识别文本的时间",
                     "IMAGES": "你已经训练了一个机器学习模型来识别图像是什么时候",
-                    "NUMBERS": "您已经培训了一种机器学习模型来识别数字是什么时候"
+                    "NUMBERS": "您已经培训了一种机器学习模型来识别数字是什么时候",
+                    "SOUNDS" : "You have trained a machine learning model to recognise when sounds are "
                 },
                 "CREATED": {
                     "TEACHER": "你的老师创造了模型",
@@ -287,18 +334,21 @@
                     "CLASS": {
                         "TEXT": "您的老师尝试使用您班级收集的文本示例来训练机器学习模型。",
                         "IMAGES": "您的老师尝试使用您班级收集的图像示例来训练机器学习模型。",
-                        "NUMBERS": "您的老师尝试使用您班级收集的数字示例来训练机器学习模型。"
+                        "NUMBERS": "您的老师尝试使用您班级收集的数字示例来训练机器学习模型。",
+                        "SOUNDS" : "Your teacher tried training a machine learning model using the examples of sounds that your class collected."
                     },
                     "YOU": {
                         "TEXT": "您尝试使用班级收集的文本示例来训练机器学习模型。",
                         "IMAGES": "您尝试使用您的班级收集的图像示例来训练机器学习模型。",
-                        "NUMBERS": "您尝试使用班级收集的数字示例来训练机器学习模型。"
+                        "NUMBERS": "您尝试使用班级收集的数字示例来训练机器学习模型。",
+                        "SOUNDS" : "You tried training a machine learning model using the examples of sounds that your class collected."
                     }
                 },
                 "INDIVIDUAL": {
                     "TEXT": "您尝试使用您收集的文本示例来训练机器学习模型。",
                     "IMAGES": "您尝试使用您收集的图像示例来训练机器学习模型。",
-                    "NUMBERS": "您尝试使用收集的数字示例来训练机器学习模型。"
+                    "NUMBERS": "您尝试使用收集的数字示例来训练机器学习模型。",
+                    "SOUNDS" : "You tried training a machine learning model using the examples of sounds that you collected."
                 }
             },
             "IDLE": {
@@ -306,24 +356,28 @@
                     "CROWDSOURCED": {
                         "TEXT": "你的班级说你想收集文字的例子。",
                         "IMAGES": "你的班级说你想收集图像的例子。",
-                        "NUMBERS": "你的班级说你想收集数字的例子。"
+                        "NUMBERS": "你的班级说你想收集数字的例子。",
+                        "SOUNDS" : "Your class said you want to collect examples of sounds."
                     },
                     "INDIVIDUAL": {
                         "TEXT": "你说你想收集文字的例子。",
                         "IMAGES": "你说你想要收集图像的例子。",
-                        "NUMBERS": "你说你想收集数字的例子。"
+                        "NUMBERS": "你说你想收集数字的例子。",
+                        "SOUNDS" : "You've said you want to collect examples of sounds."
                     }
                 },
                 "NODATA": {
                     "CROWDSOURCED": {
                         "TEXT": "您的班级表示您希望收集计算机文本的示例,以便识别文本的时间",
                         "IMAGES": "你的班级说你要收集图像的例子,以便计算机识别出图像的时间",
-                        "NUMBERS": "您的班级表示您希望收集计算机的数字示例以识别数字何时"
+                        "NUMBERS": "您的班级表示您希望收集计算机的数字示例以识别数字何时",
+                        "SOUNDS" : "Your class said that you want to collect examples of sounds for a computer to recognise when sounds are "
                     },
                     "INDIVIDUAL": {
                         "TEXT": "您说要收集计算机文本的示例,以便识别文本的时间",
                         "IMAGES": "你说你要收集图像的例子,让计算机识别图像的时间",
-                        "NUMBERS": "你说你要收集计算机数字的例子来识别数字是什么时候"
+                        "NUMBERS": "你说你要收集计算机数字的例子来识别数字是什么时候",
+                        "SOUNDS" : "You said that you want to collect examples of sounds for a computer to recognise when sounds are "
                     }
                 },
                 "NOEXAMPLES": {
@@ -334,12 +388,14 @@
                     "CROWDSOURCED": {
                         "TEXT": "您的班级已经收集了计算机用于识别文本的文本示例",
                         "IMAGES": "您的班级已经收集了计算机用于识别图像的图像示例",
-                        "NUMBERS": "您的班级已收集计算机的数字示例,用于识别数字何时"
+                        "NUMBERS": "您的班级已收集计算机的数字示例,用于识别数字何时",
+                        "SOUNDS" : "Your class has collected examples of sounds for a computer to use to recognise when sounds are "
                     },
                     "INDIVIDUAL": {
                         "TEXT": "您收集了计算机用于识别文本的文本示例",
                         "IMAGES": "您已经收集了计算机用于识别图像的图像示例",
-                        "NUMBERS": "您已收集计算机的数字示例,用于识别数字何时"
+                        "NUMBERS": "您已收集计算机的数字示例,用于识别数字何时",
+                        "SOUNDS" : "You have collected examples of sounds for a computer to use to recognise when sounds are "
                     },
                     "COLLECTED": {
                         "CLASS": "他们收集了: ",
@@ -390,7 +446,8 @@
                 "TEST": {
                     "TEXT": "尝试测试下面的机器学习模型。输入一个下面的文本示例,您没有在用于训练它的示例中包含这些文本。它会告诉您它识别它的内容,以及它对这个文本识别的信心",
                     "IMAGES": "尝试测试下面的机器学习模型。在下面输入一个示例图片,您没有在用于训练它的示例中包含这些图片。它会告诉您它识别它的内容,以及它对这个图片识别的信心。",
-                    "NUMBERS": "尝试测试下面的机器学习模型。输入一个下面的数字示例,您没有在用于训练它的示例中包含这些数字。它会告诉您它识别它的内容,以及它对这个数字识别的信心"
+                    "NUMBERS": "尝试测试下面的机器学习模型。输入一个下面的数字示例,您没有在用于训练它的示例中包含这些数字。它会告诉您它识别它的内容,以及它对这个数字识别的信心",
+                    "SOUNDS" : "Try testing the machine learning model below. Click the 'Start listening' button. If your machine learning model recognises any sounds, it will tell you what it recognises it as, and how confident it is in that."
                 },
                 "SCRATCH": "如果计算机似乎已经学会正确识别事物,那么你可以去Scratch并使用计算机学到的东西制作游戏！",
                 "ADDITIONAL_TRAINING": {
@@ -418,12 +475,15 @@
             "INTRO": {
                 "TEXT": "尝试根据您的训练添加一些文字以了解它是如何识别的。",
                 "IMAGES": "尝试根据您的训练设置图像以查看其识别方式。",
-                "NUMBERS": "尝试输入一些数字,看看它是如何根据你的训练得到认可的。"
+                "NUMBERS": "尝试输入一些数字,看看它是如何根据你的训练得到认可的。",
+                "SOUNDS": "Try making a sound to see how it is recognised based on your training"
             },
             "WEBCAM": "使用<strong>摄像头</strong>进行测试",
             "DRAWING": "通过<strong>绘图</strong>进行测试",
             "WWW": "用<strong> www </strong>进行测试",
-            "RECOGNISED": "被认可为<strong> {{testoutput}} </strong> "
+            "RECOGNISED": "被认可为<strong> {{testoutput}} </strong> ",
+            "STARTLISTENING": "Start listening",
+            "STOPLISTENING": "Stop listening"
         },
         "QUIZ": {
             "TITLE": "测验时间！",
@@ -436,8 +496,8 @@
     },
     "MAKES": {
         "TITLE": "Make something with your machine learning model",
-        "SCRATCH2": "Make a project in the current version of Scratch",
-        "SCRATCH3": "Use the new (beta) version of Scratch",
+        "SCRATCH2": "Make a project in the old version of Scratch",
+        "SCRATCH3": "Use the new version of Scratch",
         "PYTHON": "Write Python code to use your machine learning model",
         "APPINVENTOR": "Make a mobile app for your phone or tablet"
     },
@@ -498,7 +558,8 @@
 
             "TEXT": " 文本 ",
             "IMAGES": "图像",
-            "NUMBERS": "数字"
+            "NUMBERS": "数字",
+            "SOUNDS": "sounds"
         },
 
         "LEVELS": {
@@ -644,6 +705,26 @@
             "TITLE": "头条新闻",
             "SUMMARY": "测试计算机识别语言使用的能力",
             "DESCRIPTION": "训练计算机识别全国性报纸的头条新闻。"
+        },
+        "FINDIT": {
+            "TITLE": "Find It!",
+            "SUMMARY": "Teach a computer to recognise pictures",
+            "DESCRIPTION": "Make a hide-and-seek game for your mobile phone"
+        },
+        "ALIENLANGUAGE": {
+            "TITLE": "Alien Language",
+            "SUMMARY": "Teach a computer to recognize sounds",
+            "DESCRIPTION": "Make an alien in Scratch that learns to recognize an alien language"
+        },
+        "SECRETCODE": {
+            "TITLE": "Secret Code",
+            "SUMMARY": "Teach a computer to recognize speech",
+            "DESCRIPTION": "Train a computer to understand secret code words to guide a spy."
+        },
+        "JARGONBUSTER": {
+            "TITLE": "Jargon Buster",
+            "SUMMARY": "Teach a computer to listen for words",
+            "DESCRIPTION": "Make a project in Scratch that displays the meaning of words you say."
         }
     },
     "TEACHER": {
@@ -789,7 +870,53 @@
 
             "DELETE_STUDENT": "Delete student account",
 
-            "NOT_AUTHORIZED": "You are not authorized to access the list of students in your class."
+            "NOT_AUTHORIZED": "You are not authorized to access the list of students in your class.",
+
+            "ADD_MULTIPLE": {
+                "BUTTON" : "Multiple students",
+
+                "TITLE" : "Add new students",
+                "INTRO" : "You can use this to create more than one student account at the same time.",
+                "USERNAME" : "What do you want each username to start with?",
+                "USERNAME_REQUIRED" : "Please choose the prefix for the usernames",
+                "USERNAME_TOOLONG" : "That is too long",
+                "USERNAME_INVALID" : "Invalid characters",
+                "NUMBER" : "How many student accounts do you want?",
+                "NUMBER_REQUIRED" : "Please enter the number of students to create",
+                "NUMBER_TOOMANY" : "Your class has a limit of {{userslimit}} students.",
+                "PASSWORD" : "The password to give them:",
+                "PASSWORD_TOOSHORT" : "Too short"
+            }
+        }
+    },
+    "SCRATCHBLOCKS": {
+        "TEXT_PROJECTS": {
+            "mlforkids.text.recogniseLabel": "recognise text [TEXT] (label)",
+            "mlforkids.text.recogniseConfidence": "recognise text [TEXT] (confidence)",
+            "mlforkids.text.addTraining": "add training data [TEXT] [LABEL]",
+            "mlforkids.text.trainNewModel": "train new machine learning model",
+            "mlforkids.text.checkModelStatus": "Is the machine learning model [STATUS] ?"
+        },
+        "IMAGES_PROJECTS": {
+            "mlforkids.images.recogniseLabel": "recognise image [IMAGE] (label)",
+            "mlforkids.images.recogniseConfidence": "recognise image [IMAGE] (confidence)",
+            "mlforkids.images.addTraining": "add training data [TEXT] [LABEL]"
+        },
+        "NUMBER_PROJECTS": {
+            "mlforkids.numbers.trainNewModel": "train new machine learning model"
+        },
+        "TWITTER": {
+            "mlforkids.twitter.getrecenttweet": "get the [INDEX] most recent tweet about [TOPIC]"
+        },
+        "IMAGE_BLOCKS": {
+            "mlforkids.imageblocks.getCostumeImage": "costume image",
+            "mlforkids.imageblocks.getBackdropCostumeImage": "backdrop image",
+            "mlforkids.imageblocks.getBackdropImage": "backdrop image",
+            "mlforkids.imageblocks.saveScreenshotToCostume": "save screenshot to costume"
+        },
+        "GUI": {
+            "gui.menuBar.mlforkidsLibrary": "Project templates",
+            "gui.mlforkidsLibrary.templates": "Machine Learning for Kids modelos de projeto"
         }
     },
     "HELP": {
@@ -956,7 +1083,14 @@
             "Q4-A-6": "General information stored about all accounts",
             "Q4-A-7": "User management for Machine Learning for Kids is implemented using the third party service, <a href='https://auth0.com/'>Auth0</a>. They store the IP address that you last logged into Machine Learning for Kids from, and the type of browser you used. I've never found a reason to use that, but it is stored if I did want to go and look for it.",
             "Q4-A-8": "Errors that happen in the web browser are captured using the third party service, <a href='https://sentry.io/'>Sentry</a>. If something goes wrong, it will capture information about the error, including your username, IP address, type of browser you were using, and a technical description of what went wrong.",
-            "Q4-A-9": "I use <a href='https://www.google.com/analytics/'>Google Analytics</a> so that I know how many users visit Machine Learning for Kids each day. Although it captures information such as geographic location and browser type, this is only ever displayed to me in an anonymised aggregate way."
+            "Q4-A-9": "I use <a href='https://www.google.com/analytics/'>Google Analytics</a> so that I know how many users visit Machine Learning for Kids each day. Although it captures information such as geographic location and browser type, this is only ever displayed to me in an anonymised aggregate way.",
+
+            "Q5": "What happens to training data created by students?",
+            "Q5-A-1": "A step in all machine learning projects that students make using this site is to create or collect training examples. For text projects, this can mean typing in short text passages. For image projects, this can means drawing pictures onto an on-screen canvas or taking photos using the webcam. For numbers projects, this means typing in sets of numbers",
+            "Q5-A-2": "All of these training examples are stored in a <a href='https://www.ibm.com/cloud/compose/mysql'>MySQL database hosted on IBM Cloud</a>. As the database administrator, I have access to all of these training examples for all student projects, however I do not use it for any other purposes other than enabling students to access and work on their own projects. I do not publish the training data (either publicly or to individuals or third parties) or otherwise share it, with the two exceptions of submitting it to IBM Watson APIs described below.",
+            "Q5-A-3": "Machine learning models for text projects are created using the <a href='https://www.ibm.com/cloud/watson-assistant/'>IBM Watson Assistant</a> cloud service, which means when students train a model, a copy of the training examples that they have entered will be <a href='https://cloud.ibm.com/apidocs/assistant#create-workspace'>submitted to IBM Watson</a>. IBM Watson does not use these training examples for any other purposes. This is because Machine Learning for Kids <a href='https://cloud.ibm.com/apidocs/assistant#data-collection'>requests an opt-out</a> for student training examples being used by IBM to improve the service, as <a href='https://cloud.ibm.com/docs/services/watson?topic=watson-gs-logging-overview'>described in the Watson documentation</a>.",
+            "Q5-A-4": "Machine learning models for images projects are created using the <a href='https://www.ibm.com/watson/services/visual-recognition/'>IBM Visual Recognition</a> cloud service, which means when students train a model, a copy of their training images will be <a href='https://cloud.ibm.com/apidocs/visual-recognition#create-a-classifier'>uploaded to IBM Watson</a>. IBM Watson does not use these training examples for any other purposes. This is because Machine Learning for Kids <a href='https://cloud.ibm.com/apidocs/visual-recognition#data-collection'>requests an opt-out</a> for student training examples being used by IBM to improve the service, as <a href='https://cloud.ibm.com/docs/services/watson?topic=watson-gs-logging-overview'>described in the Watson documentation</a>.",
+            "Q5-A-5": "IBM Watson provides some <a href='https://cloud.ibm.com/docs/services/assistant?topic=assistant-information-security#information-security-gdpr-wa'>general guidance for sharing training data with their services</a>, which also apply to training data created and collected in Machine Learning for Kids. Specifically, students should be advised not to include personally identifiable information in the examples that they collect."
         }
     }
 }

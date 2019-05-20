@@ -32,7 +32,7 @@
         "IN20MINS": "In 20 minutes...",
         "WHAT": {
             "TITLE": "What?",
-            "BODY" : "This tool introduces machine learning by providing hands-on experiences for training machine learning systems and building things with them. <br/><br/>It provides an easy-to-use guided environment for training machine learning models for classifying text, numbers or recognising images. <br/><br/>This builds on existing efforts to introduce and teach coding to children, by adding these models to <a href='https://scratch.mit.edu/about' target='_blank'>Scratch</a> (a widely used educational coding platform), allowing children to create projects and build games with the machine learning models that they've trained. <br/><br/>To learn more, look at:"
+            "BODY" : "This free tool introduces machine learning by providing hands-on experiences for training machine learning systems and building things with them. <br/><br/>It provides an easy-to-use guided environment for training machine learning models to recognise text, numbers, images, or sounds. <br/><br/>This builds on existing efforts to introduce and teach coding to children, by adding these models to educational coding platforms <a href='https://scratch.mit.edu/about' target='_blank'>Scratch</a> and <a href='http://appinventor.mit.edu/' target='_blank'>App Inventor</a>, and helping children create projects and build games with the machine learning models they train. <br/><br/>The tool was first made available in 2017, and is now being <a href='https://wakelet.com/wake/4d3680cb-2a11-49ab-9180-fcfeced48393' target='_blank'>used by thousands of schools, code clubs, and families around the world</a>. <br/><br/>To learn more, look at:"
         },
         "WHY": {
             "TITLE": "Why?",
@@ -40,8 +40,12 @@
         },
         "TECH": {
             "TITLE": "Tech",
-            "BODY": "The tool is entirely web-based and requires no installs or complicated setup to be able to use. <br/><br/>It was designed for use in the classroom by schools and volunteer-run coding groups for children, and provides an admin page for teachers or group leaders to be able to manage and administer access for their students.<br/><br/>It is being built by <a target='_blank' href='http://dalelane.co.uk/'>Dale Lane</a> using APIs from <a target='_blank' href='https://www.ibm.com/watson/developercloud/'>IBM Watson Developer Cloud</a>.",
+            "BODY": "The tool is entirely web-based and requires no installs or complicated setup to be able to use. <br/><br/>It was designed for use in the classroom by schools and volunteer-run coding groups for children, and provides an admin page for teachers or group leaders to be able to manage and administer access for their students.<br/><br/>It is being built by <a target='_blank' href='http://dalelane.co.uk/'>Dale Lane</a> using APIs from <a target='_blank' href='https://www.ibm.com/watson/developer/'>IBM Watson</a>.<br/><br/>For more details about the implementation, you can see the <a target='_blank' href='https://github.com/IBM/taxinomitis/'>source code on GitHub</a>, or read some of the <a target='_blank' href='http://dalelane.co.uk/blog/?tag=mlforkids-tech'>blog posts about the tech</a>. ",
             "LOGIN": "To get started: "
+        },
+        "FURTHER": {
+            "TITLE": "Further learning",
+            "BODY": "Machine Learning for Kids is a useful tool for introducing children to how ML systems are trained, how they are used, and some of the real-world implications of AI applications. <br/><br/>For additional teaching and learning resources, including teaching the internals of ML systems, please see: "
         }
     },
     "NEWS": {
@@ -53,6 +57,43 @@
         "MENTIONS": {
             "TITLE": "Mentions & Media",
             "DESCRIPTION": "loading Mentions &amp; Media from wakelet.com"
+        }
+    },
+    "LINKS": {
+        "TITLE": "Educational AI resources for children",
+        "INTRO": "This page is a list of further tools and resources for explaining artificial intelligence to children.",
+        "ECRAFT2LEARN": {
+            "BODY1": "<a href='http://users.ox.ac.uk/~oucs0030/' target='_blank'>Ken Kahn</a> has created resources to allow beginners to create AI programs in Snap! (a visual programming environment similar to Scratch).",
+            "BODY2": "While I've focused on explaining how AI systems are trained and behave (and the real-world implications), eCraft2Learn has fantastic resources that dive deep into how ML systems actually work.",
+            "BODY3": "The <a href='https://ecraft2learn.github.io/ai/AI-Teacher-Guide/chapter-6.html' target='_blank'>neural net Tic Tac Toe project</a> is particularly fascinating, allowing students to experiment with hyperparameters from Snap."
+        },
+        "APPSFORGOOD": {
+            "BODY1": "Apps for Good are a UK-based not-for-profit that creates resources for teaching technology subjects, that they make freely available to schools.",
+            "BODY2": "Their Machine Learning course uses <em>Machine Learning for Kids</em>, and supplements it with a range of additional materials like schemes of work, lesson plans, student workbooks, presentations and more. It makes it easy for schools to deliver ML lessons that put the coding exercises in context."
+        },
+        "AIFAMILYCHALLENGE": {
+            "BODY1": "The AI Family Challenge is a free, hands-on AI education program for families. They use <em>Machine Learning for Kids</em>, and supplement it with a lot of additional support, such as technical coaches and mentors, a structured lesson plan and supporting videos.",
+            "BODY2": "The program is based around a competition that challenges children to think of their own AI project ideas, with the support of their families and technical mentors."
+        },
+        "AIINSCHOOLS": {
+            "BODY1": "The AIinSchools programme provides a free lesson plan for teachers to explain AI to Year 9 (aged 13-14).",
+            "BODY2": "It includes both unplugged classroom activities, and programming activities for training neural networks on GPUs running on AWS."
+        },
+        "TEENSINAI": {
+            "BODY1": "Teens in AI use a combination of hackathons, accelerators and bootcamps to support young people aged 12-18 to explore AI."
+        },
+        "AI4ALL": {
+            "BODY1": "AI4ALL run summer camps for high school students in the US that give a detailed technical introduction to AI."
+        },
+        "CALYPSO": {
+            "BODY1": "Students with programmable Cozmo robots can use the Calypso programming framework to get a hands-on way to experience AI by experimenting with techniques like computer vision and speech recognition."
+        },
+        "AIINABOX": {
+            "BODY1": "AI-in-a-Box is a bundle of robots, accessories and teaching resources. The kit can be used to teach projects that cover topics like visual recognition, facial recognition, speech generation and speech recognition."
+        },
+        "VIDEOS": {
+            "TITLE": "Videos",
+            "INTRO": "I've also found these videos useful when introducing AI concepts:"
         }
     },
     "ERRORS": {
@@ -111,7 +152,7 @@
             "TITLE": "Create an <strong>unmanaged</strong> class account",
             "INTRO": "If you are happy to set up and manage the class account yourself, you can do it now!",
             "LISTINTRO": "You will need to:",
-            "LIST_CREATEACCOUNT": "Create an account on IBM Cloud",
+            "LIST_CREATEACCOUNT": "Create a free account on IBM Cloud",
             "LIST_CREATEAPIKEYS": "Create API key(s) for Watson cloud services needed to train machine learning models",
             "LIST_ENTERAPIKEYS": "Enter the API keys into this Machine Learning for Kids tool",
             "HELP": "Step-by-step instructions (with screenshots) are available for all of this."
@@ -147,7 +188,8 @@
             "NOTES_1": "What type of thing do you want to teach the computer to recognise?",
             "NOTES_2": "For words, sentences or paragraphs, choose \"text\"",
             "NOTES_3": "For photos, diagrams and pictures, choose \"images\"",
-            "NOTES_4": "For sets of numbers or multiple choices, choose \"numbers\""
+            "NOTES_4": "For sets of numbers or multiple choices, choose \"numbers\"",
+            "NOTES_5": "For voices and sounds, choose \"sounds\""
         },
         "LANGUAGE": {
             "LABEL": "Language",
@@ -235,7 +277,8 @@
             "PATTERNURL": "This needs to be the web address of a picture",
             "WEBCAMFAIL": "Sorry! We weren't able to get a webcam to work for you.",
             "WEBCAMERROR": "The message we got from your web browser was:"
-        }
+        },
+        "BACKGROUNDNOISE": "Collecting examples of background noise will help the computer to learn to recognize your sounds"
     },
     "MODELS": {
         "TITLE": "Machine learning models",
@@ -253,12 +296,14 @@
                 "CROWDSOURCED" : {
                     "TEXT" : "Your class is training a machine learning model using the examples of text that you all collected.",
                     "IMAGES" : "Your class is training a machine learning model using the examples of images that you all collected.",
-                    "NUMBERS" : "Your class is training a machine learning model using the examples of numbers that you all collected."
+                    "NUMBERS" : "Your class is training a machine learning model using the examples of numbers that you all collected.",
+                    "SOUNDS" : "Your class is training a machine learning model using the examples of sounds that you all collected."
                 },
                 "INDIVIDUAL" : {
                     "TEXT" : "You've started training a machine learning model using the examples of text that you collected.",
                     "IMAGES" : "You've started training a machine learning model using the examples of images that you collected.",
-                    "NUMBERS" : "You've started training a machine learning model using the examples of numbers that you collected."
+                    "NUMBERS" : "You've started training a machine learning model using the examples of numbers that you collected.",
+                    "SOUNDS" : "You've started training a machine learning model using the examples of sounds that you collected."
                 },
                 "SINCE": "It's been training since"
             },
@@ -266,12 +311,14 @@
                 "CROWDSOURCED" : {
                     "TEXT" : "Your class has trained a machine learning model to recognise when text is ",
                     "IMAGES" : "Your class has trained a machine learning model to recognise when images are ",
-                    "NUMBERS" : "Your class has trained a machine learning model to recognise when numbers are "
+                    "NUMBERS" : "Your class has trained a machine learning model to recognise when numbers are ",
+                    "SOUNDS" : "Your class has trained a machine learning model to recognise when sounds are "
                 },
                 "INDIVIDUAL" : {
                     "TEXT" : "You have trained a machine learning model to recognise when text is ",
                     "IMAGES" : "You have trained a machine learning model to recognise when images are ",
-                    "NUMBERS" : "You have trained a machine learning model to recognise when numbers are "
+                    "NUMBERS" : "You have trained a machine learning model to recognise when numbers are ",
+                    "SOUNDS" : "You have trained a machine learning model to recognise when sounds are "
                 },
                 "CREATED" : {
                     "TEACHER" : "Your teacher created the model on ",
@@ -287,18 +334,21 @@
                     "CLASS" : {
                         "TEXT" : "Your teacher tried training a machine learning model using the examples of text that your class collected.",
                         "IMAGES" : "Your teacher tried training a machine learning model using the examples of images that your class collected.",
-                        "NUMBERS" : "Your teacher tried training a machine learning model using the examples of numbers that your class collected."
+                        "NUMBERS" : "Your teacher tried training a machine learning model using the examples of numbers that your class collected.",
+                        "SOUNDS" : "Your teacher tried training a machine learning model using the examples of sounds that your class collected."
                     },
                     "YOU" : {
                         "TEXT" : "You tried training a machine learning model using the examples of text that your class collected.",
                         "IMAGES" : "You tried training a machine learning model using the examples of images that your class collected.",
-                        "NUMBERS" : "You tried training a machine learning model using the examples of numbers that your class collected."
+                        "NUMBERS" : "You tried training a machine learning model using the examples of numbers that your class collected.",
+                        "SOUNDS" : "You tried training a machine learning model using the examples of sounds that your class collected."
                     }
                 },
                 "INDIVIDUAL" : {
                     "TEXT" : "You tried training a machine learning model using the examples of text that you collected.",
                     "IMAGES" : "You tried training a machine learning model using the examples of images that you collected.",
-                    "NUMBERS" : "You tried training a machine learning model using the examples of numbers that you collected."
+                    "NUMBERS" : "You tried training a machine learning model using the examples of numbers that you collected.",
+                    "SOUNDS" : "You tried training a machine learning model using the examples of sounds that you collected."
                 }
             },
             "IDLE" : {
@@ -306,24 +356,28 @@
                     "CROWDSOURCED" : {
                         "TEXT" : "Your class said you want to collect examples of text.",
                         "IMAGES" : "Your class said you want to collect examples of images.",
-                        "NUMBERS" : "Your class said you want to collect examples of numbers."
+                        "NUMBERS" : "Your class said you want to collect examples of numbers.",
+                        "SOUNDS" : "Your class said you want to collect examples of sounds."
                     },
                     "INDIVIDUAL" : {
                         "TEXT" : "You've said you want to collect examples of text.",
                         "IMAGES" : "You've said you want to collect examples of images.",
-                        "NUMBERS" : "You've said you want to collect examples of numbers."
+                        "NUMBERS" : "You've said you want to collect examples of numbers.",
+                        "SOUNDS" : "You've said you want to collect examples of sounds."
                     }
                 },
                 "NODATA" : {
                     "CROWDSOURCED" : {
                         "TEXT" : "Your class said that you want to collect examples of text for a computer to recognise when text is ",
                         "IMAGES" : "Your class said that you want to collect examples of images for a computer to recognise when images are ",
-                        "NUMBERS" : "Your class said that you want to collect examples of numbers for a computer to recognise when numbers are "
+                        "NUMBERS" : "Your class said that you want to collect examples of numbers for a computer to recognise when numbers are ",
+                        "SOUNDS" : "Your class said that you want to collect examples of sounds for a computer to recognise when sounds are "
                     },
                     "INDIVIDUAL" : {
                         "TEXT" : "You said that you want to collect examples of text for a computer to recognise when text is ",
                         "IMAGES" : "You said that you want to collect examples of images for a computer to recognise when images are ",
-                        "NUMBERS" : "You said that you want to collect examples of numbers for a computer to recognise when numbers are "
+                        "NUMBERS" : "You said that you want to collect examples of numbers for a computer to recognise when numbers are ",
+                        "SOUNDS" : "You said that you want to collect examples of sounds for a computer to recognise when sounds are "
                     }
                 },
                 "NOEXAMPLES" : {
@@ -334,12 +388,14 @@
                     "CROWDSOURCED" : {
                         "TEXT" : "Your class has collected examples of text for a computer to use to recognise when text is ",
                         "IMAGES" : "Your class has collected examples of images for a computer to use to recognise when images are ",
-                        "NUMBERS" : "Your class has collected examples of numbers for a computer to use to recognise when numbers are "
+                        "NUMBERS" : "Your class has collected examples of numbers for a computer to use to recognise when numbers are ",
+                        "SOUNDS" : "Your class has collected examples of sounds for a computer to use to recognise when sounds are "
                     },
                     "INDIVIDUAL" : {
                         "TEXT" : "You have collected examples of text for a computer to use to recognise when text is ",
                         "IMAGES" : "You have collected examples of images for a computer to use to recognise when images are ",
-                        "NUMBERS" : "You have collected examples of numbers for a computer to use to recognise when numbers are "
+                        "NUMBERS" : "You have collected examples of numbers for a computer to use to recognise when numbers are ",
+                        "SOUNDS" : "You have collected examples of sounds for a computer to use to recognise when sounds are "
                     },
                     "COLLECTED" : {
                         "CLASS" : "They've collected: ",
@@ -390,7 +446,8 @@
                 "TEST" : {
                     "TEXT" : "Try testing the machine learning model below. Enter an example of text below, that you didn't include in the examples you used to train it. It will tell you what it recognises it as, and how confident it is in that.",
                     "IMAGES" : "Try testing the machine learning model below. Enter an example image below, that you didn't include in the examples you used to train it. It will tell you what it recognises it as, and how confident it is in that.",
-                    "NUMBERS" : "Try testing the machine learning model below. Enter an example of numbers below, that you didn't include in the examples you used to train it. It will tell you what it recognises it as, and how confident it is in that."
+                    "NUMBERS" : "Try testing the machine learning model below. Enter an example of numbers below, that you didn't include in the examples you used to train it. It will tell you what it recognises it as, and how confident it is in that.",
+                    "SOUNDS" : "Try testing the machine learning model below. Click the 'Start listening' button. If your machine learning model recognises any sounds, it will tell you what it recognises it as, and how confident it is in that."
                 },
                 "SCRATCH" : "If the computer seems to have learned to recognise things correctly, then you can go to Scratch and use what the computer has learned to make a game!",
                 "ADDITIONAL_TRAINING" : {
@@ -418,12 +475,15 @@
             "INTRO": {
                 "TEXT": "Try putting in some text to see how it is recognised based on your training.",
                 "IMAGES": "Try putting in an image to see how it is recognised based on your training.",
-                "NUMBERS": "Try putting in some numbers to see how it is recognised based on your training."
+                "NUMBERS": "Try putting in some numbers to see how it is recognised based on your training.",
+                "SOUNDS": "Try making a sound to see how it is recognised based on your training"
             },
             "WEBCAM": "Test with <strong>webcam</strong>",
             "DRAWING": "Test by <strong>drawing</strong>",
             "WWW": "Test with <strong>www</strong>",
-            "RECOGNISED": "Recognised as  <strong>{{ testoutput }}</strong>"
+            "RECOGNISED": "Recognised as  <strong>{{ testoutput }}</strong>",
+            "STARTLISTENING": "Start listening",
+            "STOPLISTENING": "Stop listening"
         },
         "QUIZ": {
             "TITLE": "Quiz time!",
@@ -436,8 +496,8 @@
     },
     "MAKES": {
         "TITLE": "Make something with your machine learning model",
-        "SCRATCH2": "Make a project in the current version of Scratch",
-        "SCRATCH3": "Use the new (beta) version of Scratch",
+        "SCRATCH2": "Make a project in the old version of Scratch",
+        "SCRATCH3": "Use the new version of Scratch",
         "PYTHON": "Write Python code to use your machine learning model",
         "APPINVENTOR": "Make a mobile app for your phone or tablet"
     },
@@ -498,7 +558,8 @@
 
             "TEXT": "text",
             "IMAGES": "images",
-            "NUMBERS": "numbers"
+            "NUMBERS": "numbers",
+            "SOUNDS": "sounds"
         },
 
         "LEVELS": {
@@ -644,6 +705,26 @@
             "TITLE": "Headlines",
             "SUMMARY": "Test the computer's ability to recognise use of language",
             "DESCRIPTION": "Train a computer to recognise headlines from national newspapers."
+        },
+        "FINDIT": {
+            "TITLE": "Find It!",
+            "SUMMARY": "Teach a computer to recognise pictures",
+            "DESCRIPTION": "Make a hide-and-seek game for your mobile phone."
+        },
+        "ALIENLANGUAGE": {
+            "TITLE": "Alien Language",
+            "SUMMARY": "Teach a computer to recognize sounds",
+            "DESCRIPTION": "Make an alien in Scratch that learns to recognize an alien language."
+        },
+        "SECRETCODE": {
+            "TITLE": "Secret Code",
+            "SUMMARY": "Teach a computer to recognize speech",
+            "DESCRIPTION": "Train a computer to understand secret code words to guide a spy."
+        },
+        "JARGONBUSTER": {
+            "TITLE": "Jargon Buster",
+            "SUMMARY": "Teach a computer to listen for words",
+            "DESCRIPTION": "Make a project in Scratch that displays the meaning of words you say."
         }
     },
     "TEACHER": {
@@ -789,7 +870,53 @@
 
             "DELETE_STUDENT": "Delete student account",
 
-            "NOT_AUTHORIZED": "You are not authorized to access the list of students in your class."
+            "NOT_AUTHORIZED": "You are not authorized to access the list of students in your class.",
+
+            "ADD_MULTIPLE": {
+                "BUTTON" : "Multiple students",
+
+                "TITLE" : "Add new students",
+                "INTRO" : "You can use this to create more than one student account at the same time.",
+                "USERNAME" : "What do you want each username to start with?",
+                "USERNAME_REQUIRED" : "Please choose the prefix for the usernames",
+                "USERNAME_TOOLONG" : "That is too long",
+                "USERNAME_INVALID" : "Invalid characters",
+                "NUMBER" : "How many student accounts do you want?",
+                "NUMBER_REQUIRED" : "Please enter the number of students to create",
+                "NUMBER_TOOMANY" : "Your class has a limit of {{userslimit}} students.",
+                "PASSWORD" : "The password to give them:",
+                "PASSWORD_TOOSHORT" : "Too short"
+            }
+        }
+    },
+    "SCRATCHBLOCKS": {
+        "TEXT_PROJECTS": {
+            "mlforkids.text.recogniseLabel": "recognise text [TEXT] (label)",
+            "mlforkids.text.recogniseConfidence": "recognise text [TEXT] (confidence)",
+            "mlforkids.text.addTraining": "add training data [TEXT] [LABEL]",
+            "mlforkids.text.trainNewModel": "train new machine learning model",
+            "mlforkids.text.checkModelStatus": "Is the machine learning model [STATUS] ?"
+        },
+        "IMAGES_PROJECTS": {
+            "mlforkids.images.recogniseLabel": "recognise image [IMAGE] (label)",
+            "mlforkids.images.recogniseConfidence": "recognise image [IMAGE] (confidence)",
+            "mlforkids.images.addTraining": "add training data [TEXT] [LABEL]"
+        },
+        "NUMBER_PROJECTS": {
+            "mlforkids.numbers.trainNewModel": "train new machine learning model"
+        },
+        "TWITTER": {
+            "mlforkids.twitter.getrecenttweet": "get the [INDEX] most recent tweet about [TOPIC]"
+        },
+        "IMAGE_BLOCKS": {
+            "mlforkids.imageblocks.getCostumeImage": "costume image",
+            "mlforkids.imageblocks.getBackdropCostumeImage": "backdrop image",
+            "mlforkids.imageblocks.getBackdropImage": "backdrop image",
+            "mlforkids.imageblocks.saveScreenshotToCostume": "save screenshot to costume"
+        },
+        "GUI": {
+            "gui.menuBar.mlforkidsLibrary": "Project templates",
+            "gui.mlforkidsLibrary.templates": "Machine Learning for Kids modelos de projeto"
         }
     },
     "HELP": {
@@ -812,9 +939,9 @@
         "SCRATCH": {
             "TITLE": "Scratch issues",
 
-            "Q1": "I don't know how to get Scratch working",
-            "Q1-A-1": "Machine Learning for Kids uses Scratch 2. Scratch needs Adobe Flash to work, so you need to be using an operating system and a web browser that can work with Flash (so that means no iPads for now, sorry).",
-            "Q1-A-2": "If you're not sure about how to enable Flash, you can            <a href='https://github.com/IBM/taxinomitis-docs/raw/master/docs/pdf/machinelearningforkids-scratchx.pdf'>download a document with some tips for getting Scratch working</a>.",
+            "Q1": "I don't know how to get Scratch 2 working",
+            "Q1-A-1": "The old version of Scratch, Scratch 2, needs Adobe Flash to work, so you need to be using an operating system and a web browser that can work with Flash.",
+            "Q1-A-2": "If you're not sure about how to enable Flash, you can            <a href='https://github.com/IBM/taxinomitis-docs/raw/master/docs/pdf/machinelearningforkids-scratchx.pdf'>download a document with some tips for getting Scratch working</a>. Or you can use the new version of Scratch, Scratch 3, instead.",
 
             "Q2": "The \"Load Project\" and \"Save Project\" menus in Scratch don't work",
             "Q2-A-1": "If you're using Safari on macOS and the Scratch menus \"File -&gt; Load Project\" and \"File -&gt; Save Project\" menus aren't working, it might be that you're running in Safe Mode.",
@@ -956,7 +1083,14 @@
             "Q4-A-6": "General information stored about all accounts",
             "Q4-A-7": "User management for Machine Learning for Kids is implemented using the third party service, <a href='https://auth0.com/'>Auth0</a>. They store the IP address that you last logged into Machine Learning for Kids from, and the type of browser you used. I've never found a reason to use that, but it is stored if I did want to go and look for it.",
             "Q4-A-8": "Errors that happen in the web browser are captured using the third party service, <a href='https://sentry.io/'>Sentry</a>. If something goes wrong, it will capture information about the error, including your username, IP address, type of browser you were using, and a technical description of what went wrong.",
-            "Q4-A-9": "I use <a href='https://www.google.com/analytics/'>Google Analytics</a> so that I know how many users visit Machine Learning for Kids each day. Although it captures information such as geographic location and browser type, this is only ever displayed to me in an anonymised aggregate way."
+            "Q4-A-9": "I use <a href='https://www.google.com/analytics/'>Google Analytics</a> so that I know how many users visit Machine Learning for Kids each day. Although it captures information such as geographic location and browser type, this is only ever displayed to me in an anonymised aggregate way.",
+
+            "Q5": "What happens to training data created by students?",
+            "Q5-A-1": "A step in all machine learning projects that students make using this site is to create or collect training examples. For text projects, this can mean typing in short text passages. For image projects, this can means drawing pictures onto an on-screen canvas or taking photos using the webcam. For numbers projects, this means typing in sets of numbers",
+            "Q5-A-2": "All of these training examples are stored in a <a href='https://www.ibm.com/cloud/compose/mysql'>MySQL database hosted on IBM Cloud</a>. As the database administrator, I have access to all of these training examples for all student projects, however I do not use it for any other purposes other than enabling students to access and work on their own projects. I do not publish the training data (either publicly or to individuals or third parties) or otherwise share it, with the two exceptions of submitting it to IBM Watson APIs described below.",
+            "Q5-A-3": "Machine learning models for text projects are created using the <a href='https://www.ibm.com/cloud/watson-assistant/'>IBM Watson Assistant</a> cloud service, which means when students train a model, a copy of the training examples that they have entered will be <a href='https://cloud.ibm.com/apidocs/assistant#create-workspace'>submitted to IBM Watson</a>. IBM Watson does not use these training examples for any other purposes. This is because Machine Learning for Kids <a href='https://cloud.ibm.com/apidocs/assistant#data-collection'>requests an opt-out</a> for student training examples being used by IBM to improve the service, as <a href='https://cloud.ibm.com/docs/services/watson?topic=watson-gs-logging-overview'>described in the Watson documentation</a>.",
+            "Q5-A-4": "Machine learning models for images projects are created using the <a href='https://www.ibm.com/watson/services/visual-recognition/'>IBM Visual Recognition</a> cloud service, which means when students train a model, a copy of their training images will be <a href='https://cloud.ibm.com/apidocs/visual-recognition#create-a-classifier'>uploaded to IBM Watson</a>. IBM Watson does not use these training examples for any other purposes. This is because Machine Learning for Kids <a href='https://cloud.ibm.com/apidocs/visual-recognition#data-collection'>requests an opt-out</a> for student training examples being used by IBM to improve the service, as <a href='https://cloud.ibm.com/docs/services/watson?topic=watson-gs-logging-overview'>described in the Watson documentation</a>.",
+            "Q5-A-5": "IBM Watson provides some <a href='https://cloud.ibm.com/docs/services/assistant?topic=assistant-information-security#information-security-gdpr-wa'>general guidance for sharing training data with their services</a>, which also apply to training data created and collected in Machine Learning for Kids. Specifically, students should be advised not to include personally identifiable information in the examples that they collect."
         }
     }
 }

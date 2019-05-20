@@ -47,7 +47,6 @@ async function restartConnection() {
 
 
 async function handleDbException(err: NodeJS.ErrnoException) {
-    log.error({ err }, 'DB error');
     if (err.code === 'ER_OPTION_PREVENTS_STATEMENT' &&  err.errno === 1290)
     {
         // for this error, it is worth trying to reconnect to the DB
@@ -57,14 +56,13 @@ async function handleDbException(err: NodeJS.ErrnoException) {
 
 
 async function dbExecute(query: string, params: any[]) {
-    // const [response] = await dbConnPool.execute(query, params);
-    // return response;
     const dbConn = await dbConnPool.getConnection();
     try {
         const [response] = await dbConn.execute(query, params);
         return response;
     }
     catch (err) {
+        log.error({ query, params : params.join(','), err }, 'DB error');
         await handleDbException(err);
         throw err;
     }
@@ -190,12 +188,16 @@ async function getCurrentLabels(userid: string, classid: string, projectid: stri
         classid,
     ];
     const rows = await dbExecute(queryString, values);
-    if (rows.length !== 1) {
-        log.error({ projectid }, 'Project not found');
-        throw new Error('Project not found');
+    if (rows.length === 1) {
+        return dbobjects.getLabelsFromList(rows[0].labels);
     }
-
-    return dbobjects.getLabelsFromList(rows[0].labels);
+    else if (rows.length === 0) {
+        log.warn({ projectid, classid, func : 'getCurrentLabels' }, 'Project not found in request for labels');
+    }
+    else {
+        log.error({ projectid, classid, rows, func : 'getCurrentLabels' }, 'Unexpected number of project rows');
+    }
+    throw new Error('Project not found');
 }
 async function updateLabels(userid: string, classid: string, projectid: string, labels: string[]): Promise<any> {
     const queryString = 'UPDATE `projects` ' +
@@ -277,11 +279,16 @@ export async function getProject(id: string): Promise<Objects.Project | undefine
                         'WHERE `id` = ?';
 
     const rows = await dbExecute(queryString, [ id ]);
-    if (rows.length !== 1) {
-        log.error({ id, func : 'getProject' }, 'Project not found');
-        return;
+    if (rows.length === 1) {
+        return dbobjects.getProjectFromDbRow(rows[0]);
     }
-    return dbobjects.getProjectFromDbRow(rows[0]);
+    else if (rows.length === 0) {
+        log.warn({ id, func : 'getProject' }, 'Project not found');
+    }
+    else {
+        log.error({ rows, id, func : 'getProject' }, 'Project not found');
+    }
+    return;
 }
 
 
@@ -353,6 +360,8 @@ function getDbTable(type: Objects.ProjectTypeLabel): string {
         return 'numbertraining';
     case 'images':
         return 'imagetraining';
+    case 'sounds':
+        return 'soundtraining';
     }
 }
 
@@ -828,6 +837,91 @@ export async function getNumberTraining(
 }
 
 
+
+
+
+
+export async function storeSoundTraining(
+    projectid: string, data: number[], label: string,
+): Promise<Objects.SoundTraining>
+{
+    let outcome: InsertTrainingOutcome;
+
+    // prepare the data to be stored
+    const obj = dbobjects.createSoundTraining(projectid, data, label);
+    const row = dbobjects.createSoundTrainingDbRow(obj);
+
+    // prepare the DB queries
+    const countQry = 'SELECT COUNT(*) AS `trainingcount` from `soundtraining` WHERE `projectid` = ?';
+    const countValues = [ projectid ];
+
+    const insertQry = 'INSERT INTO `soundtraining` (`id`, `projectid`, `audiodata`, `label`) VALUES (?, ?, ?, ?)';
+    const insertValues = [ row.id, row.projectid, row.audiodata, row.label ];
+
+    // connect to the DB
+    const dbConn = await dbConnPool.getConnection();
+
+    // store the data unless the project is already full
+    try {
+        // count the number of training items already in the project
+        const [countResponse] = await dbConn.execute(countQry, countValues);
+        const count = countResponse[0].trainingcount;
+
+        if (count >= limits.getStoreLimits().soundTrainingItemsPerProject) {
+            // they already have too much data - nothing else to do
+            outcome = InsertTrainingOutcome.NotStored_MetLimit;
+        }
+        else {
+            // they haven't reached their limit yet - okay to INSERT
+            const [insertResponse] = await dbConn.execute(insertQry, insertValues);
+            if (insertResponse.affectedRows === 1) {
+                outcome = InsertTrainingOutcome.StoredOk;
+            }
+            else {
+                // insert failed for an unknown reason
+                outcome = InsertTrainingOutcome.NotStored_UnknownFailure;
+            }
+        }
+    }
+    catch (err) {
+        handleDbException(err);
+        throw err;
+    }
+    finally {
+        dbConn.release();
+    }
+
+
+    // prepare the response
+
+    switch (outcome) {
+    case InsertTrainingOutcome.StoredOk:
+        return obj;
+    case InsertTrainingOutcome.NotStored_MetLimit:
+        throw new Error('Project already has maximum allowed amount of training data');
+    case InsertTrainingOutcome.NotStored_UnknownFailure:
+        throw new Error('Failed to store training data');
+    }
+}
+
+
+export async function getSoundTraining(
+    projectid: string, options: Objects.PagingOptions,
+): Promise<Objects.SoundTraining[]>
+{
+    const queryString = 'SELECT `id`, `audiodata`, `label` FROM `soundtraining` ' +
+                        'WHERE `projectid` = ? ' +
+                        'ORDER BY `label`, `id` ' +
+                        'LIMIT ? OFFSET ?';
+
+    const rows = await dbExecute(queryString, [ projectid, options.limit, options.start ]);
+    return rows.map(dbobjects.getSoundTrainingFromDbRow);
+}
+
+
+
+
+
 // -----------------------------------------------------------------------------
 //
 // BLUEMIX CREDENTIALS
@@ -916,14 +1010,22 @@ export async function getBluemixCredentialsById(credentialsid: string): Promise<
                        'WHERE `id` = ?';
     const rows = await dbExecute(credsQuery, [ credentialsid ]);
 
-    if (rows.length !== 1) {
+    if (rows.length === 1) {
+        return dbobjects.getCredentialsFromDbRow(rows[0]);
+    }
+    else if (rows.length === 0) {
+        log.warn({
+            credentialsid, credsQuery, rows,
+            func : 'getBluemixCredentialsById',
+        }, 'Credentials not found');
+    }
+    else {
         log.error({
             credentialsid, credsQuery, rows,
             func : 'getBluemixCredentialsById',
         }, 'Unexpected response from DB');
-        throw new Error('Unexpected response when retrieving the service credentials');
     }
-    return dbobjects.getCredentialsFromDbRow(rows[0]);
+    throw new Error('Unexpected response when retrieving the service credentials');
 }
 
 
@@ -1033,11 +1135,16 @@ export async function getConversationWorkspace(
                         'WHERE `projectid` = ? AND `classifierid` = ?';
 
     const rows = await dbExecute(queryString, [ projectid, classifierid ]);
-    if (rows.length !== 1) {
-        log.error({ rows, func : 'getConversationWorkspace' }, 'Unexpected response from DB');
-        throw new Error('Unexpected response when retrieving service details');
+    if (rows.length === 1) {
+        return dbobjects.getWorkspaceFromDbRow(rows[0]);
     }
-    return dbobjects.getWorkspaceFromDbRow(rows[0]);
+    else if (rows.length > 1) {
+        log.error({ projectid, classifierid, rows, func : 'getConversationWorkspace' }, 'Unexpected response from DB');
+    }
+    else {
+        log.warn({ projectid, classifierid, func : 'getConversationWorkspace' }, 'Conversation workspace not found');
+    }
+    throw new Error('Unexpected response when retrieving conversation workspace details');
 }
 
 
@@ -1217,11 +1324,16 @@ export async function getImageClassifier(
                         'WHERE `projectid` = ? AND `classifierid` = ?';
 
     const rows = await dbExecute(queryString, [ projectid, classifierid ]);
-    if (rows.length !== 1) {
-        log.error({ rows, func : 'getImageClassifier' }, 'Unexpected response from DB');
-        throw new Error('Unexpected response when retrieving service details');
+    if (rows.length === 1) {
+        return dbobjects.getVisualClassifierFromDbRow(rows[0]);
     }
-    return dbobjects.getVisualClassifierFromDbRow(rows[0]);
+    if (rows.length > 1) {
+        log.error({ rows, func : 'getImageClassifier' }, 'Unexpected response from DB');
+    }
+    else {
+        log.warn({ projectid, classifierid, func : 'getImageClassifier' }, 'Image classifier not found');
+    }
+    throw new Error('Unexpected response when retrieving image classifier details');
 }
 
 
@@ -1502,11 +1614,17 @@ export async function getScratchKey(key: string): Promise<Objects.ScratchKey> {
                         'WHERE `id` = ?';
 
     const rows = await dbExecute(queryString, [ key ]);
-    if (rows.length !== 1) {
-        log.error({ rows, key, func : 'getScratchKey' }, 'Unexpected response from DB');
-        throw new Error('Unexpected response when retrieving credentials for Scratch');
+    if (rows.length === 1) {
+        return dbobjects.getScratchKeyFromDbRow(rows[0]);
     }
-    return dbobjects.getScratchKeyFromDbRow(rows[0]);
+
+    if (rows.length === 0) {
+        log.warn({ key, func : 'getScratchKey' }, 'Scratch key not found');
+    }
+    else if (rows.length > 1) {
+        log.error({ rows, key, func : 'getScratchKey' }, 'Unexpected response from DB');
+    }
+    throw new Error('Unexpected response when retrieving credentials for Scratch');
 }
 
 
@@ -1902,7 +2020,7 @@ export async function getTemporaryUser(id: string): Promise<Objects.TemporaryUse
 
     const rows = await dbExecute(queryString, [ id ]);
     if (rows.length !== 1) {
-        log.error({ id }, 'Temporary user not found');
+        log.warn({ id }, 'Temporary user not found');
         return;
     }
     return dbobjects.getTemporaryUserFromDbRow(rows[0]);
@@ -1959,6 +2077,74 @@ export async function bulkDeleteTemporaryUsers(users: Objects.TemporaryUser[]): 
 }
 
 
+
+// -----------------------------------------------------------------------------
+//
+// SITE ALERTS
+//
+// -----------------------------------------------------------------------------
+
+export function testonly_resetSiteAlertsStore(): Promise<void>
+{
+    return dbExecute('DELETE FROM `sitealerts`', []);
+}
+
+
+export async function storeSiteAlert(
+    message: string, url: string,
+    audience: Objects.SiteAlertAudienceLabel,
+    severity: Objects.SiteAlertSeverityLabel,
+    expiry: number,
+): Promise<Objects.SiteAlert>
+{
+    let obj: Objects.SiteAlertDbRow;
+    try {
+        obj = dbobjects.createSiteAlert(message, url, audience, severity, expiry);
+    }
+    catch (err) {
+        err.statusCode = 400;
+        throw err;
+    }
+
+    const insertAlertQry: string = 'INSERT INTO `sitealerts` ' +
+        '(`timestamp` , `severityid`, `audienceid`, `message`, `url`, `expiry`) ' +
+        'VALUES (?, ?, ?, ?, ?, ?)';
+    const insertAlertValues = [
+        obj.timestamp,
+        obj.severityid, obj.audienceid,
+        obj.message, obj.url,
+        obj.expiry,
+    ];
+
+    const response = await dbExecute(insertAlertQry, insertAlertValues);
+    if (response.affectedRows === 1) {
+        return dbobjects.getSiteAlertFromDbRow(obj);
+    }
+    throw new Error('Failed to store site alert');
+}
+
+
+export async function getLatestSiteAlert(): Promise<Objects.SiteAlert | undefined>
+{
+    const queryString = 'SELECT `timestamp` , `severityid`, `audienceid`, `message`, `url`, `expiry` ' +
+                        'FROM `sitealerts` ' +
+                        'ORDER BY `timestamp` DESC ' +
+                        'LIMIT 1';
+    const rows = await dbExecute(queryString, []);
+    if (rows.length === 1) {
+        return dbobjects.getSiteAlertFromDbRow(rows[0]);
+    }
+    else if (rows.length === 0) {
+        return;
+    }
+    else {
+        log.error({ rows, num : rows.length, func : 'getLatestSiteAlert' }, 'Unexpected response from DB');
+        return;
+    }
+}
+
+
+
 // -----------------------------------------------------------------------------
 //
 // UBER DELETERS
@@ -1985,6 +2171,10 @@ export async function deleteEntireProject(userid: string, classid: string, proje
     case 'numbers':
         await numbers.deleteClassifier(userid, classid, project.id);
         break;
+
+    case 'sounds':
+        // nothing to do - models all stored client-side
+        break;
     }
 
     const deleteQueries = [
@@ -1993,6 +2183,7 @@ export async function deleteEntireProject(userid: string, classid: string, proje
         'DELETE FROM `texttraining` WHERE `projectid` = ?',
         'DELETE FROM `numbertraining` WHERE `projectid` = ?',
         'DELETE FROM `imagetraining` WHERE `projectid` = ?',
+        'DELETE FROM `soundtraining` WHERE `projectid` = ?',
         'DELETE FROM `bluemixclassifiers` WHERE `projectid` = ?',
         'DELETE FROM `taxinoclassifiers` WHERE `projectid` = ?',
         'DELETE FROM `scratchkeys` WHERE `projectid` = ?',
@@ -2038,4 +2229,3 @@ export async function deleteClassResources(classid: string): Promise<void> {
     }
     dbConn.release();
 }
-

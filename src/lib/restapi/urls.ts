@@ -1,5 +1,6 @@
 // tslint:disable:max-line-length
 
+export const ROOT                  = '/';
 
 export const TEACHERS              = '/api/teachers';
 export const CLASSES               = '/api/classes';
@@ -19,6 +20,7 @@ export const BLUEMIX_CLASSIFIER    = '/api/classes/:classid/classifiers/:classif
 export const USERS                 = '/api/classes/:classid/students';
 export const USER                  = '/api/classes/:classid/students/:studentid';
 export const USER_PASSWORD         = '/api/classes/:classid/students/:studentid/password';
+export const PASSWORD              = '/api/classes/:classid/passwords';
 
 //
 // URLS about student projects
@@ -61,6 +63,14 @@ export const SESSION_USERS         = '/api/sessionusers';
 export const SESSION_USER          = '/api/classes/:classid/sessionusers/:studentid';
 
 export const SESSION_USER_APIS     = '/api/classes/session-users/*';
+
+//
+// URLs about site alerts
+export const SITEALERTS            = '/api/sitealerts';
+export const SITEALERTS_PUBLIC     = '/api/sitealerts/public';
+export const SITEALERTS_STUDENT    = '/api/sitealerts/alerts/:classid/students/:studentid';
+export const SITEALERTS_TEACHER    = '/api/sitealerts/alerts/:classid/supervisors/:studentid';
+export const SITEALERTS_REFRESH    = '/api/sitealerts/actions/refresh';
 
 
 // tslint:enable:max-line-length

@@ -24,6 +24,7 @@ export const ERROR_MESSAGES = {
                          'Please stop now and let your teacher or group leader know that ' +
                          '"the Watson Assistant service is currently rate limiting their API key"',
     MODEL_NOT_FOUND : 'Your machine learning model could not be found on the training server.',
+    TEXT_TOO_LONG : 'text cannot be longer than 2048 characters',
 };
 
 
@@ -311,7 +312,7 @@ export async function getStatus(
             return workspace;
         })
         .catch((err) => {
-            log.error({ err }, 'Failed to get status');
+            log.warn({ err }, 'Failed to get status');
             workspace.status = 'Non Existent';
             return workspace;
         });
@@ -325,16 +326,19 @@ async function getTraining(project: DbObjects.Project): Promise<TrainingObjects.
 
     const intents: TrainingObjects.ConversationIntent[] = [];
     for (const label of project.labels) {
-        const training = await store.getUniqueTrainingTextsByLabel(project.id, label, {
-            start : 0, limit : counts[label],
-        });
 
-        intents.push({
-            intent : label.replace(/\s/g, '_'),
-            examples : training.map((item) => {
-                return { text : item };
-            }),
-        });
+        if (label in counts && counts[label] > 0) {
+            const training = await store.getUniqueTrainingTextsByLabel(project.id, label, {
+                start : 0, limit : counts[label],
+            });
+
+            intents.push({
+                intent : label.replace(/\s/g, '_'),
+                examples : training.map((item) => {
+                    return { text : item };
+                }),
+            });
+        }
     }
 
     return {
@@ -408,7 +412,7 @@ async function submitTrainingToConversation(
         return workspace;
     }
     catch (err) {
-        log.error({ req, err }, ERROR_MESSAGES.UNKNOWN);
+        log.warn({ req, err }, ERROR_MESSAGES.UNKNOWN);
 
         const ignoreErr = await store.isTenantDisruptive(project.classid);
         if (ignoreErr === false) {
@@ -449,6 +453,7 @@ export async function testClassifier(
             input : {
                 text,
             },
+            alternate_intents : true,
         },
     };
 
@@ -477,6 +482,14 @@ export async function testClassifier(
             err.error && err.error.code && err.error.code === httpStatus.NOT_FOUND)
         {
             throw new Error(ERROR_MESSAGES.MODEL_NOT_FOUND);
+        }
+        if (err.statusCode === httpStatus.BAD_REQUEST &&
+            err.error &&
+            err.error.code && err.error.code === httpStatus.BAD_REQUEST &&
+            err.error.errors && Array.isArray(err.error.errors) && err.error.errors.length > 0 &&
+            err.error.errors[0].message === ERROR_MESSAGES.TEXT_TOO_LONG)
+        {
+            throw new Error(ERROR_MESSAGES.TEXT_TOO_LONG);
         }
 
         log.error({ err, classifierId, credentials, projectid, text }, 'Failed to classify text');
@@ -638,6 +651,7 @@ async function createBaseRequest(credentials: TrainingObjects.BluemixCredentials
             },
             headers: {
                 'user-agent': 'machinelearningforkids',
+                'X-Watson-Learning-Opt-Out': 'true',
             },
             json : true,
             gzip : true,
@@ -650,11 +664,12 @@ async function createBaseRequest(credentials: TrainingObjects.BluemixCredentials
 
         const req: NewConvRequest = {
             qs : {
-                version: '2018-02-16',
+                version: '2018-09-20',
                 include_audit: true,
             },
             headers : {
                 'user-agent': 'machinelearningforkids',
+                'X-Watson-Learning-Opt-Out': 'true',
                 'Authorization': authHeader,
             },
             json : true,
@@ -688,6 +703,7 @@ interface ConversationRequestBase {
     };
     readonly headers: {
         readonly 'user-agent': 'machinelearningforkids';
+        readonly 'X-Watson-Learning-Opt-Out': 'true';
     };
     readonly json: true;
     readonly gzip: true;
@@ -706,12 +722,13 @@ interface LegacyConvRequest extends ConversationRequestBase {
 }
 interface NewConvRequest extends ConversationRequestBase {
     readonly qs: {
-        readonly version: '2018-02-16';
+        readonly version: '2018-09-20';
         page_limit?: number;
         readonly include_audit: true;
     };
     readonly headers: {
         readonly 'user-agent': 'machinelearningforkids';
+        readonly 'X-Watson-Learning-Opt-Out': 'true';
         readonly Authorization: string;
     };
 }
@@ -724,6 +741,7 @@ interface TestRequest {
         readonly input: {
             readonly text: string;
         };
+        readonly alternate_intents: boolean;
     };
 }
 

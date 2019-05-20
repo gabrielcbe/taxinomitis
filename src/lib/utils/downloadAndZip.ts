@@ -6,7 +6,7 @@ import * as tmp from 'tmp';
 import * as async from 'async';
 import * as archiver from 'archiver';
 import * as fileType from 'file-type';
-import * as readChunk from 'read-chunk';
+import readChunk from 'read-chunk';
 // local dependencies
 import * as download from './download';
 import * as imagestore from '../imagestore';
@@ -31,6 +31,7 @@ interface ObjectStorageSpec {
 export interface DownloadFromWeb {
     readonly type: 'download';
     readonly url: string;
+    readonly imageid: string;
 }
 
 export type ImageDownload = RetrieveFromStorage | DownloadFromWeb;
@@ -101,7 +102,7 @@ function renameFileFromContents(filepath: string, source: ImageDownload, callbac
     ], callback);
 }
 
-function logError(err?: Error) {
+function logError(err?: Error | null) {
     if (err) {
         log.error({ err }, 'Failed to delete file');
     }
@@ -165,6 +166,11 @@ function downloadAndRename(location: ImageDownload, callback: IDownloadCallback)
         (tmpFilePath: string, next: IDownloadCallback) => {
             // download the file to the temp location on disk
             retrieveImage(location, tmpFilePath, (err) => {
+                if (err && err.message.startsWith(download.ERRORS.DOWNLOAD_FAIL)) {
+                    const errWithLocation: any = err as unknown;
+                    errWithLocation.location = location;
+                    return callback(errWithLocation);
+                }
                 next(err, tmpFilePath);
             });
         },
@@ -187,7 +193,7 @@ function downloadAndRename(location: ImageDownload, callback: IDownloadCallback)
  */
 function downloadAll(locations: ImageDownload[], callback: IDownloadAllCallback): void {
     // @ts-ignore async.map types have a problem with this
-    async.map(locations, downloadAndRename, callback);
+    async.mapLimit(locations, 2, downloadAndRename, callback);
 }
 
 
@@ -324,7 +330,9 @@ export function run(locations: ImageDownload[]): Promise<string> {
     return new Promise((resolve, reject) => {
         downloadAllIntoZip(locations, (err, zippath) => {
             if (err) {
-                log.error({ err }, 'Failed to create training zip');
+                if (!err.message.startsWith(download.ERRORS.DOWNLOAD_FAIL)) {
+                    log.error({ err }, 'Failed to create training zip');
+                }
                 return reject(err);
             }
             return resolve(zippath);

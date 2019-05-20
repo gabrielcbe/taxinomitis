@@ -9,6 +9,7 @@ import * as dbobjects from '../db/objects';
 import * as users from '../auth0/users';
 import * as Users from '../auth0/auth-types';
 import * as urls from './urls';
+import * as sound from '../training/sound';
 import * as errors from './errors';
 import * as headers from './headers';
 import loggerSetup from '../utils/logger';
@@ -60,7 +61,7 @@ function getProjectsByClassId(req: Express.Request, res: Express.Response) {
             return res.json(ownedProjects);
         })
         .catch((err) => {
-            log.error({ err }, 'Server error');
+            log.error({ err, func : 'getProjectsByClassId' }, 'Server error');
             errors.unknownError(res, err);
         });
 }
@@ -75,7 +76,7 @@ function getProjectsByUserId(req: Express.Request, res: Express.Response) {
             res.set(headers.NO_CACHE).json(projects);
         })
         .catch((err) => {
-            log.error({ err }, 'Server error');
+            log.error({ err, func : 'getProjectsByUserId' }, 'Server error');
             errors.unknownError(res, err);
         });
 }
@@ -130,13 +131,18 @@ async function createProject(req: Express.Request, res: Express.Response) {
             req.body.language,
             req.body.fields,
             crowdsourced);
+
+
+        if (project.type === 'sounds') {
+            await store.addLabelToProject(userid, classid, project.id, sound.BACKGROUND_NOISE);
+        }
         return res.status(httpstatus.CREATED).json(project);
     }
     catch (err) {
         if (err.statusCode === httpstatus.BAD_REQUEST) {
             return res.status(httpstatus.BAD_REQUEST).json({ error : err.message });
         }
-        log.error({ err }, 'Server error');
+        log.error({ err, func : 'createProject' }, 'Server error');
         errors.unknownError(res, err);
     }
 }
@@ -162,7 +168,7 @@ function getProjectFields(req: Express.Request, res: Express.Response) {
             }
         })
         .catch((err) => {
-            log.error({ err }, 'Server error');
+            log.error({ err, func : 'getProjectFields' }, 'Server error');
             errors.unknownError(res, err);
         });
 }
@@ -187,7 +193,7 @@ async function deleteProject(req: auth.RequestWithProject, res: Express.Response
         return res.sendStatus(httpstatus.NO_CONTENT);
     }
     catch (err) {
-        log.error({ err }, 'Server error');
+        log.error({ err, func : 'deleteProject' }, 'Server error');
         errors.unknownError(res, err);
     }
 }
@@ -305,7 +311,7 @@ async function modifyProject(req: Express.Request, res: Express.Response) {
         if (err.message === 'No room for the label') {
             return res.status(httpstatus.BAD_REQUEST).json({ error : err.message });
         }
-        log.error({ err }, 'Server error');
+        log.error({ err, func : 'modifyProject' }, 'Server error');
         return errors.unknownError(res, err);
     }
 }

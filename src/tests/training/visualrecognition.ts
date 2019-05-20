@@ -21,39 +21,53 @@ import * as downloadAndZip from '../../lib/utils/downloadAndZip';
 
 import * as mockstore from './mockstore';
 import requestPromise = require('request-promise');
+import requestLegacy = require('request');
 
 
 
 describe('Training - Visual Recognition', () => {
 
-    let getStub: sinon.SinonStub;
-    let createStub: sinon.SinonStub;
-    let deleteStub: sinon.SinonStub;
-    let getProjectStub: sinon.SinonStub;
-    let authStoreStub: sinon.SinonStub;
-    let authByIdStoreStub: sinon.SinonStub;
-    let countStoreStub: sinon.SinonStub;
-    let getImageClassifiers: sinon.SinonStub;
-    let getStoreStub: sinon.SinonStub;
-    let storeStoreStub: sinon.SinonStub;
-    let deleteStoreStub: sinon.SinonStub;
-    let storeScratchKeyStub: sinon.SinonStub;
-    let resetExpiredScratchKeyStub: sinon.SinonStub;
-    let getClassStub: sinon.SinonStub;
+    let getStub: sinon.SinonStub<[string,
+        (requestPromise.RequestPromiseOptions | undefined)?,
+        (requestLegacy.RequestCallback | undefined)?], requestPromise.RequestPromise>;
+    let createStub: sinon.SinonStub<[string,
+        (requestPromise.RequestPromiseOptions | undefined)?,
+        (requestLegacy.RequestCallback | undefined)?], requestPromise.RequestPromise>;
+    let deleteStub: sinon.SinonStub<[string,
+        (requestPromise.RequestPromiseOptions | undefined)?,
+        (requestLegacy.RequestCallback | undefined)?], requestPromise.RequestPromise>;
+    let getProjectStub: sinon.SinonStub<[string], Promise<DbTypes.Project | undefined>>;
+    let authStoreStub: sinon.SinonStub<[string, TrainingTypes.BluemixServiceType], Promise<TrainingTypes.BluemixCredentials[]>>;
+    let authByIdStoreStub: sinon.SinonStub<[string], Promise<TrainingTypes.BluemixCredentials>>;
+    let countStoreStub: sinon.SinonStub<[DbTypes.Project], Promise<{ [label: string]: number; }>>;
+    let getImageClassifiers: sinon.SinonStub<[string], Promise<TrainingTypes.VisualClassifier[]>>;
+    let getStoreStub: sinon.SinonStub<[string, string, DbTypes.PagingOptions], Promise<DbTypes.ImageTraining[]>>;
+    let storeStoreStub: sinon.SinonStub<[TrainingTypes.BluemixCredentials, DbTypes.Project, TrainingTypes.VisualClassifier], Promise<TrainingTypes.VisualClassifier>>;
+    let deleteStoreStub: sinon.SinonStub<[string], Promise<void>>;
+    let storeScratchKeyStub: sinon.SinonStub<[DbTypes.Project, TrainingTypes.BluemixCredentials, string, Date], Promise<string>>;
+    let resetExpiredScratchKeyStub: sinon.SinonStub<[string, DbTypes.ProjectTypeLabel], Promise<void>>;
+    let getClassStub: sinon.SinonStub<[string], Promise<DbTypes.ClassTenant>>;
     let setTimeoutStub: sinon.SinonStub;
 
-    let downloadStub: sinon.SinonStub;
+    let downloadStub: sinon.SinonStub<[downloadAndZip.ImageDownload[]], Promise<string>>;
 
 
     before(() => {
         iam.init();
 
+        // @ts-ignore
         getStub = sinon.stub(request, 'get');
+        // @ts-ignore
         getStub.withArgs(sinon.match(/.*classifiers.*/), sinon.match.any).callsFake(mockVisRec.getClassifier);
+        // @ts-ignore
         getStub.withArgs(sinon.match(/.*classify/), sinon.match.any).callsFake(mockVisRec.testClassify);
+        // @ts-ignore
         createStub = sinon.stub(request, 'post');
+        // @ts-ignore
         createStub.withArgs(sinon.match(/.*classifiers/), sinon.match.any).callsFake(mockVisRec.createClassifier);
+        // @ts-ignore
         createStub.withArgs(sinon.match(/.*classify/), sinon.match.any).callsFake(mockVisRec.testClassify);
+        // @ts-ignore
         deleteStub = sinon.stub(request, 'delete').callsFake(mockVisRec.deleteClassifier);
 
         getProjectStub = sinon.stub(store, 'getProject').callsFake(mockstore.getProject);
@@ -69,6 +83,7 @@ describe('Training - Visual Recognition', () => {
         getClassStub = sinon.stub(store, 'getClassTenant').callsFake(mockstore.getClassTenant);
 
         const fakeTimer: NodeJS.Timer = {} as NodeJS.Timer;
+        // @ts-ignore
         setTimeoutStub = sinon.stub(global, 'setTimeout').returns(fakeTimer);
 
         downloadStub = sinon.stub(downloadAndZip, 'run').callsFake(mockDownloadAndZip.run);
@@ -133,7 +148,7 @@ describe('Training - Visual Recognition', () => {
 
             assert(
                 storeScratchKeyStub.calledWith(project, mockstore.credsForVisRec,
-                    'good'));
+                    'good', sinon.match.any));
         });
 
         it('should not try to create a classifier without enough training data', async () => {
@@ -157,7 +172,7 @@ describe('Training - Visual Recognition', () => {
 
             try {
                 await visrec.trainClassifier(project);
-                assert.fail(0, 1, 'should not have reached here', '');
+                assert.fail('should not have reached here');
             }
             catch (err) {
                 assert.strictEqual(err.message, 'Not enough images to train the classifier');
@@ -187,7 +202,7 @@ describe('Training - Visual Recognition', () => {
 
             try {
                 await visrec.trainClassifier(project);
-                assert.fail(0, 1, 'should not have reached here', '');
+                assert.fail('should not have reached here');
             }
             catch (err) {
                 assert.strictEqual(err.message, 'Number of images exceeds maximum (10000)');
@@ -217,7 +232,7 @@ describe('Training - Visual Recognition', () => {
 
             try {
                 await visrec.trainClassifier(project);
-                assert.fail(0, 1, 'should not have reached here', '');
+                assert.fail('should not have reached here');
             }
             catch (err) {
                 assert.strictEqual(err.message, visrec.ERROR_MESSAGES.INSUFFICIENT_API_KEYS);
@@ -284,7 +299,7 @@ describe('Training - Visual Recognition', () => {
 
             assert(deleteStub.calledWith('https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers/good', {
                 qs : { version : '2016-05-20', api_key : 'userpass' },
-                headers : { 'user-agent' : 'machinelearningforkids' },
+                headers : { 'user-agent' : 'machinelearningforkids', 'X-Watson-Learning-Opt-Out': 'true' },
                 timeout : 120000, gzip : true, json : true,
             }));
             assert(deleteStoreStub.calledWith(goodClassifier.id));
@@ -310,7 +325,7 @@ describe('Training - Visual Recognition', () => {
 
             assert(deleteStub.calledWith('https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers/unknown', {
                 qs : { version : '2016-05-20', api_key : 'userpass' },
-                headers : { 'user-agent' : 'machinelearningforkids' },
+                headers : { 'user-agent' : 'machinelearningforkids', 'X-Watson-Learning-Opt-Out': 'true' },
                 timeout : 120000, gzip : true, json : true,
             }));
             assert(deleteStoreStub.calledWith(unknownClassifier.id));
@@ -390,6 +405,7 @@ describe('Training - Visual Recognition', () => {
             assert.strictEqual(opts.qs.version, '2016-05-20');
             assert.strictEqual(opts.qs.api_key, 'userpass');
             assert.strictEqual(opts.headers['user-agent'], 'machinelearningforkids');
+            assert.strictEqual(opts.headers['X-Watson-Learning-Opt-Out'], 'true');
 
             const fileOptions = opts as visrec.LegacyTestFileRequest;
             const urlOptions = opts as visrec.LegacyTestUrlRequest;
@@ -449,6 +465,8 @@ describe('Training - Visual Recognition', () => {
             }
         },
         createClassifier : (url: string, options: visrec.LegacyTrainingRequest) => {
+            assert.strictEqual(options.headers['X-Watson-Learning-Opt-Out'], 'true');
+
             if (options.formData.name === 'Bob\'s images proj') {
                 assert.strictEqual(options.qs.version, '2016-05-20');
                 assert.strictEqual(options.qs.api_key, 'userpass');
