@@ -1,5 +1,6 @@
 // core dependencies
 import * as fs from 'fs';
+import { IncomingHttpHeaders } from 'http';
 // external dependencies
 import * as request from 'request';
 import * as httpstatus from 'http-status';
@@ -71,20 +72,16 @@ export function file(url: string, targetFilePath: string, callback: IErrCallback
             .on('response', (r) => {
                 // request doesn't emit errors for unsuccessful status codes
                 //  so we check for status codes that look like errors here
-                if (r.statusCode >= 400) {
-                    if (r.statusCode === httpstatus.FORBIDDEN || r.statusCode === httpstatus.UNAUTHORIZED) {
-                        return resolve(new Error(safeGetHost(url) + ERRORS.DOWNLOAD_FORBIDDEN));
-                    }
-
-                    numErrors += 1;
-                    log.error({ statusCode : r.statusCode, url, numDownloads, numErrors }, 'Failed to request url');
-                    return resolve(new Error(ERRORS.DOWNLOAD_FAIL + url));
+                const problem = recognizeCommonProblems(r, url);
+                if (problem) {
+                    resolve(problem);
+                    return r.destroy();
                 }
             })
             .on('error', (err) => {
                 numErrors += 1;
 
-                log.error({ err, numDownloads, numErrors }, 'request get fail');
+                log.error({ err, url, numDownloads, numErrors }, 'request get fail');
                 resolve(new Error(ERRORS.DOWNLOAD_FAIL + url));
             })
             .pipe(writeStream);
@@ -93,6 +90,60 @@ export function file(url: string, targetFilePath: string, callback: IErrCallback
         log.error({ err, url }, 'Failed to download file');
         resolve(new Error(ERRORS.DOWNLOAD_FAIL + url));
     }
+}
+
+
+
+function recognizeCommonProblems(response: request.Response, url: string): Error | undefined
+{
+    if (response.statusCode >= 400) {
+        if (response.statusCode === httpstatus.FORBIDDEN ||
+            response.statusCode === httpstatus.UNAUTHORIZED)
+        {
+            return new Error(safeGetHost(url) + ERRORS.DOWNLOAD_FORBIDDEN);
+        }
+
+        numErrors += 1;
+        log.error({ statusCode : response.statusCode, url, numDownloads, numErrors }, 'Failed to request url');
+        return new Error(ERRORS.DOWNLOAD_FAIL + url);
+    }
+
+    if (downloadTooBig(response.headers)) {
+        return new Error(ERRORS.DOWNLOAD_TOO_BIG);
+    }
+
+    if (response.headers['content-type'] &&
+        response.headers['content-type'].startsWith('text/html') &&
+        response.request.uri.href.startsWith('https://accounts.google.com/ServiceLogin?continue='))
+    {
+        return new Error('Google' + ERRORS.DOWNLOAD_FORBIDDEN);
+    }
+}
+
+
+
+/**
+ * Checks if the response headers for an image download suggest the
+ * image will be too big to resize
+ *
+ * @returns true - if the headers suggest the image is too big
+ */
+export function downloadTooBig(headers: IncomingHttpHeaders): boolean {
+    if (headers['content-length']) {
+        const sizeStr = headers['content-length'];
+        try {
+            const sizeInt = parseInt(sizeStr, 10);
+            if (sizeInt > 52428800) {
+                return true;
+            }
+        }
+        catch (err) {
+            log.error({ err, sizeStr }, 'Unable to parse content-length header');
+        }
+    }
+
+    // assume it's probably okay
+    return false;
 }
 
 
@@ -182,5 +233,7 @@ function safeGetHost(url: string): string {
 
 export const ERRORS = {
     DOWNLOAD_FAIL : 'Unable to download image from ',
+    DOWNLOAD_FILETYPE_UNSUPPORTED : 'Unsupported image file type',
     DOWNLOAD_FORBIDDEN : ' would not allow "Machine Learning for Kids" to use that image',
+    DOWNLOAD_TOO_BIG : 'The image is too big to use. Please choose a different image.',
 };

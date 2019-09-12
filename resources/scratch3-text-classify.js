@@ -1,7 +1,10 @@
 class MachineLearningText {
 
     constructor() {
-        this._labels = [ {{#labels}} '{{name}}', {{/labels}} ];
+        this._labels = {
+            items : [ {{#labels}} '{{name}}', {{/labels}} ],
+            acceptReporters: true
+        };
 
         this._statuses = [
             { value : 'Ready', text : 'ready to use' },
@@ -23,11 +26,11 @@ class MachineLearningText {
             name: '{{{ projectname }}}',
 
             // colour for the blocks
-            colour: '#4B4A60',
+            color1: '#4B4A60',
             // colour for the menus in the blocks
-            colourSecondary: '#707070',
+            color2: '#707070',
             // border for blocks and parameter gaps
-            colourTertiary: '#4c97ff',
+            color3: '#4c97ff',
 
             // Machine Learning for Kids site icon
             menuIconURI: this._icon,
@@ -91,7 +94,7 @@ class MachineLearningText {
                         },
                         LABEL: {
                             type: Scratch.ArgumentType.STRING,
-                            defaultValue: this._labels[0],
+                            defaultValue: this._labels.items[0],
                             menu: 'labels'
                         }
                     }

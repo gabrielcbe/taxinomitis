@@ -2,7 +2,7 @@
 import * as assert from 'assert';
 import * as filecompare from 'filecompare';
 import * as fs from 'fs';
-import * as unzip from 'unzip2';
+import * as unzip from 'unzipper';
 import * as tmp from 'tmp';
 import * as async from 'async';
 
@@ -88,11 +88,6 @@ describe('Utils - download and zip', () => {
                     (unzippedFile: any, nextFile) => {
                         switch (unzippedFile.size) {
                         case 22955:
-                            // when running on Travis, the transformed file is slightly different
-                            assert.strictEqual(process.env.TRAVIS, 'true');
-                            nextFile();
-                            break;
-                        case 23109:
                             filecompare('./src/tests/utils/resources/map.jpg',
                                         unzippedFile.location,
                                         (isEq: boolean) => {

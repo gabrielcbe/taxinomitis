@@ -265,6 +265,8 @@ async function getTraining(project: DbObjects.Project): Promise<{ [label: string
 
     const examples: { [label: string]: string } = {};
 
+    const trainingDataToFetch: { [label: string]: downloadAndZip.ImageDownload[] } = {};
+
     for (const label of project.labels) {
 
         if (label in counts && counts[label] > 0) {
@@ -280,7 +282,7 @@ async function getTraining(project: DbObjects.Project): Promise<{ [label: string
                     const fromStorage: downloadAndZip.ImageDownload = {
                         type : 'retrieve',
                         spec : {
-                            imageid : trainingitem.id,
+                            objectid : trainingitem.id,
                             projectid : project.id,
                             userid : project.userid,
                             classid : project.classid,
@@ -296,10 +298,20 @@ async function getTraining(project: DbObjects.Project): Promise<{ [label: string
 
             validateRequest(trainingLocations);
 
-            const trainingZip = await downloadAndZip.run(trainingLocations);
-            examples[label] = trainingZip;
+            trainingDataToFetch[label] = trainingLocations;
         }
     }
+
+
+    // create zip files for each of the training labels
+    const zipPromises = Object.keys(trainingDataToFetch).map((label) => {
+        return downloadAndZip.run(trainingDataToFetch[label])
+            .then((trainingZip) => {
+                examples[label] = trainingZip;
+            });
+    });
+    await Promise.all(zipPromises);
+
 
     return examples;
 }

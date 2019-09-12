@@ -1,3 +1,7 @@
+-- CREATE DATABASE mlforkidsdb CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+
+-- ------------------------------------------------------------------
+
 use mlforkidsdb;
 
 -- ------------------------------------------------------------------
@@ -64,19 +68,20 @@ CREATE TABLE imagetraining (
     isstored BOOLEAN DEFAULT false
 );
 
-CREATE INDEX imagetraining_getImageTraining on imagetraining(projectid, label, imageurl);
+CREATE INDEX imagetraining_getImageTraining on imagetraining(projectid, label, imageurl(250));
 CREATE INDEX imagetraining_getTrainingLabels on imagetraining(projectid);
 
 
 CREATE TABLE soundtraining (
     id CHAR(36) NOT NULL PRIMARY KEY,
     projectid CHAR(36) NOT NULL,
-    audiodata MEDIUMTEXT,
-    label VARCHAR(100)
+    label VARCHAR(100),
+    audiourl VARCHAR(185)
 );
 
 CREATE INDEX soundtraining_getSoundTraining on soundtraining(projectid, label);
 CREATE INDEX soundtraining_getTrainingLabels on soundtraining(projectid);
+
 
 -- ------------------------------------------------------------------
 
@@ -87,15 +92,17 @@ CREATE TABLE bluemixcredentials (
     url VARCHAR(200) NOT NULL,
     username VARCHAR(36),
     password VARCHAR(36),
-    credstypeid TINYINT NOT NULL
+    credstypeid TINYINT NOT NULL DEFAULT 0
 );
 
 CREATE INDEX bluemixcredentials_getBluemixCredentials on bluemixcredentials(classid, servicetype);
 
 INSERT INTO bluemixcredentials (id, classid, servicetype, url, username, password)
     VALUES
-    ('01cf0343-6bd7-4732-95f0-8c8dbc0be922', 'testing', 'conv', 'https://gateway.watsonplatform.net/conversation/api', '263913bf-07b0-4d04-b08d-1a3a38c287d6', 'A8PV7mFeg37b'),
-    ('3a9a71ab-de77-4912-b0b0-f0c9698d9245', 'testing', 'visrec', 'https://gateway.watsonplatform.net/visual-recognition/api', 'ChfzmB5KwqQhu4jk0zKpOj', 'JqZfa6xuDgwcOmUoYHCBzE');
+    -- This is a placeholder row used for unit tests - it's obviously not a real username/password.
+    ('01cf0343-6bd7-4732-95f0-8c8dbc0be922', 'testing', 'conv', 'https://gateway.watsonplatform.net/conversation/api', '00000000-1111-2222-3333-444444444444', '56789abcdef0'),
+    -- This is a placeholder row used for unit tests - it's obviously not a real API key.
+    ('3a9a71ab-de77-4912-b0b0-f0c9698d9245', 'testing', 'visrec', 'https://gateway.watsonplatform.net/visual-recognition/api', 'AbCdEfGhIjKlMnOpQrStUv', 'WxYz0123456789AbCdEfGh');
 
 -- ------------------------------------------------------------------
 
@@ -198,7 +205,7 @@ CREATE TABLE tenants (
 
 INSERT INTO tenants (id, projecttypes, maxusers, maxprojectsperuser, textclassifiersexpiry, ismanaged)
     VALUES
-        ('TESTTENANT', 'text,images,numbers', 8, 3, 2, true),
+        ('TESTTENANT', 'text,images,numbers,sounds', 8, 3, 2, true),
         ('UNIQUECLASSID', 'text,numbers', 8, 3, 2, true),
         ('session-users', 'text,numbers,sounds', 5, 1, 4, true);
 

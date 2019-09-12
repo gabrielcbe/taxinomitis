@@ -30,9 +30,9 @@ const TESTCLASS = 'UNIQUECLASSID';
 
 describe('REST API - scratch keys', () => {
 
-    let authStub: sinon.SinonStub;
-    let checkUserStub: sinon.SinonStub;
-    let requireSupervisorStub: sinon.SinonStub;
+    let authStub: sinon.SinonStub<any, any>;
+    let checkUserStub: sinon.SinonStub<any, any>;
+    let requireSupervisorStub: sinon.SinonStub<any, any>;
 
     function authNoOp(
         req: Express.Request, res: Express.Response,
@@ -41,7 +41,7 @@ describe('REST API - scratch keys', () => {
         next();
     }
 
-    let deleteStub: sinon.SinonStub;
+    let deleteStub: sinon.SinonStub<any, any>;
 
 
     before(async () => {
@@ -281,6 +281,48 @@ describe('REST API - scratch keys', () => {
                     assert.strictEqual(res.error.text,
                         '/**/ typeof ' + callbackFunctionName +
                         ' === \'function\' && mycb({"error":"Missing data"});');
+                });
+        });
+
+        it('should check the data type when classifying', async () => {
+            const projectid = uuid();
+
+            const project: DbTypes.Project = {
+                id : projectid,
+                name : 'Test Project',
+                userid : 'userid',
+                classid : TESTCLASS,
+                type : 'numbers',
+                language : 'en',
+                labels : [],
+                numfields : 3,
+                isCrowdSourced : false,
+            };
+
+            const key = await store.storeUntrainedScratchKey(project);
+
+            const callbackFunctionName = 'mycb';
+            return request(testServer)
+                .get('/api/scratch/' + key + '/classify')
+                .query({ callback : callbackFunctionName, data : 'I am not an array of numbers' })
+                // this is a JSONP API
+                .expect('Content-Type', /javascript/)
+                .expect(httpstatus.BAD_REQUEST)
+                .then(async (res) => {
+                    await store.deleteEntireProject('userid', TESTCLASS, project);
+
+                    const text = res.text;
+
+                    const expectedStart = '/**/ typeof ' +
+                                        callbackFunctionName +
+                                        ' === \'function\' && ' +
+                                        callbackFunctionName + '(';
+
+                    assert(text.startsWith(expectedStart));
+
+                    const classificationRespStr: string = text.substring(expectedStart.length, text.length - 2);
+                    const payload = JSON.parse(classificationRespStr);
+                    assert.deepStrictEqual(payload, { error : 'Missing data' });
                 });
         });
 
@@ -1066,7 +1108,7 @@ describe('REST API - scratch keys', () => {
             return prom as requestPromise.RequestPromise;
         }
 
-        function brokenClassifier(url: string, options?: coreReq.CoreOptions): requestPromise.RequestPromise {
+        function brokenClassifier(/*url: string, options?: coreReq.CoreOptions*/): requestPromise.RequestPromise {
             const prom: unknown = new Promise((resolve, reject) => {
                 reject({ error : {
                     code : 500,

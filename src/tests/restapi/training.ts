@@ -2,6 +2,7 @@
 import * as uuid from 'uuid/v1';
 import * as assert from 'assert';
 import * as request from 'supertest';
+import * as requestPromise from 'request-promise';
 import * as httpstatus from 'http-status';
 import * as sinon from 'sinon';
 import * as randomstring from 'randomstring';
@@ -20,19 +21,23 @@ let testServer: express.Express;
 
 describe('REST API - training', () => {
 
-    let authStub: sinon.SinonStub;
-    let checkUserStub: sinon.SinonStub;
-    let requireSupervisorStub: sinon.SinonStub;
+    let authStub: sinon.SinonStub<any, any>;
+    let checkUserStub: sinon.SinonStub<any, any>;
+    let requireSupervisorStub: sinon.SinonStub<any, any>;
+
+    let numbersTrainingServicePostStub: sinon.SinonStub<any, any>;
+    let numbersTrainingServiceDeleteStub: sinon.SinonStub<any, any>;
 
     let nextAuth0UserId = 'userid';
     let nextAuth0UserTenant = 'tenant';
-    let nextAuth0UserRole = 'student';
+    let nextAuth0UserRole: 'student' | 'supervisor' = 'student';
 
     function authNoOp(
         req: Express.Request, res: Express.Response,
         next: (err?: Error) => void)
     {
-        req.user = {
+        const reqWithUser = req as auth.RequestWithUser;
+        reqWithUser.user = {
             sub : nextAuth0UserId,
             app_metadata : {
                 tenant : nextAuth0UserTenant,
@@ -47,6 +52,11 @@ describe('REST API - training', () => {
         authStub = sinon.stub(auth, 'authenticate').callsFake(authNoOp);
         checkUserStub = sinon.stub(auth, 'checkValidUser').callsFake(authNoOp);
         requireSupervisorStub = sinon.stub(auth, 'requireSupervisor').callsFake(authNoOp);
+
+        // @ts-ignore
+        numbersTrainingServicePostStub = sinon.stub(requestPromise, 'post').callsFake(stubbedRequestPost);
+        // @ts-ignore
+        numbersTrainingServiceDeleteStub = sinon.stub(requestPromise, 'delete').callsFake(stubbedRequestDelete);
 
         await store.init();
 
@@ -64,6 +74,9 @@ describe('REST API - training', () => {
         authStub.restore();
         checkUserStub.restore();
         requireSupervisorStub.restore();
+
+        numbersTrainingServicePostStub.restore();
+        numbersTrainingServiceDeleteStub.restore();
 
         return store.disconnect();
     });
@@ -1368,7 +1381,7 @@ describe('REST API - training', () => {
                         assert.strictEqual(job.attempts, 0);
                         assert.deepStrictEqual(job.jobdata, {
                             projectid, userid, classid,
-                            imageid : trainingOne.id,
+                            objectid : trainingOne.id,
                         });
 
                         await store.deletePendingJob(job);
@@ -1495,5 +1508,32 @@ describe('REST API - training', () => {
         });
 
     });
+
+
+
+
+
+    const originalRequestPost = requestPromise.post;
+    const originalRequestDelete = requestPromise.delete;
+    const stubbedRequestPost = (url: string, opts?: any) => {
+        if (url === 'undefined/api/models') {
+            // no test numbers service available
+            return Promise.resolve();
+        }
+        else {
+            // use a real test numbers service
+            return originalRequestPost(url, opts);
+        }
+    };
+    const stubbedRequestDelete = (url: string, opts?: any) => {
+        if (url === 'undefined/api/models') {
+            // no test numbers service available
+            return Promise.resolve();
+        }
+        else {
+            // use a real test numbers service
+            return originalRequestDelete(url, opts);
+        }
+    };
 
 });

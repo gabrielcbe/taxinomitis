@@ -123,7 +123,7 @@ describe('DB objects', () => {
             projecttypes : 'text,numbers',
             ismanaged : 0,
             maxusers : 3,
-            maxprojectsperuser : 2,
+            maxprojectsperuser : 4,
             textclassifiersexpiry : 9,
             imageclassifiersexpiry : 1,
         };
@@ -132,7 +132,7 @@ describe('DB objects', () => {
             supportedProjectTypes : ['text', 'numbers'],
             isManaged : false,
             maxUsers : 3,
-            maxProjectsPerUser : 2,
+            maxProjectsPerUser : 4,
             textClassifierExpiry : 9,
             imageClassifierExpiry : 1,
         };
@@ -977,9 +977,9 @@ describe('DB objects', () => {
 
         it('should require a class id for image jobs', (done) => {
             try {
-                dbobjects.createDeleteImageJob({
+                dbobjects.createDeleteObjectStoreJob({
                     classid : UNDEFINED_STRING,
-                    userid, projectid, imageid,
+                    userid, projectid, objectid: imageid,
                 });
             }
             catch (err) {
@@ -991,9 +991,9 @@ describe('DB objects', () => {
 
         it('should require a userid id for image jobs', (done) => {
             try {
-                dbobjects.createDeleteImageJob({
+                dbobjects.createDeleteObjectStoreJob({
                     userid : UNDEFINED_STRING,
-                    classid, projectid, imageid,
+                    classid, projectid, objectid: imageid,
                 });
             }
             catch (err) {
@@ -1005,9 +1005,9 @@ describe('DB objects', () => {
 
         it('should require a project id for image jobs', (done) => {
             try {
-                dbobjects.createDeleteImageJob({
+                dbobjects.createDeleteObjectStoreJob({
                     projectid : UNDEFINED_STRING,
-                    classid, userid, imageid,
+                    classid, userid, objectid: imageid,
                 });
             }
             catch (err) {
@@ -1019,13 +1019,13 @@ describe('DB objects', () => {
 
         it('should require a image id for image jobs', (done) => {
             try {
-                dbobjects.createDeleteImageJob({
-                    imageid : UNDEFINED_STRING,
+                dbobjects.createDeleteObjectStoreJob({
+                    objectid : UNDEFINED_STRING,
                     classid, userid, projectid,
                 });
             }
             catch (err) {
-                assert.strictEqual(err.message, 'Missing required image id');
+                assert.strictEqual(err.message, 'Missing required object id');
                 return done();
             }
             assert.fail('Failed to reject request');
@@ -1035,7 +1035,7 @@ describe('DB objects', () => {
 
         it('should require a class id for project jobs', (done) => {
             try {
-                dbobjects.createDeleteProjectImagesJob({
+                dbobjects.createDeleteProjectObjectsJob({
                     classid : UNDEFINED_STRING,
                     userid, projectid,
                 });
@@ -1049,7 +1049,7 @@ describe('DB objects', () => {
 
         it('should require a userid id for project jobs', (done) => {
             try {
-                dbobjects.createDeleteProjectImagesJob({
+                dbobjects.createDeleteProjectObjectsJob({
                     userid : UNDEFINED_STRING,
                     classid, projectid,
                 });
@@ -1063,7 +1063,7 @@ describe('DB objects', () => {
 
         it('should require a project id for project jobs', (done) => {
             try {
-                dbobjects.createDeleteProjectImagesJob({
+                dbobjects.createDeleteProjectObjectsJob({
                     projectid : UNDEFINED_STRING,
                     classid, userid,
                 });
@@ -1078,7 +1078,7 @@ describe('DB objects', () => {
 
         it('should require a class id for user jobs', (done) => {
             try {
-                dbobjects.createDeleteUserImagesJob({
+                dbobjects.createDeleteUserObjectsJob({
                     classid : UNDEFINED_STRING,
                     userid,
                 });
@@ -1092,7 +1092,7 @@ describe('DB objects', () => {
 
         it('should require a userid id for user jobs', (done) => {
             try {
-                dbobjects.createDeleteUserImagesJob({
+                dbobjects.createDeleteUserObjectsJob({
                     userid : UNDEFINED_STRING,
                     classid,
                 });
@@ -1107,7 +1107,7 @@ describe('DB objects', () => {
 
         it('should require a class id for class jobs', (done) => {
             try {
-                dbobjects.createDeleteClassImagesJob({
+                dbobjects.createDeleteClassObjectsJob({
                     classid : UNDEFINED_STRING,
                 });
             }
@@ -1278,7 +1278,7 @@ describe('DB objects', () => {
                 projecttypes : 'text,images,numbers,sounds',
                 ismanaged : 0,
                 maxusers : 30,
-                maxprojectsperuser : 2,
+                maxprojectsperuser : 3,
                 textclassifiersexpiry : 24,
                 imageclassifiersexpiry : 24,
             });
@@ -1402,21 +1402,6 @@ describe('DB objects', () => {
             }
             catch (err) {
                 assert.strictEqual(err.message, 'Invalid URL');
-            }
-        });
-
-        it('should reject empty URLs', () => {
-            try {
-                dbobjects.createSiteAlert(
-                    'This is my message.',
-                    '',
-                    'supervisor',
-                    'error',
-                    constants.ONE_HOUR);
-                assert.fail('should not get here');
-            }
-            catch (err) {
-                assert.strictEqual(err.message, 'Missing required attributes');
             }
         });
 

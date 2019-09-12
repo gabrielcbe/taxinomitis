@@ -7,11 +7,13 @@ import * as async from 'async';
 import * as archiver from 'archiver';
 import * as fileType from 'file-type';
 import readChunk from 'read-chunk';
+import * as request from 'request';
 // local dependencies
 import * as download from './download';
-import * as imagestore from '../imagestore';
+import * as objectstore from '../objectstore';
 import * as visrec from '../training/visualrecognition';
 import * as notifications from '../notifications/slack';
+import * as openwhisk from './openwhisk';
 import loggerSetup from './logger';
 
 const log = loggerSetup();
@@ -23,7 +25,7 @@ export interface RetrieveFromStorage {
     readonly spec: ObjectStorageSpec;
 }
 interface ObjectStorageSpec {
-    readonly imageid: string;
+    readonly objectid: string;
     readonly projectid: string;
     readonly userid: string;
     readonly classid: string;
@@ -68,7 +70,7 @@ function summary(location: ImageDownload): string {
         return location.url;
     }
     else if (location.type === 'retrieve') {
-        return location.spec.imageid;
+        return location.spec.objectid;
     }
     else {
         return 'unknown';
@@ -117,7 +119,7 @@ function logError(err?: Error | null) {
  * @param targetFilePath - writes to
  */
 function retrieve(spec: ObjectStorageSpec, targetFilePath: string, callback: IErrCallback): void {
-    imagestore.getImage(spec)
+    objectstore.getImage(spec)
         .then((imagedata) => {
             fs.writeFile(targetFilePath, imagedata.body, callback);
         })
@@ -264,7 +266,7 @@ function createZip(filepaths: string[], callback: IZipCallback): void {
         });
 
         outputStream.on('error', (ziperr) => {
-            log.error({ err }, 'Failed to write to zip file');
+            log.error({ err: ziperr }, 'Failed to write to zip file');
             invokeCallbackSafely(ziperr);
         });
 
@@ -323,10 +325,21 @@ function downloadAllIntoZip(locations: ImageDownload[], callback: ICreateZipCall
 }
 
 
+let execution: openwhisk.Execution = 'local';
+
+function chooseExecutionEnvironment() {
+    openwhisk.isOpenWhiskConfigured()
+        .then((okayToUseOpenWhisk) => {
+            if (okayToUseOpenWhisk) {
+                execution = 'openwhisk';
+            }
+        });
+}
 
 
 
-export function run(locations: ImageDownload[]): Promise<string> {
+
+function runLocally(locations: ImageDownload[]): Promise<string> {
     return new Promise((resolve, reject) => {
         downloadAllIntoZip(locations, (err, zippath) => {
             if (err) {
@@ -338,4 +351,80 @@ export function run(locations: ImageDownload[]): Promise<string> {
             return resolve(zippath);
         });
     });
+}
+
+
+
+export async function runInServerless(locations: ImageDownload[]): Promise<string> {
+    return new Promise((resolve, reject) => {
+        tmp.file({ keep : true, postfix : '.zip' }, (tmperr?: Error, zipfile?: string) => {
+            if (tmperr || !zipfile) {
+                log.error({ err : tmperr }, 'Failed to get tmp file');
+                return reject(tmperr);
+            }
+
+            const url = openwhisk.getUrl(openwhisk.FUNCTIONS.CREATE_ZIP);
+            const headers = openwhisk.getHeaders();
+
+            const serverlessRequest = {
+                url,
+                method : 'POST',
+                json : true,
+                headers : {
+                    ...headers,
+                    'User-Agent': 'machinelearningforkids.co.uk',
+                    'Accept': 'application/zip',
+                },
+                body : {
+                    locations,
+                    imagestore : objectstore.getCredentials(),
+                },
+            };
+
+            request.post(serverlessRequest)
+            .on('error', (err) => {
+                log.error({ err }, 'Failed to run function');
+                return reject(err);
+            })
+            .on('response', (resp) => {
+                if (resp.statusCode !== 200) {
+                    log.error({
+                        status : resp.statusCode,
+                        errorobj : resp.headers['x-machinelearningforkids-error'],
+                        body : resp.body,
+                    }, 'Error response from OpenWhisk');
+
+                    let functionError = new Error('Failed to create zip') as any;
+                    const hdrs = resp.headers['x-machinelearningforkids-error'];
+                    if (hdrs && typeof hdrs === 'string') {
+                        try {
+                            const functionErrorInfo = JSON.parse(hdrs);
+                            functionError = new Error(functionErrorInfo.error) as any;
+                            functionError.location = functionErrorInfo.location;
+                        }
+                        catch (err) {
+                            log.error({ err }, 'Failed to parse function error');
+                        }
+                    }
+                    return resp.destroy(functionError);
+                }
+            })
+            .pipe(fs.createWriteStream(zipfile))
+            .on('finish', () => {
+                return resolve(zipfile);
+            });
+        });
+    });
+}
+
+
+chooseExecutionEnvironment();
+
+export function run(locations: ImageDownload[]): Promise<string> {
+    if (execution === 'openwhisk') {
+        return runInServerless(locations);
+    }
+    else {
+        return runLocally(locations);
+    }
 }

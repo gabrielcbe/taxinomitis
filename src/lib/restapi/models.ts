@@ -174,6 +174,14 @@ async function newModel(req: auth.RequestWithProject, res: Express.Response) {
                             location : err.location,
                         });
             }
+            else if (err.message === download.ERRORS.DOWNLOAD_FILETYPE_UNSUPPORTED) {
+                return res.status(httpstatus.CONFLICT)
+                        .send({
+                            code : 'MLMOD13',
+                            error : 'One of your training images is a type that cannot be used',
+                            location : err.location,
+                        });
+            }
             else {
                 return errors.unknownError(res, err);
             }
@@ -227,6 +235,27 @@ async function deleteModel(req: auth.RequestWithProject, res: Express.Response) 
             return errors.notFound(res);
         }
 
+        return errors.unknownError(res, err);
+    }
+}
+
+
+
+async function describeModel(req: auth.RequestWithProject, res: Express.Response) {
+    if (req.project.type !== 'numbers') {
+        return errors.notImplemented(res);
+    }
+
+    try {
+        const classifierInfo = await numbers.getModelVisualisation(req.project);
+
+        // computing the visualisation data is super expensive
+        //  so ask browsers to cache it forever
+        res.set(headers.CACHE_1YEAR);
+
+        return res.json(classifierInfo);
+    }
+    catch (err) {
         return errors.unknownError(res, err);
     }
 }
@@ -339,6 +368,13 @@ export default function registerApis(app: Express.Application) {
              // @ts-ignore
              newModel);
 
+    app.get(urls.MODEL,
+            auth.authenticate,
+            auth.checkValidUser,
+            auth.verifyProjectAccess,
+            // @ts-ignore
+            describeModel);
+
     app.delete(urls.MODEL,
                auth.authenticate,
                auth.checkValidUser,
@@ -350,5 +386,4 @@ export default function registerApis(app: Express.Application) {
              auth.authenticate,
              auth.checkValidUser,
              testModel);
-
 }

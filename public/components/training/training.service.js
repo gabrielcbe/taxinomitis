@@ -44,6 +44,14 @@
                 });
         }
 
+        function getSoundData(soundobj) {
+            return $http.get(soundobj.audiourl)
+                .then(function (resp) {
+                    soundobj.audiodata = resp.data;
+                    return soundobj;
+                });
+        }
+
         function getModels(projectid, userid, tenant) {
             var url = '/api/classes/' + tenant +
                         '/students/' + userid +
@@ -59,6 +67,18 @@
                     }
                 }
                 return models;
+            });
+        }
+
+        function getModel(projectid, userid, tenant, modelid, timestamp) {
+            var url = '/api/classes/' + tenant +
+                        '/students/' + userid +
+                        '/projects/' + projectid +
+                        '/models/' + modelid +
+                        '?ts=' + timestamp;
+
+             return $http.get(url).then(function (resp) {
+                return resp.data;
             });
         }
 
@@ -119,6 +139,18 @@
                 });
         }
 
+        function uploadSound(projectid, userid, tenant, audiodata, label) {
+            var url = '/api/classes/' + tenant +
+                        '/students/' + userid +
+                        '/projects/' + projectid +
+                        '/sounds';
+
+            return $http.post(url, { data : audiodata, label : label })
+                .then(function (resp) {
+                    return resp.data;
+                });
+        }
+
 
 
         function getUnmanagedClassifiers(tenant) {
@@ -146,9 +178,13 @@
             newTrainingData : newTrainingData,
             uploadImage : uploadImage,
 
+            uploadSound : uploadSound,
+            getSoundData : getSoundData,
+
             getTraining : getTraining,
             deleteTrainingData : deleteTrainingData,
             getModels : getModels,
+            getModel : getModel,
             newModel : newModel,
             testModel : testModel,
             deleteModel : deleteModel,

@@ -15,10 +15,72 @@
 
         var modelStatus;
 
+        function isUserMediaSupported() {
+            return navigator &&
+                   navigator.mediaDevices &&
+                   navigator.mediaDevices.getUserMedia;
+        }
+
+
+        // easiest way to see if we're allowed to access the microphone
+        //  is to try and access the microphone   ¯\_(ツ)_/¯
+        function permissionsCheck() {
+            return navigator.mediaDevices.getUserMedia({ audio : true, video : false })
+                .then(function (stream) {
+                    stream.getTracks().forEach(function (track) {
+                        track.stop();
+                    });
+                })
+                .catch(function (err) {
+                    if (err.name === 'NotAllowedError' || err.name === 'SecurityError') {
+                        throw { status : 400, data : {
+                            message : 'Sorry! Machine Learning for Kids was not allowed to use your microphone'
+                        }};
+                    }
+                    else if (err.name === 'NotFoundError' || err.name === 'TypeError') {
+                        throw { status : 400, data : {
+                            message : 'Sorry! Machine Learning for Kids could not find a microphone to use'
+                        }};
+                    }
+                    else if (err.name === 'NotReadableError') {
+                        throw { status : 400, data : {
+                            message : 'Sorry! There was a problem with your microphone'
+                        }};
+                    }
+                    else {
+                        console.log(err);
+                        throw { status : 500, data : err };
+                    }
+                });
+        }
+
         function loadTensorFlow() {
-            return utilService.loadScript('https://unpkg.com/@tensorflow/tfjs@1.0.2/dist/tf.js')
+            if (!isUserMediaSupported()) {
+                if (utilService.isInternetExplorer()) {
+                    throw ({
+                        status : 400,
+                        data : { message : 'Sorry! Internet Explorer cannot be used for sounds projects' }
+                    });
+                }
+                else {
+                    throw ({
+                        status : 500,
+                        data : { message : 'Sorry! Machine Learning for Kids could not find a microphone to use' }
+                    });
+                }
+            }
+
+            return permissionsCheck()
                 .then(function () {
-                    return utilService.loadScript('https://unpkg.com/@tensorflow-models/speech-commands@0.3.0');
+                    return utilService.loadScript('https://unpkg.com/@tensorflow/tfjs@1.2.9/dist/tf.js');
+                })
+                .then(function () {
+                    return utilService.loadScript('https://unpkg.com/@tensorflow-models/speech-commands@0.3.9');
+                })
+                .then(function () {
+                    if (tf && tf.enableProdMode) {
+                        tf.enableProdMode();
+                    }
                 });
         }
 
@@ -60,6 +122,13 @@
             });
         }
 
+        function getTrainingData(projectid, userid, tenantid) {
+            return trainingService.getTraining(projectid, userid, tenantid)
+                .then(function (traininginfo) {
+                    return $q.all(traininginfo.map(trainingService.getSoundData));
+                });
+        }
+
         function newModel(projectid, userid, tenantid) {
             modelStatus = {
                 classifierid : projectid,
@@ -68,7 +137,7 @@
                 updated : new Date()
             };
 
-            return trainingService.getTraining(projectid, userid, tenantid)
+            return getTrainingData(projectid, userid, tenantid)
                 .then(function (trainingdata) {
                     // reset
                     transferRecognizer.dataset.clear();
@@ -122,8 +191,20 @@
         function startTest(callback) {
             return transferRecognizer.listen(function (result) {
                 var matches = [];
+
                 var labels = transferRecognizer.wordLabels();
-                for (var i = 0; i < result.scores.length; i++) {
+                if (!labels) {
+                    console.log('Labels unavailable');
+                    return callback(matches);
+                }
+
+                if (labels.length !== result.scores.length) {
+                    console.log('Unexpected number of results',
+                                labels.length,
+                                result.scores.length);
+                }
+
+                for (var i = 0; i < Math.min(labels.length, result.scores.length); i++) {
                     matches.push({
                         class_name : labels[i],
                         confidence : result.scores[i] * 100

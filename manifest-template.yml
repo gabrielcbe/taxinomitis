@@ -1,8 +1,9 @@
 applications:
 - path: .
-  memory: 256M
-  disk_quota: 512M
+  memory: 128M
+  disk_quota: 256M
   instances: 3
+  command: node --max-old-space-size=96 dist/lib/app.js
 
   name: machinelearningforkids-region
   routes:
@@ -10,11 +11,9 @@ applications:
   - route: machinelearningforkids.co.uk
   - route: machinelearningforkids-region.region.mybluemix.net
 
-  services:
-  - mlforkids-auto-scaling
-
   env:
     NODE_ENV: production
+    DEPLOYMENT: deploymenttarget
     AUTH0_DOMAIN: MY_AUTH0_DOMAIN.AUTH0.COM
     AUTH0_CUSTOM_DOMAIN: login.machinelearningforkids.co.uk
     AUTH0_CONNECTION: MY_AUTH0_CONNECTION
@@ -41,3 +40,5 @@ applications:
     SMTP_USER: myemail@myhost.com
     SMTP_PASS: EMAIL-PASSWORD
     SMTP_REPLY_TO: admin@myhost.com
+    SERVERLESS_OPENWHISK_URL: "https://openwhisk.api.server"
+    SERVERLESS_OPENWHISK_KEY: OPENWHISK_API_KEY

@@ -105,7 +105,7 @@ function safeParseFloat(str: string): any {
 
 
 async function classifyNumbers(key: Types.ScratchKey, numbers: string[]): Promise<TrainingTypes.Classification[]> {
-    if (!numbers || numbers.length === 0) {
+    if (!numbers || numbers.length === 0 || !Array.isArray(numbers)) {
         throw new Error('Missing data');
     }
     const project = await store.getProject(key.projectid);
@@ -128,7 +128,7 @@ async function classifyNumbers(key: Types.ScratchKey, numbers: string[]): Promis
         }
     }
     catch (err) {
-        log.error({ err }, 'Failed to test numbers classifier');
+        log.error({ err, numbers }, 'Failed to test numbers classifier');
     }
 
     // we don't have a trained functional decision tree,
@@ -140,6 +140,7 @@ async function classifyNumbers(key: Types.ScratchKey, numbers: string[]): Promis
 
 
 async function classifySound(key: Types.ScratchKey): Promise<TrainingTypes.Classification[]> {
+    log.error({ key }, 'Unexpected attempt to test sound model');
     const err: any = new Error('Sound classification is only available in the browser');
     err.statusCode = 400;
     throw err;

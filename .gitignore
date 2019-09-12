@@ -18,7 +18,11 @@ ops/rollback.sh
 ops/*.sql
 ops/us-routes.sh
 ops/de-routes.sh
+ops/scaling-*.json
 archive
 .DS_Store
 ops/.lastconv
 ops/.lastvisrec
+serverless-functions/mltraining-images/dist
+serverless-functions/mltraining-images/node_modules
+serverless-functions/mltraining-numbers/__pycache__

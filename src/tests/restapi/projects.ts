@@ -7,9 +7,11 @@ import * as httpstatus from 'http-status';
 import * as randomstring from 'randomstring';
 import * as express from 'express';
 
+import * as auth0objects from '../../lib/auth0/auth-types';
 import * as store from '../../lib/db/store';
 import * as auth from '../../lib/restapi/auth';
-import * as Types from '../../lib/imagestore/types';
+import * as auth0users from '../../lib/auth0/users';
+import * as Types from '../../lib/objectstore/types';
 import testapiserver from './testserver';
 
 
@@ -21,7 +23,8 @@ const TESTCLASS = 'UNIQUECLASSID';
 
 describe('REST API - projects', () => {
 
-    let authStub: sinon.SinonStub;
+    let authStub: sinon.SinonStub<any, any>;
+    let studentsByUserIdStub: sinon.SinonStub<any, any>;
 
     let nextAuth0UserId = 'userid';
     let nextAuth0UserTenant = 'tenant';
@@ -31,6 +34,7 @@ describe('REST API - projects', () => {
         req: Express.Request, res: Express.Response,
         next: (err?: Error) => void)
     {
+        // @ts-ignore
         req.user = {
             'sub' : nextAuth0UserId,
             'https://machinelearningforkids.co.uk/api/role' : nextAuth0UserRole,
@@ -39,9 +43,14 @@ describe('REST API - projects', () => {
         next();
     }
 
+    function emptyClass(): Promise<{ [id: string]: auth0objects.Student }> {
+        return Promise.resolve({});
+    }
+
 
     before(async () => {
         authStub = sinon.stub(auth, 'authenticate').callsFake(authNoOp);
+        studentsByUserIdStub = sinon.stub(auth0users, 'getStudentsByUserId').callsFake(emptyClass);
 
         await store.init();
 
@@ -58,6 +67,7 @@ describe('REST API - projects', () => {
 
     after(async () => {
         authStub.restore();
+        studentsByUserIdStub.restore();
 
         await store.deleteProjectsByClassId(TESTCLASS);
         await store.deleteAllPendingJobs();
@@ -638,6 +648,49 @@ describe('REST API - projects', () => {
                     assert.strictEqual(body.name, projectDetails.name);
                     assert.strictEqual(body.language, projectDetails.language);
                     assert.strictEqual(body.isCrowdSourced, false);
+                });
+        });
+
+        it('should store sounds project details', () => {
+            const projectDetails = {
+                name : uuid(),
+                type : 'sounds',
+            };
+            const studentId = uuid();
+            const classid = 'TESTTENANT';
+
+            const url = '/api/classes/' + classid + '/students/' + studentId + '/projects';
+
+            nextAuth0UserId = studentId;
+            nextAuth0UserTenant = classid;
+
+            return request(testServer)
+                .post(url)
+                .send(projectDetails)
+                .expect('Content-Type', /json/)
+                .expect(httpstatus.CREATED)
+                .then((res) => {
+                    const body = res.body;
+                    assert.strictEqual(body.userid, studentId);
+                    assert.strictEqual(body.classid, classid);
+                    assert.strictEqual(body.type, projectDetails.type);
+                    assert.strictEqual(body.name, projectDetails.name);
+                    assert.strictEqual(body.isCrowdSourced, false);
+                    assert(body.id);
+
+                    return request(testServer)
+                        .get(url + '/' + body.id)
+                        .expect('Content-Type', /json/)
+                        .expect(httpstatus.OK);
+                })
+                .then((res) => {
+                    const body = res.body;
+                    assert.strictEqual(body.userid, studentId);
+                    assert.strictEqual(body.classid, classid);
+                    assert.strictEqual(body.type, projectDetails.type);
+                    assert.strictEqual(body.name, projectDetails.name);
+                    assert.strictEqual(body.isCrowdSourced, false);
+                    assert.deepStrictEqual(body.labels, ['_background_noise_']);
                 });
         });
 
@@ -1222,11 +1275,11 @@ describe('REST API - projects', () => {
             let job = await store.getNextPendingJob();
             while (job) {
                 assert.strictEqual(job.jobtype, 1);
-                const jobdata: Types.ImageSpec = job.jobdata as Types.ImageSpec;
+                const jobdata: Types.ObjectSpec = job.jobdata as Types.ObjectSpec;
                 assert.strictEqual(jobdata.projectid, projectId);
                 assert.strictEqual(jobdata.userid, studentId);
                 assert.strictEqual(jobdata.classid, TESTCLASS);
-                assert(imageIds.includes(jobdata.imageid));
+                assert(imageIds.includes(jobdata.objectid));
 
                 jobCount += 1;
 

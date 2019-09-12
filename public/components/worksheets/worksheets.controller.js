@@ -40,9 +40,11 @@
             'WORKSHEETS.WHATTWITTERTHINKS.TITLE', 'WORKSHEETS.WHATTWITTERTHINKS.SUMMARY', 'WORKSHEETS.WHATTWITTERTHINKS.DESCRIPTION',
             'WORKSHEETS.NOUGHTSANDCROSSES.TITLE', 'WORKSHEETS.NOUGHTSANDCROSSES.SUMMARY', 'WORKSHEETS.NOUGHTSANDCROSSES.DESCRIPTION',
             'WORKSHEETS.TOPTRUMPS.TITLE', 'WORKSHEETS.TOPTRUMPS.SUMMARY', 'WORKSHEETS.TOPTRUMPS.DESCRIPTION',
-            'WORKSHEETS.HEADLINES.TITLE', 'WORKSHEETS.HEADLINES.SUMMARY', 'WORKSHEETS.HEADLINES.DESCRIPTION',
+            'WORKSHEETS.NEWSPAPERSHELVES.TITLE', 'WORKSHEETS.NEWSPAPERSHELVES.SUMMARY', 'WORKSHEETS.NEWSPAPERSHELVES.DESCRIPTION',
+            'WORKSHEETS.HEADLINETESTING.TITLE', 'WORKSHEETS.HEADLINETESTING.SUMMARY', 'WORKSHEETS.HEADLINETESTING.DESCRIPTION',
             'WORKSHEETS.FINDIT.TITLE', 'WORKSHEETS.FINDIT.SUMMARY', 'WORKSHEETS.FINDIT.DESCRIPTION',
-            'WORKSHEETS.JARGONBUSTER.TITLE', 'WORKSHEETS.JARGONBUSTER.SUMMARY', 'WORKSHEETS.JARGONBUSTER.DESCRIPTION'
+            'WORKSHEETS.JARGONBUSTER.TITLE', 'WORKSHEETS.JARGONBUSTER.SUMMARY', 'WORKSHEETS.JARGONBUSTER.DESCRIPTION',
+            'WORKSHEETS.TITANIC.TITLE', 'WORKSHEETS.TITANIC.SUMMARY', 'WORKSHEETS.TITANIC.DESCRIPTION'
         ]).then(function (translations) {
             vm.worksheets = [
                 {
@@ -123,13 +125,29 @@
                     description : translations['WORKSHEETS.CHAMELEON.DESCRIPTION'],
                     difficulty : 'Beginner',
                     type : 'images',
-                    maketypes : [ 'scratch2' ],
+                    maketypes : [ 'scratch3' ],
                     image : 'static/images/project-chameleon.png',
                     tags : [ 'image classification', 'supervised learning' ],
                     teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-chameleon.pdf',
                     downloads : [
                         {
                             worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-chameleon.pdf'
+                        }
+                    ]
+                },
+                {
+                    title : translations['WORKSHEETS.TITANIC.TITLE'],
+                    summary : translations['WORKSHEETS.TITANIC.SUMMARY'],
+                    description : translations['WORKSHEETS.TITANIC.DESCRIPTION'],
+                    difficulty : 'Beginner',
+                    type : 'numbers',
+                    maketypes : [ 'python' ],
+                    image : 'static/images/project-titanic.png',
+                    tags : [ 'predictive model', 'supervised learning' ],
+                    teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-titanic.pdf',
+                    downloads : [
+                        {
+                            worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-titanic-python.pdf'
                         }
                     ]
                 },
@@ -357,6 +375,22 @@
                     ]
                 },
                 {
+                    title : translations['WORKSHEETS.NEWSPAPERSHELVES.TITLE'],
+                    summary : translations['WORKSHEETS.NEWSPAPERSHELVES.SUMMARY'],
+                    description : translations['WORKSHEETS.NEWSPAPERSHELVES.DESCRIPTION'],
+                    difficulty : 'Intermediate',
+                    type : 'text',
+                    maketypes : [ 'scratch3' ],
+                    image : 'static/images/project-headlines-easy.png',
+                    tags : [ 'text classification', 'supervised learning' ],
+                    teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-headlines-easy.pdf',
+                    downloads : [
+                        {
+                            worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-headlines-easy.pdf'
+                        }
+                    ]
+                },
+                {
                     title : translations['WORKSHEETS.JUDGEABOOK.TITLE'],
                     summary : translations['WORKSHEETS.JUDGEABOOK.SUMMARY'],
                     description : translations['WORKSHEETS.JUDGEABOOK.DESCRIPTION'],
@@ -463,14 +497,18 @@
                     description : translations['WORKSHEETS.NOUGHTSANDCROSSES.DESCRIPTION'],
                     difficulty : 'Advanced',
                     type : 'numbers',
-                    maketypes : [ 'scratch2' ],
+                    maketypes : [ 'scratch2', 'python' ],
                     image : 'static/images/project-noughtsandcrosses.png',
                     tags : [ 'decision tree learning', 'reinforcement learning', 'categorical data' ],
                     teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-noughtsandcrosses.pdf',
                     downloads : [
                         {
-                            description : 'Classroom version, where each student makes the game themselves',
+                            description : 'Classroom version, where each student makes the game themselves in Scratch',
                             worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-noughtsandcrosses.pdf'
+                        },
+                        {
+                            description : 'Classroom version, where each student makes the game themselves in Python',
+                            worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-noughtsandcrosses-python.pdf'
                         },
                         {
                             description : 'Demo version, for events like Science Fairs where each child has a minute or two to try something',
@@ -495,22 +533,17 @@
                     ]
                 },
                 {
-                    title : translations['WORKSHEETS.HEADLINES.TITLE'],
-                    summary : translations['WORKSHEETS.HEADLINES.SUMMARY'],
-                    description : translations['WORKSHEETS.HEADLINES.DESCRIPTION'],
+                    title : translations['WORKSHEETS.HEADLINETESTING.TITLE'],
+                    summary : translations['WORKSHEETS.HEADLINETESTING.SUMMARY'],
+                    description : translations['WORKSHEETS.HEADLINETESTING.DESCRIPTION'],
                     difficulty : 'Advanced',
                     type : 'text',
-                    maketypes : [ 'scratch2' ],
+                    maketypes : [ 'scratch3' ],
                     image : 'static/images/project-headlines.png',
                     tags : [ 'text classification', 'supervised learning', 'testing' ],
                     teachersnotes : 'https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-headlines.pdf',
                     downloads : [
                         {
-                            description : 'Simplified version of the project, where students make a simple project to put newspapers on the right shelves',
-                            worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-headlines-easy.pdf'
-                        },
-                        {
-                            description : 'Advanced version of the project, where students make a testing framework to analyse the performance of their model',
                             worksheet : 'https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-headlines.pdf'
                         }
                     ]

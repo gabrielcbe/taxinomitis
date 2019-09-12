@@ -4,6 +4,7 @@
 
         "BACK": "Voltar",
         "BACKTOPROJECT": "&lt; Voltar para o projeto",
+        "BACKTOMODEL": "&lt; Back to model",
         "ERROR": "Erro:",
         "WARNING": "Atenção:",
         "INFO": "Informações:",
@@ -13,6 +14,7 @@
         "DELETE": "Deletar",
         "EDIT": "Editar",
         "TEST": "Testar",
+        "RESET": "Reset",
 
         "ABOUT": "Sobre",
         "TEACHER": "Professor(a)",
@@ -44,8 +46,8 @@
             "LOGIN": "Para começar: "
         },
         "FURTHER": {
-            "TITLE": "Further learning",
-            "BODY": "Machine Learning for Kids is a useful tool for introducing children to how ML systems are trained, how they are used, and some of the real-world implications of AI applications. <br/><br/>For additional teaching and learning resources, including teaching the internals of ML systems, please see: "
+            "TITLE": "Aprendizado complementar",
+            "BODY": "Machine Learning for Kids é uma ferramenta útil para introdução de como sistemas de Aprendizagem de máquina são treinados, como são utilizados e alguns conceitos de aplicações reais de I.A. <br/><br/>Para recursos adicionais de ensino e aprendizado, incluindo ensinando sobre os fundamento de Aprendizagem de máquina, veja: "
         }
     },
     "NEWS": {
@@ -60,40 +62,43 @@
         }
     },
     "LINKS": {
-        "TITLE": "Educational AI resources for children",
-        "INTRO": "This page is a list of further tools and resources for introducing children to artificial intelligence.",
+        "TITLE": "Recursos educacionais de I.A. para crianças",
+        "INTRO": "Esta página é uma lista de ferramentas e recursos adicionais para introduzir a Inteligência Artificial para crianças.",
         "ECRAFT2LEARN": {
-            "BODY1": "<a href='http://users.ox.ac.uk/~oucs0030/' target='_blank'>Ken Kahn</a> has created resources to allow beginners to create AI programs in Snap! (a visual programming environment similar to Scratch).",
-            "BODY2": "While I've focused on explaining how AI systems are trained and behave (and the real-world implications), eCraft2Learn has fantastic resources that dive deep into how ML systems actually work.",
-            "BODY3": "The <a href='https://ecraft2learn.github.io/ai/AI-Teacher-Guide/chapter-6.html' target='_blank'>neural net Tic Tac Toe project</a> is particularly fascinating, allowing students to experiment with hyperparameters from Snap."
+            "BODY1": "<a href='http://users.ox.ac.uk/~oucs0030/' target='_blank'>Ken Kahn</a> criou recursos que permitem iniciantes a programar I.A. em Snap! (uma linguagem de programação visual similar ao Scratch).",
+            "BODY2": "Enquanto eu tenho focado em explicar como os sistemas de I.A são treinados e se comportam (e suas aplicações para o dia-a-dia), eCraft2Learn têm recursos fantásticos que aprofundam em como sistemas de Aprendizagem de Máquina realmente funcionam.",
+            "BODY3": "O <a href='https://ecraft2learn.github.io/ai/AI-Teacher-Guide/chapter-6.html' target='_blank'>projeto de jogo-da-velha com redes neurais</a> é particularmente fascinante, permitindo estudantes experimentar com hiperparâmetros do Snap!"
         },
         "APPSFORGOOD": {
-            "BODY1": "Apps for Good are a UK-based not-for-profit that creates resources for teaching technology subjects, that they make freely available to schools.",
-            "BODY2": "Their Machine Learning course uses <em>Machine Learning for Kids</em>, and supplements it with a range of additional materials like schemes of work, lesson plans, student workbooks, presentations and more. It makes it easy for schools to deliver ML lessons that put the coding exercises in context."
+            "BODY1": "Apps for Good(Aplicativos para o Bem) são uma organização sem fins lucrativos baseada no Reino Unido que cria recursos para ensinar assuntos ligados a tecnologia, que são disponibilizados gratuitamente para escolas.",
+            "BODY2": "Os cursos que eles têm em Aprendizagem de máquina usam o <em>Machine Learning for Kids</em>, e o suplementam com uma variedade de materiais adicionais como esquemas de trabalho, planos de aula, materiais para estudantes, apresentações e mais. Facilitando para as escolas incluir planos de aula de Aprendizagem de Máquina que colocam exercícios code em um melhor contexto.."
         },
         "AIFAMILYCHALLENGE": {
-            "BODY1": "The AI Family Challenge is a free, hands-on AI education program for families. They use <em>Machine Learning for Kids</em>, and supplement it with a lot of additional support, such as technical coaches and mentors, a structured lesson plan and supporting videos.",
-            "BODY2": "The program is based around a competition that challenges children to think of their own AI project ideas, with the support of their families and technical mentors."
+            "BODY1": "O AI Family Challenge é um programa gratuito e mão na massa para ensinar I.A. para famílias. Eles usam o  <em>Machine Learning for Kids</em>, e também o suplementam com suporte, como coaches e mentores técnicos, planos de aula estruturados e vídeos de suporte.",
+            "BODY2": "O programa é baseado em competições que desafiam as crianças a pensar em seus próprios projetos de I.A., com suporte de suas famílias e técnicos que agem como mentores."
         },
         "AIINSCHOOLS": {
-            "BODY1": "The AIinSchools programme provides a free lesson plan for teachers to explain AI to Year 9 (aged 13-14).",
-            "BODY2": "It includes both unplugged classroom activities, and programming activities for training neural networks on GPUs running on AWS."
+            "BODY1": "O programa AIinSchools fornece gratuitamente planos de aula para explicar I.A. para crianças do Oitavo ano (13-14 anos).",
+            "BODY2": "Nele, são incluídas tanto atividades offline quando atividades de programação para treinar redes neurais usando a GPU dos computadores rodando na AWS."
         },
         "TEENSINAI": {
-            "BODY1": "Teens in AI use a combination of hackathons, accelerators and bootcamps to support young people aged 12-18 to explore AI."
+            "BODY1": "Teens in AI usam uma combinação de maratonas hacker, aceleradoras e bootcamps para apoiar jovens de 12-18 anos a explorar I.A."
         },
         "AI4ALL": {
-            "BODY1": "AI4ALL run summer camps for high school students in the US that give a detailed technical introduction to AI."
+            "BODY1": "AI4ALL fazem acampamentos de verão para alunos do ensino médio nos Estados Unidos que dão uma introdução técnica detalhada em I.A. para seus alunos."
         },
         "CALYPSO": {
-            "BODY1": "Students with programmable Cozmo robots can use the Calypso programming framework to get a hands-on way to experience AI by experimenting with techniques like computer vision and speech recognition."
+            "BODY1": "Alunos com os robôs programáveis Cozmo podem usar a interface de programação Calypso para aprender de maneira mão-na-massa sobre I.A. e fazer experiências utilizando técnicas de Visão Computacional e Reconhecimento de Fala."
         },
         "AIINABOX": {
-            "BODY1": "AI-in-a-Box is a bundle of robots, accessories and teaching resources. The kit can be used to teach projects that cover topics like visual recognition, facial recognition, speech generation and speech recognition."
+            "BODY1": "AI-in-a-Box é um pacote de robôs, acessórios e recursos didáticos. O kit pode ser usado para ensinar projetos que abordam tópicos como reconhecimento visual, reconhecimento facial, geração de fala e reconhecimento de fala."
+        },
+        "GOOGLEEXPERIMENTS": {
+            "BODY1": "Simple online experiments to start exploring machine learning, through pictures, drawings, language, and music."
         },
         "VIDEOS": {
-            "TITLE": "Videos",
-            "INTRO": "I've also found these videos useful when introducing AI concepts:"
+            "TITLE": "Vídeos",
+            "INTRO": "Eu também achei esses vídeos úteis quando fazendo introdução de conceitos de I.A.:"
         }
     },
     "ERRORS": {
@@ -189,7 +194,7 @@
             "NOTES_2": "Para palavras, frases ou parágrafos, escolha \"texto\"",
             "NOTES_3": "Para fotos, diagramas e imagens, escolha \"imagens\"",
             "NOTES_4": "Para conjunto de números ou múltipla escolha, escolha \"números\"",
-            "NOTES_5": "For voices and sounds, choose \"sounds\""
+            "NOTES_5": "Para vozes e sons, escolha choose \"sons\""
         },
         "LANGUAGE": {
             "LABEL": "Língua",
@@ -220,6 +225,41 @@
         "ERRORS": {
             "REQUIRED": "Isso é necessário!",
             "TOOLONG": "Isso é muito longo!"
+        }
+    },
+    "DATASETS": {
+        "TITLE": "Copy a machine learning project template",
+        "INTRO": {
+            "INTRO_1": "You can create new machine learning project based on one of these templates.",
+            "INTRO_2": "Each one includes a set of training data that has been collected for you to help you get started quickly. ",
+            "INTRO_3": "You will be able to make changes to the training data if you like, or you can go straight to training a machine learning model with it. "
+        },
+        "IMPORT": "Import",
+        "MORE": {
+            "TITLE": "Other data sets",
+            "SUMMARY": "What other data sets would you like to see?",
+            "DESCRIPTION": "Have you got an idea for a data set you'd like to see available here? Or do you have a data set that you'd like to contribute? Please get in touch!",
+            "MOREINFO": "More..."
+        },
+        "DATA": {
+            "TITANIC": {
+                "TITLE": "Titanic survivors",
+                "SUMMARY": "Predict survival on the Titanic",
+                "DESCRIPTION": "On 15th April 1912, the RMS Titanic hit an iceberg and sank, killing over 1500 of the passengers and crew. This project includes personal data about hundreds of the passengers. You can use this to train a machine learning model that, if you give it a description of a passenger, can learn to predict the likelihood that they would have survived. ",
+                "DETAILS": "The 'ticket class' field is a number indicating the type of ticket for the passenger: first class (1), second class (2), or third class (3). \nThe 'gender' field is whether the passenger was 'male' or 'female'. \nThe 'age' field is the age of the passenger. \nThe 'sibl. sp.' is the number of brothers or sisters (siblings) the passenger had on board if they were a child, or the number of husbands or wives (spouses) the passenger had on board if they were an adult. \nThe 'par. ch.' field is the number of parents the passenger had on board if they were a child, or the number of children the passenger had on board if they were an adult. \nThe 'ticket fare' field is how much they paid for their ticket. \nThe 'embarked' field is where they got on board the Titanic, either Cherbourg, Queenstown or Southampton."
+            },
+            "CATSANDDOGS": {
+                "TITLE": "Cats and Dogs",
+                "SUMMARY": "Recognize photos of cats vs dogs",
+                "DESCRIPTION": "Training a machine learning model to recognise photos of cats and dogs is a good simple introduction to image recognition.",
+                "DETAILS": "This training dataset of photos from Wikimedia Commons is a good starting set for building your own training data of animal photos"
+            },
+            "UKNEWSPAPERS": {
+                "TITLE": "UK Newspaper Headlines",
+                "SUMMARY": "Recognize the use of language in newspaper headlines",
+                "DESCRIPTION": "Different newspapers use language in different ways. This project includes the main front page headline from four UK newspapers. You can use this to train a machine learning model that can learn to predict the most likely newspaper that a new headline is probably from. ",
+                "DETAILS": "This training dataset includes headlines from the Daily Mail, the Daily Telegraph, the Independent, and The Guardian"
+            }
         }
     },
     "PROJECT": {
@@ -278,7 +318,7 @@
             "WEBCAMFAIL": "Desculpe! Não conseguimos que uma webcam funcionasse para você.",
             "WEBCAMERROR": "A mensagem que recebemos do seu navegador foi:"
         },
-        "BACKGROUNDNOISE": "Collecting examples of background noise will help the computer to learn to recognize your sounds"
+        "BACKGROUNDNOISE": "Coletar exemplos de ruídos de fundo irá ajudar o computador a reconhecer melhor seus sons"
     },
     "MODELS": {
         "TITLE": "Modelos de aprendizado de máquina",
@@ -297,13 +337,13 @@
                     "TEXT" : "Sua turma está treinando um modelo de aprendizado de máquina usando os exemplos de texto que vocês coletaram.",
                     "IMAGES" : "Sua turma está treinando um modelo de aprendizado de máquina usando os exemplos de imagens que vocês coletaram.",
                     "NUMBERS" : "Sua turma está treinando um modelo de aprendizado de máquina usando os exemplos de números que vocês coletaram.",
-                    "SOUNDS" : "Your class is training a machine learning model using the examples of sounds that you all collected."
+                    "SOUNDS" : "Sua turma está treinando um modelo de aprendizado de máquina usando exemplos de sons que vocês coletaram."
                 },
                 "INDIVIDUAL" : {
                     "TEXT" : "Você começou a treinar um modelo de aprendizado de máquina usando os exemplos de texto que você coletou.",
                     "IMAGES" : "Você começou a treinar um modelo de aprendizado de máquina usando os exemplos de imagens que você coletou.",
                     "NUMBERS" : "Você começou a treinar um modelo de aprendizado de máquina usando os exemplos de números que você coletou.",
-                    "SOUNDS" : "You've started training a machine learning model using the examples of sounds that you collected."
+                    "SOUNDS" : "Você começou a treinar um modelo de aprendizado de máquina usando os exemplos de sons que você coletou."
                 },
                 "SINCE": "Está treinando desde"
             },
@@ -312,13 +352,13 @@
                     "TEXT" : "Sua turma treinou um modelo de aprendizado de máquina para reconhecer quando o texto é ",
                     "IMAGES" : "Sua turma treinou um modelo de aprendizado de máquina para reconhecer quando as imagens são ",
                     "NUMBERS" : "Sua turma treinou um modelo de aprendizado de máquina para reconhecer quando os números são ",
-                    "SOUNDS" : "Your class has trained a machine learning model to recognise when sounds are "
+                    "SOUNDS" : "Sua turma treinou um modelo de aprendizado de máquina para reconhecer quando sons são "
                 },
                 "INDIVIDUAL" : {
                     "TEXT" : "Você treinou um modelo de aprendizado de máquina para reconhecer quando o texto é ",
                     "IMAGES" : "Você treinou um modelo de aprendizado de máquina para reconhecer quando as imagens são ",
                     "NUMBERS" : "Você treinou um modelo de aprendizado de máquina para reconhecer quando os números são ",
-                    "SOUNDS" : "You have trained a machine learning model to recognise when sounds are "
+                    "SOUNDS" : "Vocẽ treinou um modelo de aprendizado de máquina para reconhecer quando os sons são "
                 },
                 "CREATED" : {
                     "TEACHER" : "Seu professor criou o modelo em ",
@@ -335,20 +375,20 @@
                         "TEXT" : "Seu professor tentou treinar um modelo de aprendizado de máquina usando os exemplos de texto que sua turma coletou.",
                         "IMAGES" : "Seu professor tentou treinar um modelo de aprendizado de máquina usando os exemplos de imagens que sua turma coletou.",
                         "NUMBERS" : "Seu professor tentou treinar um modelo de aprendizado de máquina usando os exemplos de números que sua turma coletou.",
-                        "SOUNDS" : "Your teacher tried training a machine learning model using the examples of sounds that your class collected."
+                        "SOUNDS" : "Seu professor tentou treinar um modelo de aprendizado de máquina usando os exemplos de sons que sua turma coletou."
                     },
                     "YOU" : {
                         "TEXT" : "Você tentou treinar um modelo de aprendizado de máquina usando os exemplos de texto que sua turma coletou.",
                         "IMAGES" : "Você tentou treinar um modelo de aprendizado de máquina usando os exemplos de imagens que sua turma coletou.",
                         "NUMBERS" : "Você tentou treinar um modelo de aprendizado de máquina usando os exemplos de números que sua classe coletou.",
-                        "SOUNDS" : "You tried training a machine learning model using the examples of sounds that your class collected."
+                        "SOUNDS" : "Você tentou treinar um modelo de aprendizado de máquina usando os exemplos de sons que sua classe coletou."
                     }
                 },
                 "INDIVIDUAL" : {
                     "TEXT" : "Você tentou treinar um modelo de aprendizado de máquina usando os exemplos de texto que você coletou.",
                     "IMAGES" : "Você tentou treinar um modelo de aprendizado de máquina usando os exemplos de imagens que você coletou.",
                     "NUMBERS" : "Você tentou treinar um modelo de aprendizado de máquina usando os exemplos de números que você coletou.",
-                    "SOUNDS" : "You tried training a machine learning model using the examples of sounds that you collected."
+                    "SOUNDS" : "Você tentou treinar um modelo de aprendizado de máquina usando os exemplos de sons que você coletou."
                 }
             },
             "IDLE" : {
@@ -357,13 +397,13 @@
                         "TEXT" : "Sua turma disse que quer que você colete exemplos de texto.",
                         "IMAGES" : "Sua turma disse que quer que você colete exemplos de imagens.",
                         "NUMBERS" : "Sua turma disse que quer que você colete exemplos de números.",
-                        "SOUNDS" : "Your class said you want to collect examples of sounds."
+                        "SOUNDS" : "Sua turma disse que quer que você colete exemplos de sons."
                     },
                     "INDIVIDUAL" : {
                         "TEXT" : "Você disse que quer coletar exemplos de texto.",
                         "IMAGES" : "Você disse que quer coletar exemplos de imagens.",
                         "NUMBERS" : "Você disse que quer coletar exemplos de números.",
-                        "SOUNDS" : "You've said you want to collect examples of sounds."
+                        "SOUNDS" : "Você disse que quer coletar exemplos de sons."
                     }
                 },
                 "NODATA" : {
@@ -371,13 +411,13 @@
                         "TEXT" : "Sua turma disse que quer que você colete exemplos de texto para um computador reconhecer quando o texto é ",
                         "IMAGES" : "Sua turma disse que quer que você colete exemplos de imagens para um computador reconhecer quando as imagens são ",
                         "NUMBERS" : "Sua turma disse que quer que você colete exemplos de números para um computador reconhecer quando os números são ",
-                        "SOUNDS" : "Your class said that you want to collect examples of sounds for a computer to recognise when sounds are "
+                        "SOUNDS" : "Sua turma disse que quer que você colete exemplos de sons para um computador reconhecer quando os números são "
                     },
                     "INDIVIDUAL" : {
                         "TEXT" : "Você disse que quer coletar exemplos de texto para um computador reconhecer quando o texto é ",
                         "IMAGES" : "Você disse que quer coletar exemplos de imagens para um computador reconhecer quando as imagens são ",
                         "NUMBERS" : "Você disse que quer coletar exemplos de números para um computador reconhecer quando os números são ",
-                        "SOUNDS" : "You said that you want to collect examples of sounds for a computer to recognise when sounds are "
+                        "SOUNDS" : "Você disse que quer coletar exemplos de números para um computador reconhecer quando os sons são "
                     }
                 },
                 "NOEXAMPLES" : {
@@ -389,13 +429,13 @@
                         "TEXT" : "Sua turma coletou exemplos de texto para um computador usar para reconhecer quando o texto é ",
                         "IMAGES" : "Sua turma coletou exemplos de imagens para um computador usar para reconhecer quando as imagens são ",
                         "NUMBERS" : "Sua turma coletou exemplos de números para um computador usar para reconhecer quando os números são ",
-                        "SOUNDS" : "Your class has collected examples of sounds for a computer to use to recognise when sounds are "
+                        "SOUNDS" : "Sua turma coletou exemplos de sons para um computador usar para reconhecer quando sons são "
                     },
                     "INDIVIDUAL" : {
                         "TEXT" : "Você coletou exemplos de texto para um computador usar para reconhecer quando o texto é ",
                         "IMAGES" : "Você coletou exemplos de imagens para um computador usar para reconhecer quando as imagens são ",
                         "NUMBERS" : "Você coletou exemplos de números para um computador usar para reconhecer quando os números são ",
-                        "SOUNDS" : "You have collected examples of sounds for a computer to use to recognise when sounds are "
+                        "SOUNDS" : "Você coletou exemplos de sons para um computador usar para reconhecer quando os sons são "
                     },
                     "COLLECTED" : {
                         "CLASS" : "Eles coletaram: ",
@@ -447,7 +487,7 @@
                     "TEXT" : "Tente testar o modelo de aprendizado de máquina abaixo. Digite um exemplo de texto, abaixo, que você não incluiu nos exemplos que você usou para treiná-lo. Ele lhe dirá o que ele reconhece e o quão confiante ele está na resposta.",
                     "IMAGES" : "Tente testar o modelo de aprendizado de máquina abaixo. Coloque um exemplo de imagem, abaixo, que você não incluiu nos exemplos que você usou para treiná-lo. Ele lhe dirá o que ele reconhece e o quão confiante ele está na resposta.",
                     "NUMBERS" : "Tente testar o modelo de aprendizado de máquina abaixo. Entre com um exemplo de números, abaixo, que você não incluiu nos exemplos que você usou para treiná-lo. Ele lhe dirá o que ele reconhece e o quão confiante ele está na resposta.",
-                    "SOUNDS" : "Try testing the machine learning model below. Click the 'Start listening' button. If your machine learning model recognises any sounds, it will tell you what it recognises it as, and how confident it is in that."
+                    "SOUNDS" : "Tente testar o modelo de aprendizado de máquina abaixo. Clique em 'Começar a escutar'. Se o seu modelo de aprendizado de máquina reconhecer qualquer som, ele lhe dirá o que ele reconhece e o quão confiante ele está na resposta."
                 },
                 "SCRATCH" : "Se o computador parece ter aprendido a reconhecer as coisas corretamente, então você pode ir ao Scratch e usar o que o computador aprendeu para fazer um jogo!",
                 "ADDITIONAL_TRAINING" : {
@@ -476,14 +516,14 @@
                 "TEXT": "Tente colocar algum texto para ver como ele é reconhecido com base no seu treinamento.",
                 "IMAGES": "Tente colocar uma imagem para ver como ela é reconhecida com base no seu treinamento.",
                 "NUMBERS": "Tente colocar alguns números para ver como ele é reconhecido com base no seu treinamento.",
-                "SOUNDS": "Try making a sound to see how it is recognised based on your training"
+                "SOUNDS": "Tente fazer algum som para ver como ele é reconhecido com base no seu treinamento"
             },
             "WEBCAM": "Teste com uma <strong>webcam</strong>",
             "DRAWING": "Teste <strong>desenhando</strong>",
             "WWW": "Teste com <strong>www</strong>",
             "RECOGNISED": "Reconhecido como  <strong>{{ testoutput }}</strong>",
-            "STARTLISTENING": "Start listening",
-            "STOPLISTENING": "Stop listening"
+            "STARTLISTENING": "Começar a ouvir",
+            "STOPLISTENING": "Parar de ouvir"
         },
         "QUIZ": {
             "TITLE": "Hora do Quiz!",
@@ -491,7 +531,133 @@
             "PREVIOUSLY_ATTEMPTED": "Você já viu isso antes - vamos ver se você lembra qual é a resposta certa desta vez!",
             "CORRECT_ANSWER": "Correto!",
             "INCORRECT_ANSWER": "Não, desculpe. A resposta correta é mostrada acima.",
-            "NEXT_QUESTION": "Próxima questão"
+            "NEXT_QUESTION": "Próxima questão",
+
+            "QUESTION_1": {
+                "QUESTION": "In general, what will help machines to learn better?",
+                "ANSWER_1": "More examples", 
+                "ANSWER_2": "Fewer examples",
+                "NOTES_1": "That isn't the only thing that has an effect. But in general, the more examples it has to learn from, the better it should learn."
+            },
+            "QUESTION_2": {
+                "QUESTION": "Which of these would probably be best for training a computer to recognise a photo of an apple?",
+                "ANSWER_1": "Photos of dogs", 
+                "ANSWER_2": "Varied photos of different types of apples in different places",
+                "ANSWER_3": "Identical photos of an apple",
+                "ANSWER_4": "Very, very similar photos of the same apple in the same place",
+                "NOTES_1": "The more varied the examples you can collect, the more the system can learn about how to recognise different pictures of an apple.",
+                "NOTES_2": "If every example you give it is the same apple on the same brown wooden table, it might learn that something is only an apple if it's on a brown wooden table."
+            },
+            "QUESTION_3": {
+                "QUESTION": "Which of these would be a good use of machine learning?",
+                "ANSWER_1": "Adding big numbers together",
+                "ANSWER_2": "Recognising if an email is spam",
+                "ANSWER_3": "Counting the number of times a button is pressed",
+                "NOTES_1": "Spam filters are a good example of machine learning.",
+                "NOTES_2": "With enough examples of legitimate emails, and enough examples of spam emails, a computer can start to learn how to recognise a spam email."
+            },
+            "QUESTION_4": {
+                "QUESTION": "Which of these is NOT a good use of machine learning?",
+                "ANSWER_1": "Sentiment analysis - recognising the mood, tone or emotion in text",
+                "ANSWER_2": "Translating text from one language to another",
+                "ANSWER_3": "Face recognition - recognising a face in a photo and identifying who it is",
+                "ANSWER_4": "Self-driving cars",
+                "ANSWER_5": "Calculating the cost of something in different countries based on exchange rates",
+                "ANSWER_6": "Recommending a movie based on films you've watched before",
+                "NOTES_1": "Tasks that involve following rules which can be worked out are not a good use for machine learning.",
+                "NOTES_2": "A computer isn't going to learn how to apply an exchange rate from examples - we can just tell it what to do."
+            },
+            "QUESTION_5": {
+                "QUESTION": "Which of these would be more likely to be successful?",
+                "ANSWER_1": "Collect a small set of examples, train a system, test to see how good it is. Add more examples, train again, and then test again. Repeat until it gets good enough.",
+                "ANSWER_2": "More examples is better, so decide you must need millions of examples. Start collecting a massive set of examples, and spend months collecting more and more and more.",
+                "NOTES_1": "More examples is generally better, but be practical.",
+                "NOTES_2": "Pragmatism is important. Regular testing is useful to let you know how things are going, and help you know when you've done enough.",
+                "NOTES_3": "When you've only got ten examples, another ten examples will probably make a huge difference.",
+                "NOTES_4": "When you've got 100,000 examples, another ten examples probably won't have a noticeable impact."
+            },
+            "QUESTION_6": {
+                "QUESTION": "Which of these statements is correct?",
+                "ANSWER_1": "Machine learning is a technique where computers can be trained to perform tasks instead of needing to be given an explicit set of steps to follow",
+                "ANSWER_2": "Machine learning is magic",    
+                "ANSWER_3": "Machine learning means we don't need to think about problems any more because computers will think for us",
+                "ANSWER_4": "Machine learning has replaced the need for us to learn how to code",
+                "ANSWER_5": "Machine learning can only be done on massive supercomputers"
+            },
+            "QUESTION_7": {
+                "QUESTION": "A machine learning system trained to recognise pictures with a tree in should be good at which of the following tasks:",
+                "ANSWER_1": "Identifying pictures of fruit",
+                "ANSWER_2": "Recognising the emotion in a piece of writing",
+                "ANSWER_3": "Recognising pictures of trees",
+                "NOTES_1": "Machine learning does not mean computers magically learn to do everything.",
+                "NOTES_2": "It means they learn how to do a specific task by being shown examples of that specific task.",
+                "NOTES_3": "If you want it to do something else, you need to train it to do that as well, by giving it examples of that."
+            },
+            "QUESTION_8": {
+                "QUESTION": "Alice and Bob both want to train a machine learning system to recognise if text is happy/positive or sad/negative. Which of them will probably train the best system?",
+                "ANSWER_1": "Alice. She has collected 10 varied examples of happy text, and 10 varied examples of sad text",
+                "ANSWER_2": "Bob. He has collected 1000 examples of happy writing and 10 examples of sad writing",
+                "NOTES_1": "Collecting a roughly similar number of examples for each label is a useful technique.",
+                "NOTES_2": "If nearly every example of writing you train a system with is happy, you might end up training the system to assume that sad writing is very unlikely, and that it should assume happy more often.",
+                "NOTES_3": "",
+                "NOTES_4": "But, you might want it to do this.",
+                "NOTES_5": "If you're training a system to recognise text where text is happy 98% of the time, training it with that realistic experience might be worth a try."
+            },
+            "QUESTION_9": {
+                "QUESTION": "Advanced machine learning technology will always give correct answers. Incorrect answers mean the machine learning technology isn't very good",
+                "ANSWER_1": "True", 
+                "ANSWER_2": "False", 
+                "NOTES_1": "Not necessarily.",
+                "NOTES_2": "",
+                "NOTES_3": "The technology and algorithms are important. BUT machine learning systems are only as accurate and reliable as the training they are given.",
+                "NOTES_4": "Simple machine learning algorithms with a lot of high quality training can do better than the most advanced machine learning algorithms with a small amount of poor quality training."
+            },
+            "QUESTION_10": {
+                "QUESTION": "How can you make sure your collection of animal pictures is good quality for training a machine and doesn't contain human mistakes?",
+                "ANSWER_1": "Manually inspect all of the pictures of animals yourself and make sure you agree with all of the labels",
+                "ANSWER_2": "Ask lots of people to label all the images and keep the training labels that people generally agree on",
+                "ANSWER_3": "Trick question! Humans are always right - machines make mistakes!",
+                "NOTES_1": "Even humans make mistakes and you won't always have time to double check all the training data!",
+                "NOTES_2": "If the task is tricky it can be a good idea to get more than one person to label each image and keep the label that the most humans agree is the right one."
+            },
+            "QUESTION_11": {
+                "QUESTION": "A machine trained to identify pictures of \"food\" or \"not food\" gives inconsistent results for sandwiches, often putting them in the \"not food\" class. Which of the following could explain that?",
+                "ANSWER_1": "The human who trained the system doesn't like sandwiches and didn't put any in the training data",
+                "ANSWER_2": "The machine has to be in the right mood for a sandwich so it changes its mind a lot",
+                "ANSWER_3": "Sandwiches are not food. The system is right to be unsure",
+                "NOTES_1": "Machine learning models can only learn from the examples we show them.",
+                "NOTES_2": "It is very easy for humans to accidentally introduce their likes and dislikes into machine learning models so we should be very careful about what training data we use."
+            },
+            "QUESTION_12": {
+                "QUESTION": "Which of the following best describes unsupervised learning?",
+                "ANSWER_1": "Writing a program that contains lots of if/else statements to determine the result",
+                "ANSWER_2": "A machine learning algorithm that uses unlabelled data and classifies it based on how similar one dataset is to another",
+                "ANSWER_3": "A machine learning algorithm that uses labelled data and classifies it based on training from example input-output pairs",
+                "NOTES_1": "Unsupervised learning is a type of machine learning, whereas only using if/else statements is not.",
+                "NOTES_2": "Unsupervised learning algorithms are still trained, but the inputs that are given to it are not labelled or classified.",
+                "NOTES_3": "If the data is labelled then this is what's known as supervised learning."
+            },
+            "QUESTION_13": {
+                "QUESTION": "Without machine learning, it would be impossible for search engines such as Google to exist.",
+                "ANSWER_1": "True", 
+                "ANSWER_2": "False", 
+                "NOTES_1": "Whilst many modern search engines do use machine learning, it is possible to create one without it. A basic search engine will just look for documents (web pages) that include the words the user searches for."
+            }
+        }
+    },
+    "DESCRIBEMODEL": {
+        "TITLE": "Understand your machine learning model",
+        "TRYITOUT": "Try out your machine learning model to see how it uses the decision tree to make predictions",
+        "EXPLANATION": {
+            "EXPL_1": "The technique used to create your machine learning model is called a <a target='_blank' href='https://wikipedia.org/wiki/Decision_tree_learning'>Decision Tree Classifier</a>.",
+            "EXPL_2": "This is not the only way to train a machine learning model. We're using it because it's very quick and easy to train, and it is one of the easiest techniques to understand. This page shows you the decision tree that was created based on the training examples that you have collected.",
+            "EXPL_3": "When you test your model, the computer starts at the top of the tree, and follows a path until it reaches the bottom. The <strong>class</strong> at the bottom of the tree is the prediction that the machine learning model makes.",
+            "EXPL_4": "At each box in the tree, it reads the test described at the top of the box. If your test values pass the test described in the box, it follows the arrow to the left. If it doesn't pass the test, it follows the arrow to the right.",
+            "EXPL_5": "The <strong>samples</strong> shown in each box tells you how many examples in your training data matches that part of the decision tree.",
+            "EXPL_6": "The <strong>value</strong> shown in each box tells you how many examples in your training data passed the test shown at the top (following the left arrow) and how many examples didn't pass the test at the top (following the right arrow)."
+        },
+        "ERRORS": {
+            "NUMBERSONLY": "Only machine learning models for numbers projects can be described"
         }
     },
     "MAKES": {
@@ -510,10 +676,12 @@
     "APPINVENTOR": {
         "TITLE": "Usando aprendizado de máquina no App Inventor",
 
+        "LAUNCH_APPINVENTOR_BY_ITSELF": "(You can use <a href='{{ url }}' class='btn btn-default' target='_blank'>App Inventor by itself</a> if you want.)",
+
         "NOTREADY": "Seu projeto ainda não está pronto para ser usado no App Inventor.",
         "NOMODEL": "Você ainda não treinou um modelo de aprendizado de máquina.",
 
-        "BETAWARNING": "Este é um early beta. O suporte para o App Inventor ainda não está concluído e provavelmente terá alguns bugs e problemas."
+        "LAUNCH": "Open App Inventor"
     },
     "SCRATCH": {
         "TITLE": "Usando aprendizado de máquina no Scratch",
@@ -559,7 +727,7 @@
             "TEXT": "texto",
             "IMAGES": "imagens",
             "NUMBERS": "números",
-            "SOUNDS": "sounds"
+            "SOUNDS": "sons"
         },
 
         "LEVELS": {
@@ -706,25 +874,40 @@
             "SUMMARY": "Teste a capacidade do computador de reconhecer o uso da linguagem",
             "DESCRIPTION": "Treine um computador para reconhecer as manchetes dos principais jornais."
         },
+        "NEWSPAPERSHELVES": {
+            "TITLE": "Newspaper shelves",
+            "SUMMARY": "Test the computer's ability to recognise use of language",
+            "DESCRIPTION": "Train a computer to recognise headlines from national newspapers."
+        },
+        "HEADLINETESTING": {
+            "TITLE": "Headline testing",
+            "SUMMARY": "Test the computer's ability to recognise use of language",
+            "DESCRIPTION": "Create a testing tool in Scratch to measure how good a machine learning model is"
+        },
         "FINDIT": {
-            "TITLE": "Find It!",
+            "TITLE": "Onde está?",
             "SUMMARY": "Ensine um computador a reconhecer fotos",
             "DESCRIPTION": "Faça um jogo de esconde-esconde para o seu celular"
         },
         "ALIENLANGUAGE": {
-            "TITLE": "Alien Language",
-            "SUMMARY": "Teach a computer to recognize sounds",
-            "DESCRIPTION": "Make an alien in Scratch that learns to recognize an alien language"
+            "TITLE": "Linguagem Alienígena",
+            "SUMMARY": "Ensine o computador a reconhecer sons",
+            "DESCRIPTION": "Faça um alien no Scratch que aprenda a reconhecer uma linguagem alienígena"
         },
         "SECRETCODE": {
-            "TITLE": "Secret Code",
-            "SUMMARY": "Teach a computer to recognize speech",
-            "DESCRIPTION": "Train a computer to understand secret code words to guide a spy."
+            "TITLE": "Código Secreto",
+            "SUMMARY": "Ensine o computador a reconhecer fala",
+            "DESCRIPTION": "Treine um computador para ele entender palavras secretas para guiar uma espião."
         },
         "JARGONBUSTER": {
             "TITLE": "Jargon Buster",
-            "SUMMARY": "Teach a computer to listen for words",
-            "DESCRIPTION": "Make a project in Scratch that displays the meaning of words you say."
+            "SUMMARY": "Ensine um computador a reconhecer palavras",
+            "DESCRIPTION": "Faça um projeto em Scratch que mostra o significado de palavras que você disse."
+        },
+        "TITANIC": {
+            "TITLE": "Titanic",
+            "SUMMARY": "Teach a computer to predict outcomes",
+            "DESCRIPTION": "Create a Python program that can predict who survived the sinking of the Titanic."
         }
     },
     "TEACHER": {
@@ -777,10 +960,12 @@
             "NOTAUTHORISED": "Você não está autorizado a acessar as chaves de API do Watson usadas por sua turma.",
             "MANAGEDCLASS": "As chaves de API usadas por sua turma estão sendo gerenciadas para você.",
 
-            "HELP_STEPBYSTEP_GUIDE": "Se você não tem certeza do que fazer aqui, por favor siga o guia <a href='https://github.com/IBM/taxinomitis-docs/raw/master/docs/pdf/machinelearningforkids-apikeys.pdf'> Passo-a-Passo </a>. Se você gostaria de ajuda, por favor, <strong><a style='cursor: pointer;' ui-sref='help'>entre em contato</a></strong>.",
+            "HELP_STEPBYSTEP_GUIDE": "Se você não tem certeza do que fazer aqui, por favor siga o guia <a href='/apikeys-guide'> Passo-a-Passo </a>. Se você gostaria de ajuda, por favor, <strong><a style='cursor: pointer;' href='/help'>entre em contato</a></strong>.",
 
             "INTRO_WATSONASSISTANT": "Treinar modelos de aprendizado de máquina para projetos de <span class='mlprojecttype'>texto</span> usa o <a class='mlprojecttype' href='https://www.ibm.com/cloud/watson-assistant/'>Watson Assistant</a>",
             "INTRO_VISUALRECOGNITION": "Treinar modelos de aprendizado de máquina para projetos de <span class='mlprojecttype'>imagens</span> usa o <a class='mlprojecttype' href='https://www.ibm.com/watson/services/visual-recognition/'>Watson Visual Recognition</a>",
+            "INTRO_NUMBERS": "Training machine learning models for <span class='mlprojecttype'>numbers</span> projects does <strong>not</strong> require any API keys",
+            "INTRO_SOUNDS": "Training machine learning models for <span class='mlprojecttype'>sound</span> projects does <strong>not</strong> require any API keys",
 
             "ERROR_FETCHING_WATSONASSISTANT": "Falha ao obter suas senhas do seu Watson Assistant",
             "ERROR_FETCHING_VISUALRECOG": "Falha ao obter suas chaves API do Watson Visual Recognition",
@@ -800,8 +985,8 @@
                 "ASSISTANT_TITLE": "Adicionar credenciais do Watson Assistant",
                 "VISUAL_RECOGNITION_TITLE": "Adicionar chaves de API do Visual Recognition",
 
-                "USED_FOR_TEXT_PROJECTS": "Estas serão usadas quando seus estudantes estiverem treinando modelos para projetos de texto.",
-                "USED_FOR_IMAGE_PROJECTS": "Estas serão usadas quando seus estudantes estiverem treinando projetos com imagens.",
+                "USED_FOR_TEXT_PROJECTS": "Essas serão usadas quando seus estudantes estiverem treinando modelos para projetos de texto.",
+                "USED_FOR_IMAGE_PROJECTS": "Essas serão usadas quando seus estudantes estiverem treinando projetos com imagens.",
 
                 "HIDDEN_FROM_STUDENTS": "Isso não será mostrado para estudantes no seu grupo.",
 
@@ -873,19 +1058,19 @@
             "NOT_AUTHORIZED": "Você não está autorizado a acessar a lista de estudantes na sua sala.",
 
             "ADD_MULTIPLE": {
-                "BUTTON" : "Multiple students",
+                "BUTTON" : "Múltiplos estudantes",
 
-                "TITLE" : "Add new students",
-                "INTRO" : "You can use this to create more than one student account at the same time.",
-                "USERNAME" : "What do you want each username to start with?",
-                "USERNAME_REQUIRED" : "Please choose the prefix for the usernames",
-                "USERNAME_TOOLONG" : "That is too long",
-                "USERNAME_INVALID" : "Invalid characters",
-                "NUMBER" : "How many student accounts do you want?",
-                "NUMBER_REQUIRED" : "Please enter the number of students to create",
-                "NUMBER_TOOMANY" : "Your class has a limit of {{userslimit}} students.",
-                "PASSWORD" : "The password to give them:",
-                "PASSWORD_TOOSHORT" : "Too short"
+                "TITLE" : "Adicionar novos estudantes",
+                "INTRO" : "Você pode usar essa função para criar mais do que uma conta de estudante ao mesmo tempo.",
+                "USERNAME" : "Com o que você quer que cada usuário comece?",
+                "USERNAME_REQUIRED" : "Por favor, escolha o prefixo para os usuários",
+                "USERNAME_TOOLONG" : "Longo demais",
+                "USERNAME_INVALID" : "caracteres inválidos",
+                "NUMBER" : "Quantos contas de estudantes você vai querer?",
+                "NUMBER_REQUIRED" : "Por favor, entre o número de contas de estudantes a serem criadas",
+                "NUMBER_TOOMANY" : "Sua turma tem um limite de {{userslimit}} estudantes.",
+                "PASSWORD" : "A senha dos alunos será:",
+                "PASSWORD_TOOSHORT" : "Muito curta"
             }
         }
     },
@@ -1085,12 +1270,22 @@
             "Q4-A-8": "Erros que acontecem no navegador são capturados por um serviço de terceiros, <a href='https://sentry.io/'>Sentry</a>. Se algo dá errado, as informações do erro serão capturados, incluindo nome de usuário, endereço IP, tipo de navegador que você está usando, e uma descrição técnica do que aconteceu de errado.",
             "Q4-A-9": "Eu uso <a href='https://www.google.com/analytics/'>Google Analytics</a> para saber quantos usuários acessam Machine Learning for Kids todo dia. Embora eles tenham informações de localização geográfica e tipo de navegador, isso só me é exibido de forma agregada e anônima.",
 
-            "Q5": "What happens to training data created by students?",
-            "Q5-A-1": "A step in all machine learning projects that students make using this site is to create or collect training examples. For text projects, this can mean typing in short text passages. For image projects, this can means drawing pictures onto an on-screen canvas or taking photos using the webcam. For numbers projects, this means typing in sets of numbers",
-            "Q5-A-2": "All of these training examples are stored in a <a href='https://www.ibm.com/cloud/compose/mysql'>MySQL database hosted on IBM Cloud</a>. As the database administrator, I have access to all of these training examples for all student projects, however I do not use it for any other purposes other than enabling students to access and work on their own projects. I do not publish the training data (either publicly or to individuals or third parties) or otherwise share it, with the two exceptions of submitting it to IBM Watson APIs described below.",
-            "Q5-A-3": "Machine learning models for text projects are created using the <a href='https://www.ibm.com/cloud/watson-assistant/'>IBM Watson Assistant</a> cloud service, which means when students train a model, a copy of the training examples that they have entered will be <a href='https://cloud.ibm.com/apidocs/assistant#create-workspace'>submitted to IBM Watson</a>. IBM Watson does not use these training examples for any other purposes. This is because Machine Learning for Kids <a href='https://cloud.ibm.com/apidocs/assistant#data-collection'>requests an opt-out</a> for student training examples being used by IBM to improve the service, as <a href='https://cloud.ibm.com/docs/services/watson?topic=watson-gs-logging-overview'>described in the Watson documentation</a>.",
-            "Q5-A-4": "Machine learning models for images projects are created using the <a href='https://www.ibm.com/watson/services/visual-recognition/'>IBM Visual Recognition</a> cloud service, which means when students train a model, a copy of their training images will be <a href='https://cloud.ibm.com/apidocs/visual-recognition#create-a-classifier'>uploaded to IBM Watson</a>. IBM Watson does not use these training examples for any other purposes. This is because Machine Learning for Kids <a href='https://cloud.ibm.com/apidocs/visual-recognition#data-collection'>requests an opt-out</a> for student training examples being used by IBM to improve the service, as <a href='https://cloud.ibm.com/docs/services/watson?topic=watson-gs-logging-overview'>described in the Watson documentation</a>.",
-            "Q5-A-5": "IBM Watson provides some <a href='https://cloud.ibm.com/docs/services/assistant?topic=assistant-information-security#information-security-gdpr-wa'>general guidance for sharing training data with their services</a>, which also apply to training data created and collected in Machine Learning for Kids. Specifically, students should be advised not to include personally identifiable information in the examples that they collect."
+            "Q5": "O que acontece com os dados de treinamentos criados pelos estudantes?",
+            "Q5-A-1": "Um passo de todos os projetos de aprendizado de máquina que os alunos fazem utilizando esse site é criar ou coletar exemplos de treinamento. Para projetos de texto, isso pode significar digitar algum texto pequeno. Para projeto de imagens, isso pode significar desenhar figuras em um canvas na tela ou tirar fotos utilizando a webcam. Para projeto de números, isso pode significar digitar conjuntos de números",
+            "Q5-A-2": "Todos esses exemplos de treinamento são armazenados em um <a href='https://www.ibm.com/cloud/compose/mysql'> Banco de dados MySQL hospedada na IBM Cloud</a>. Como o administrador deste banco de dados, eu tenho acesso a todos esses exemplos de treinamento de todos os projetos de estudantes, entretanto, eu não uso esses dados por nenhum outro motivo que não seja possibilitar estudantes a acessar e trabalhar em seus próprios projetos. Eu não publico os dados de treinamento (publicamente ou para terceiros) ou os compartilho, com duas exceções de submetê-los para a API do IBM Watson descritos abaixo.",
+            "Q5-A-3": "Modelos de Aprendizado de máquina para projetos de texto são criados utilizando o serviço de nuvem do <a href='https://www.ibm.com/cloud/watson-assistant/'>IBM Watson Assistant</a>, o que quer dizer que quando os estudantes treinam um modelo, uma cópia dos dados de treinamento que eles fizeram serão <a href='https://cloud.ibm.com/apidocs/assistant#create-workspace'>enviados para o IBM Watson</a>. O IBM Watson não utiliza esses exemplos de treinamento para nenhum outro propósito. Isso, porque o Machine Learning for Kids <a href='https://cloud.ibm.com/apidocs/assistant#data-collection'>opta por  não permitir</a> para que exemplos de treinamento seja utilizados para melhorar os serviços da IBM, como <a href='https://cloud.ibm.com/docs/services/watson?topic=watson-gs-logging-overview'>descrito na documentação do Watson</a>.",
+            "Q5-A-4": "Modelos de Aprendizado de máquina para projetos de imagens são criados utilizando o serviço de nuvem do <a href='https://www.ibm.com/watson/services/visual-recognition/'>IBM Visual Recognition</a>, o que quer dizer que quando os estudantes treinam um modelo, uma cópia das imagens serão <a href='https://cloud.ibm.com/apidocs/visual-recognition#create-a-classifier'>carregadas para o IBM Watson</a>. O IBM Watson não faz uso desses exemplos para nenhum outro propósito. Isso, porque o Machine Learning for Kids <a href='https://cloud.ibm.com/apidocs/visual-recognition#data-collection'>opta por  não permitir</a> para que exemplos de treinamento de estudantes sejam usados para melhorar os serviços da IBM, como <a href='https://cloud.ibm.com/docs/services/watson?topic=watson-gs-logging-overview'>descrito na documentação do Watson</a>.",
+            "Q5-A-5": "O IBM Watson fornece <a href='https://cloud.ibm.com/docs/services/assistant?topic=assistant-information-security#information-security-gdpr-wa'>orientações gerais para compartilhamento de dados de treinamento para os seus serviços</a>, os quais também se aplicam para os dados de treinamento criados e coletados no Machine Learning for Kids. Especificamente, estudantes devem ser students should be aconselhados a não incluir nenhuma informação que poderiam os identificar nos exemplos que são coletados."
         }
+    },
+    "APIKEYSGUIDE": {
+        "TITLE": "Guide to IBM Cloud",
+        "INTRO": {
+            "INTRO_1": "Teachers / parents / code club-leaders with unmanaged class accounts need to provide '<strong>API Keys</strong>' from IBM Cloud. These are secret codes that provide access to the artificial intelligence technology that will power student projects.",
+            "INTRO_2": "Text projects need a 'Watson Assistant' API Key. Image projects need a 'Visual Recognition' API Key. (Numbers and Sound projects don't require API Keys).",
+            "INTRO_3": "You will need to create an account on IBM Cloud to be able to create these codes. It is free to create an account, and there are no charges for 'Lite' API Keys. "
+        },
+        "LINK": "How to create API Keys",
+        "EXPLANATION": "Download a step-by-step guide for how to create API Keys on IBM Cloud"
     }
 }
